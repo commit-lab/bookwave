@@ -24,10 +24,10 @@ async function bootstrap() {
   const document = createSwaggerDocument(app);
   SwaggerModule.setup("api", app, document);
 
-  const port = process.env.PORT || 4000;
-  logger.log(`listening on port: ${port}`);
+  const port = process.env.PORT ?? 4000;
+  logger.log(`listening on port: ${String(port)}`);
   await app.listen(port);
 }
-bootstrap().catch((err) => {
+bootstrap().catch((err: unknown) => {
   logger.error("Failed to bootstrap server. err = ", err);
 });

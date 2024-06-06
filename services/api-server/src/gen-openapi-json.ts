@@ -15,6 +15,6 @@ const logger = new Logger("gen-openapi-json");
     path.resolve(__dirname, "./swagger-spec.json"),
     JSON.stringify(document)
   );
-})().catch((err) => {
+})().catch((err: unknown) => {
   logger.error("Failed to write OpenAPI JSON. err = ", err);
 });
