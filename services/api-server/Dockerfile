@@ -4,7 +4,7 @@ FROM node:20 as base
 FROM base AS builder
 # Set working directory
 WORKDIR /app
-RUN yarn global add turbo@1.13.4
+RUN yarn global add turbo
 COPY . .
 
 # See https://turbo.build/repo/docs/handbook/deploying-with-docker on what this
