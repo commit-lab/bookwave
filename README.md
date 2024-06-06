@@ -20,7 +20,7 @@ We will use the [Google Typescript Style Guide](https://google.github.io/stylegu
 Run the following:
 
 ```
-cd services/game-server
+cd services/api-server
 cp .env.sample .env
 ```
 
