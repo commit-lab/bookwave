@@ -1,9 +1,10 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { InitModule } from "./init/init.module";
+import { DummyModule } from "@/dummy/dummy.module";
+import { InitModule } from "@/init/init.module";
 
 @Module({
-  imports: [ConfigModule.forRoot(), InitModule],
+  imports: [ConfigModule.forRoot(), InitModule, DummyModule],
   controllers: [],
   providers: [],
 })
