@@ -1,0 +1,51 @@
+{
+  "name": "@bookwave/web",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "predev": "# vercel env pull",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "yarn jest --passWithNoTests"
+  },
+  "dependencies": {
+    "@bookwave/utils": "*",
+    "@emotion/css": "^11.11.2",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@fontsource/inter": "^5.0.18",
+    "@fontsource/red-hat-display": "^5.0.20",
+    "@mui/icons-material": "^5.15.0",
+    "@mui/joy": "^5.0.0-beta.36",
+    "@mui/material": "^5.15.5",
+    "@tanstack/react-query": "^5.17.19",
+    "@tanstack/react-query-devtools": "^5.9.0",
+    "axios": "^1.6.2",
+    "classnames": "^2.3.2",
+    "firebase": "^10.12.0",
+    "jotai": "^2.8.3",
+    "next": "^14.0.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "ts-node": "^10.9.1",
+    "zustand": "^4.4.7"
+  },
+  "devDependencies": {
+    "@bookwave/eslint-config-custom": "*",
+    "@bookwave/tsconfig": "*",
+    "@jest/globals": "^29.7.0",
+    "@next/eslint-plugin-next": "^14.0.3",
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/react": "^14.1.2",
+    "@types/jest": "^29.5.10",
+    "@types/node": "^20.10.1",
+    "@types/react": "^18.2.39",
+    "@types/react-dom": "^18.2.17",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "*"
+  }
+}
