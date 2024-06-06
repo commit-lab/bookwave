@@ -1,0 +1,54 @@
+name: General CI
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "**/"
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - "**/"
+
+jobs:
+  build:
+    # env:
+    #   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+    #   TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    name: Build, Lint, & Test
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+
+    # To use Remote Caching, uncomment the next lines and follow the steps below.
+    # env:
+    #  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+    #  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: "yarn"
+          cache-dependency-path: "./yarn.lock"
+
+      - name: Install dependencies
+        run: yarn
+        working-directory: ./
+
+      - name: Build
+        run: yarn build
+        working-directory: ./
+
+      - name: Lint
+        run: yarn lint
+        working-directory: ./
+
+      - name: Test
+        run: yarn test
+        working-directory: ./
