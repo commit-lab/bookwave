@@ -2,8 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { NestFactory } from "@nestjs/core";
 import { Logger } from "@nestjs/common";
-import { AppModule } from "./app.module";
-import { createSwaggerDocument } from "./swagger";
+import { AppModule } from "@/app.module";
+import { createSwaggerDocument } from "@/swagger";
 
 const logger = new Logger("gen-openapi-json");
 
