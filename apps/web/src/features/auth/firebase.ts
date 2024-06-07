@@ -6,7 +6,11 @@ export type { AuthError, User as AuthUser } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAXQ7r_W1ppTF-Vhv8LboR6R8FZtEwJdCQ",
+  // We don't check this into Github because Google complains about it being
+  // present in a public repo, despite it not being a security risk 🤷‍♂️
+  // See: https://stackoverflow.com/questions/37482366/is-it-safe-to-expose-firebase-apikey-to-the-public
+  apiKey:
+    process.env.NEXT_PUBLIC_FIREBASE_CONFIG_API_KEY ?? "DUMMY_FIREBASE_KEY",
   authDomain: "the-commit-lab-reader.firebaseapp.com",
   projectId: "the-commit-lab-reader",
   storageBucket: "the-commit-lab-reader.appspot.com",

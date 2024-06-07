@@ -9,6 +9,7 @@ import "@fontsource/red-hat-display/700.css";
 
 import type { Metadata } from "next";
 import Head from "next/head";
+import Providers from "@/app/providers";
 
 export const metadata: Metadata = {
   title: "BookWave",
@@ -25,7 +26,9 @@ export default function RootLayout({
       <Head>
         <meta content="initial-scale=1, width=device-width" name="viewport" />
       </Head>
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
