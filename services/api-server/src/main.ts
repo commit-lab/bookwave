@@ -1,10 +1,10 @@
 import { type LogLevel, Logger, ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { SwaggerModule } from "@nestjs/swagger";
-import { AppModule } from "./app.module";
-import { createSwaggerDocument } from "./swagger";
-import { CLIENT_ORIGIN, LOCAL_CLIENT_ORIGIN } from "./constants";
-import { args } from "./common/args";
+import { CLIENT_ORIGIN, LOCAL_CLIENT_ORIGIN } from "@/constants";
+import { AppModule } from "@/app.module";
+import { createSwaggerDocument } from "@/swagger";
+import { args } from "@/common/args";
 
 const logger = new Logger("bootstrap");
 
