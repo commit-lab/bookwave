@@ -1,33 +1,23 @@
-import type { User } from "firebase/auth";
 import {
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { atom, useAtom } from "jotai";
 import { useCallback, useEffect } from "react";
 import { getFirebaseAuth } from "@/features/auth/firebase";
+import { useAuthStore } from "@/features/auth/stores/auth-store";
 
 const provider = new GoogleAuthProvider();
-const accessTokenAtom = atom<string | null>(null);
-const userAtom = atom<User | null>(null);
-const errorAtom = atom<Error | null>(null);
 
 interface FirebaseAuth {
-  accessToken: string | null;
-  error: Error | null;
   handleSignIn: () => Promise<void>;
   handleSignOut: () => Promise<void>;
-  user: User | null;
   isSignedIn: boolean;
 }
 
 export const useFirebaseAuth = (): FirebaseAuth => {
-  const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
-  const [user, setUser] = useAtom(userAtom);
-  const [error, setError] = useAtom(errorAtom);
-
+  const authStore = useAuthStore();
   const { auth } = getFirebaseAuth();
 
   useEffect(() => {
@@ -36,13 +26,13 @@ export const useFirebaseAuth = (): FirebaseAuth => {
         auth,
         async (nextUser) => {
           if (nextUser) {
-            if (!accessToken) {
+            if (!authStore.accessToken) {
               const token = await nextUser.getIdToken();
-              setAccessToken(token);
+              authStore.setAccessToken(token);
             }
-            setUser(nextUser);
+            authStore.setSocialUserIdentity(nextUser);
           } else {
-            setUser(null);
+            authStore.setSocialUserIdentity(null);
           }
         }
       );
@@ -50,7 +40,7 @@ export const useFirebaseAuth = (): FirebaseAuth => {
         unsubscribeAuthState();
       };
     }
-  }, [accessToken, auth, setAccessToken, setUser]);
+  }, [authStore, auth]);
 
   const handleSignIn = useCallback(async () => {
     try {
@@ -64,24 +54,26 @@ export const useFirebaseAuth = (): FirebaseAuth => {
       if (!credential) {
         throw new Error("Credential is null");
       }
-      setAccessToken(credential.accessToken ?? null);
+      authStore.setAccessToken(credential.accessToken ?? null);
       // The signed-in user info.
-      setUser(result.user);
+      authStore.setSocialUserIdentity(result.user);
       // IdP data available using getAdditionalUserInfo(result)
       // ...
     } catch (unknownError: unknown) {
-      setError(unknownError as Error);
+      authStore.setAuthError(unknownError);
       // eslint-disable-next-line no-console -- Want this to be visible for now.
       console.error("Error signing in.", unknownError);
       throw unknownError;
     }
-  }, [auth, setAccessToken, setUser, setError]);
+  }, [auth, authStore]);
 
   const handleSignOut = useCallback(async () => {
     try {
-      setAccessToken(null);
-      setUser(null);
-      setError(null);
+      authStore.setAll({
+        accessToken: null,
+        socialUserIdentity: null,
+        authError: null,
+      });
       if (!auth) {
         throw new Error("Auth is null");
       }
@@ -91,14 +83,11 @@ export const useFirebaseAuth = (): FirebaseAuth => {
       console.error("Error signing in.", unknownError);
       throw unknownError;
     }
-  }, [auth, setAccessToken, setUser, setError]);
+  }, [auth, authStore]);
 
   return {
-    accessToken,
-    error,
     handleSignIn,
     handleSignOut,
-    user,
-    isSignedIn: Boolean(user),
+    isSignedIn: Boolean(authStore.socialUserIdentity),
   };
 };
