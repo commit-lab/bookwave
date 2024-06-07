@@ -1,9 +1,11 @@
-import { Stack, Typography, Box } from "@mui/joy";
+import { Stack, Typography, Box, Button } from "@mui/joy";
 import { type FC } from "react";
 import { AllDummies } from "@/features/dummy/components/all-dummies";
 import { CreateDummy } from "@/features/dummy/components/create-dummy";
+import { useSignOut } from "@/features/auth/hooks/use-sign-out";
 
 export const DummyPageContent: FC = () => {
+  const signOut = useSignOut();
   return (
     <Box p={8}>
       <Stack spacing={8} direction={{ xs: "column", md: "row" }}>
@@ -12,7 +14,10 @@ export const DummyPageContent: FC = () => {
           <AllDummies />
         </Stack>
         <Stack spacing={4} flex="1">
-          <Typography level="h1">Create A Dummy</Typography>
+          <Stack direction="row" justifyContent="space-between">
+            <Typography level="h1">Create A Dummy</Typography>
+            <Button onClick={signOut}>Sign Out</Button>
+          </Stack>
           <CreateDummy />
         </Stack>
       </Stack>
