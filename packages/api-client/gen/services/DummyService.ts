@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { CreateDummyDto } from '../models/CreateDummyDto';
 import type { DummyDto } from '../models/DummyDto';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -19,6 +20,22 @@ export class DummyService {
         return this.httpRequest.request({
             method: 'GET',
             url: '/dummy',
+        });
+    }
+
+    /**
+     * @param requestBody
+     * @returns DummyDto
+     * @throws ApiError
+     */
+    public createOne(
+        requestBody: CreateDummyDto,
+    ): CancelablePromise<DummyDto> {
+        return this.httpRequest.request({
+            method: 'POST',
+            url: '/dummy',
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 
