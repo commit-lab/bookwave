@@ -13,7 +13,7 @@ const logger = new Logger("gen-openapi-json");
 
   fs.writeFileSync(
     path.resolve(__dirname, "./swagger-spec.json"),
-    JSON.stringify(document)
+    JSON.stringify(document),
   );
 })().catch((err: unknown) => {
   logger.error("Failed to write OpenAPI JSON. err = ", err);

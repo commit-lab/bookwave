@@ -11,7 +11,7 @@ export interface AuthStore {
   authError: unknown;
   setAuthError: (error: unknown) => void;
   setAll: (
-    params: Pick<AuthStore, "socialUserIdentity" | "accessToken" | "authError">
+    params: Pick<AuthStore, "socialUserIdentity" | "accessToken" | "authError">,
   ) => void;
 }
 
@@ -37,6 +37,6 @@ export const useAuthStore = create<AuthStore>()(
     {
       enabled: shouldDebugLog(),
       name: "AuthStore",
-    }
-  )
+    },
+  ),
 );

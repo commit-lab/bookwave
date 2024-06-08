@@ -1,10 +1,6 @@
 import type { INestApplication } from "@nestjs/common";
-import type {
-  SwaggerDocumentOptions} from "@nestjs/swagger";
-import {
-  DocumentBuilder,
-  SwaggerModule,
-} from "@nestjs/swagger";
+import type { SwaggerDocumentOptions } from "@nestjs/swagger";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 export function createSwaggerDocument(app: INestApplication) {
   const options: SwaggerDocumentOptions = {
