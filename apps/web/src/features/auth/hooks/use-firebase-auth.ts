@@ -43,7 +43,7 @@ export const useFirebaseAuth = (): FirebaseAuth => {
           } else {
             setSocialUserIdentity(null);
           }
-        }
+        },
       );
       return () => {
         unsubscribeAuthState();

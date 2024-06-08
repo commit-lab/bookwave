@@ -21,7 +21,7 @@ export class DummyController {
     } catch (err: unknown) {
       logErrorAndMaybeThrowInternalServerError(
         err,
-        "Unable to fetch all dummies"
+        "Unable to fetch all dummies",
       );
     }
   }

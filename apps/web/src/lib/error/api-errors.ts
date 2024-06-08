@@ -7,7 +7,7 @@ import { GeneralError } from "./general-error";
 export class ApiUnauthorizedError extends GeneralError {
   constructor(
     message: string,
-    public originError: ApiError
+    public originError: ApiError,
   ) {
     super(message);
     this.name = "ApiUnauthorizedError";
@@ -21,7 +21,7 @@ export class ApiUnauthorizedError extends GeneralError {
 export class ApiNotFoundError extends GeneralError {
   constructor(
     message: string,
-    public originError: ApiError
+    public originError: ApiError,
   ) {
     super(message);
     this.name = "ApiNotFoundError";
@@ -35,7 +35,7 @@ export class ApiNotFoundError extends GeneralError {
 export class ApiConflictError extends GeneralError {
   constructor(
     message: string,
-    public originError: ApiError
+    public originError: ApiError,
   ) {
     super(message);
     this.name = "ApiConflictError";
