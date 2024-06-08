@@ -1,23 +1,23 @@
 import { type Model, Schema, type Types, model } from "mongoose";
-import { ChapterSchema, type ChapterType } from "./chapter";
+import { ChapterSchema, type Chapter } from "./chapter";
 
 export enum PublishState {
   DRAFT = "DRAFT",
   PUBLISHED = "PUBLISHED",
 }
 
-export interface BookType {
+export interface Book {
   title: string;
   handle: string;
   authorId: Types.ObjectId;
   publishedAt: Date;
   state: PublishState;
-  chapters: ChapterType[];
+  chapters: Chapter[];
 }
 
-export type BookModel = Model<BookType>;
+export type BookModelType = Model<Book>;
 
-export const BookSchema: Schema = new Schema<BookType, BookModel>({
+export const BookSchema: Schema = new Schema<Book, BookModelType>({
   title: { type: String, required: true },
   handle: { type: String, required: true },
   authorId: { type: Schema.Types.ObjectId, required: true },
@@ -26,4 +26,7 @@ export const BookSchema: Schema = new Schema<BookType, BookModel>({
   chapters: { type: [ChapterSchema] },
 });
 
-export const Book: BookModel = model<BookType, BookModel>("Book", BookSchema);
+export const BookModel: BookModelType = model<Book, BookModelType>(
+  "Book",
+  BookSchema,
+);
