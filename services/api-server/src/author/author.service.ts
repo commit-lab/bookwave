@@ -8,7 +8,7 @@ import { AUTHOR_MODEL } from "./author.constants";
 export class AuthorService {
   constructor(
     @Inject(AUTHOR_MODEL)
-    private readonly authorModel: Model<Author>
+    private readonly authorModel: Model<Author>,
   ) {}
 
   async create(createAuthorDto: CreateAuthorDto): Promise<Author> {
