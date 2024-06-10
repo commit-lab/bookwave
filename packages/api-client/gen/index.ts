@@ -10,7 +10,9 @@ export { CancelablePromise, CancelError } from './core/CancelablePromise';
 export { OpenAPI } from './core/OpenAPI';
 export type { OpenAPIConfig } from './core/OpenAPI';
 
+export type { CreateAuthorDto } from './models/CreateAuthorDto';
 export type { CreateDummyDto } from './models/CreateDummyDto';
 export type { DummyDto } from './models/DummyDto';
 
+export { AuthorService } from './services/AuthorService';
 export { DummyService } from './services/DummyService';

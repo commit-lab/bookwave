@@ -6,12 +6,14 @@ import type { BaseHttpRequest } from './core/BaseHttpRequest';
 import type { OpenAPIConfig } from './core/OpenAPI';
 import { FetchHttpRequest } from './core/FetchHttpRequest';
 
+import { AuthorService } from './services/AuthorService';
 import { DummyService } from './services/DummyService';
 
 type HttpRequestConstructor = new (config: OpenAPIConfig) => BaseHttpRequest;
 
 export class ApiClient {
 
+    public readonly author: AuthorService;
     public readonly dummy: DummyService;
 
     public readonly request: BaseHttpRequest;
@@ -29,6 +31,7 @@ export class ApiClient {
             ENCODE_PATH: config?.ENCODE_PATH,
         });
 
+        this.author = new AuthorService(this.request);
         this.dummy = new DummyService(this.request);
     }
 }
