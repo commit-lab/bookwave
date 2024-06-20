@@ -7,6 +7,8 @@ const REMOTE_API = "https://api.bookwave.com";
 export const apiClient = new ApiClient({
   BASE: process.env.NODE_ENV === "development" ? LOCAL_API : REMOTE_API,
   TOKEN: async () => {
-    return Promise.resolve(useAuthStore.getState().accessToken ?? "");
+    return Promise.resolve(
+      useAuthStore.getState().socialUserIdentity?.getIdToken() ?? "",
+    );
   },
 });

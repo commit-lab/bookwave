@@ -6,26 +6,18 @@ import { shouldDebugLog } from "@/lib/logging/debug";
 export interface AuthStore {
   socialUserIdentity: User | null;
   setSocialUserIdentity: (user: User | null) => void;
-  accessToken: string | null;
-  setAccessToken: (token: string | null) => void;
   authError: unknown;
   setAuthError: (error: unknown) => void;
-  setAll: (
-    params: Pick<AuthStore, "socialUserIdentity" | "accessToken" | "authError">,
-  ) => void;
+  setAll: (params: Pick<AuthStore, "socialUserIdentity" | "authError">) => void;
 }
 
 export const useAuthStore = create<AuthStore>()(
   devtools(
     (set) => ({
-      accessToken: null,
       socialUserIdentity: null,
       authError: null,
       setSocialUserIdentity: (socialUserIdentity) => {
         set({ socialUserIdentity });
-      },
-      setAccessToken: (accessToken) => {
-        set({ accessToken });
       },
       setAuthError: (authError: unknown) => {
         set({ authError });
