@@ -8,7 +8,7 @@ import { AUTHOR_MODEL } from "./author.constants";
 export class AuthorService {
   constructor(
     @Inject(AUTHOR_MODEL)
-    private readonly authorModel: Model<Author>,
+    private readonly authorModel: Model<Author>
   ) {}
 
   async create(createAuthorDto: CreateAuthorDto): Promise<Author> {
@@ -18,5 +18,9 @@ export class AuthorService {
 
   async findAll(): Promise<Author[]> {
     return this.authorModel.find().exec();
+  }
+
+  async findByFirebaseUid(uid: string): Promise<Author | null> {
+    return this.authorModel.findOne({ firebaseUid: uid }).exec();
   }
 }
