@@ -19,67 +19,42 @@ interface FirebaseAuth {
 }
 
 export const useFirebaseAuth = (): FirebaseAuth => {
-  const {
-    setAccessToken,
-    setSocialUserIdentity,
-    accessToken,
-    setAuthError,
-    setAll,
-    socialUserIdentity,
-  } = useAuthStore();
+  const { setSocialUserIdentity, setAuthError, setAll, socialUserIdentity } =
+    useAuthStore();
   const { auth } = getFirebaseAuth();
 
   useEffect(() => {
     if (auth) {
-      const unsubscribeAuthState = onAuthStateChanged(
-        auth,
-        async (nextUser) => {
-          if (nextUser) {
-            if (!accessToken) {
-              const token = await nextUser.getIdToken();
-              setAccessToken(token);
-            }
-            setSocialUserIdentity(nextUser);
-          } else {
-            setSocialUserIdentity(null);
-          }
-        },
-      );
+      const unsubscribeAuthState = onAuthStateChanged(auth, (nextUser) => {
+        if (nextUser) {
+          setSocialUserIdentity(nextUser);
+        } else {
+          setSocialUserIdentity(null);
+        }
+      });
       return () => {
         unsubscribeAuthState();
       };
     }
-  }, [auth, accessToken, setAccessToken, setSocialUserIdentity]);
+  }, [auth, setSocialUserIdentity]);
 
   const handleSignIn = useCallback(async () => {
     try {
       if (!auth) {
         throw new Error("Auth is null");
       }
-      const result = await signInWithPopup(auth, provider);
-
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      if (!credential) {
-        throw new Error("Credential is null");
-      }
-      setAccessToken(credential.accessToken ?? null);
-      // The signed-in user info.
-      setSocialUserIdentity(result.user);
-      // IdP data available using getAdditionalUserInfo(result)
-      // ...
+      await signInWithPopup(auth, provider);
     } catch (unknownError: unknown) {
       setAuthError(unknownError);
       // eslint-disable-next-line no-console -- Want this to be visible for now.
       console.error("Error signing in.", unknownError);
       throw unknownError;
     }
-  }, [auth, setAccessToken, setSocialUserIdentity, setAuthError]);
+  }, [auth, setAuthError]);
 
   const handleSignOut = useCallback(async () => {
     try {
       setAll({
-        accessToken: null,
         socialUserIdentity: null,
         authError: null,
       });

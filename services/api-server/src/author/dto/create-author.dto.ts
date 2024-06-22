@@ -2,9 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString } from "class-validator";
 
 export class CreateAuthorDto {
-  @ApiProperty({ type: String })
-  @IsString()
-  @IsNotEmpty()
+  firebaseUid: string;
   firstName: string;
 
   @ApiProperty({ type: String })
