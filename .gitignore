@@ -16,6 +16,7 @@ build
 
 
 # misc
+bookwave-api-key-sdk.json
 .DS_Store
 *.pem
 
