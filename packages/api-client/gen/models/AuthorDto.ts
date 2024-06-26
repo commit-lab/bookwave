@@ -3,7 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type CreateAuthorDto = {
+export type AuthorDto = {
     firstName: string;
     lastName: string;
     handle: string;
