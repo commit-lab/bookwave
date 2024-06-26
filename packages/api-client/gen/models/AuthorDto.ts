@@ -3,8 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type CreateAuthorDto = {
-    firebaseUid?: string;
+export type AuthorDto = {
     firstName: string;
     lastName: string;
     handle: string;

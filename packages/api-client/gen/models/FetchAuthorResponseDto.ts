@@ -3,10 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type CreateAuthorDto = {
-    firebaseUid?: string;
-    firstName: string;
-    lastName: string;
-    handle: string;
+import type { AuthorDto } from './AuthorDto';
+
+export type FetchAuthorResponseDto = {
+    author: AuthorDto;
 };
 

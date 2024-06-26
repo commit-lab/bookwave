@@ -3,10 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type CreateAuthorDto = {
-    firebaseUid?: string;
-    firstName: string;
-    lastName: string;
-    handle: string;
+export type DeleteAuthorResponseDto = {
+    deletedCount: number;
 };
 
