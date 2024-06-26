@@ -12,8 +12,16 @@ export class AuthorService {
     private readonly authorModel: Model<Author>
   ) {}
 
-  async create(createAuthorDto: CreateAuthorDto): Promise<Author> {
-    const createdAuthor = this.authorModel.create(createAuthorDto);
+  async create(
+    createAuthorDto: CreateAuthorDto,
+    firebaseUid: string
+  ): Promise<Author> {
+    const createdAuthor = this.authorModel.create({
+      firebaseUid,
+      firstName: createAuthorDto.firstName,
+      lastName: createAuthorDto.lastName,
+      handle: createAuthorDto.handle,
+    });
     return createdAuthor;
   }
 

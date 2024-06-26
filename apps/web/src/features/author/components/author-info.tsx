@@ -19,7 +19,7 @@ export const AuthorInfo = () => {
   if (data?.author) {
     return (
       <Stack>
-        <Card key={`${data.author.firstName}-${data.author.lastName}`}>
+        <Card>
           <Typography level="title-md">{data.author.firstName}</Typography>
           <Typography level="body-sm">First Name</Typography>
           <Typography level="title-md">{data.author.lastName}</Typography>

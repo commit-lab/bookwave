@@ -13,9 +13,6 @@ export class AuthorDto {
 }
 
 export class CreateAuthorDto {
-  @ApiProperty({ type: String, required: false })
-  firebaseUid: string;
-
   @ApiProperty({ type: String })
   @IsNotEmpty()
   firstName: string;

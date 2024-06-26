@@ -4,7 +4,6 @@
 /* eslint-disable */
 
 export type CreateAuthorDto = {
-    firebaseUid?: string;
     firstName: string;
     lastName: string;
     handle: string;

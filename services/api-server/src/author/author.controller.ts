@@ -26,10 +26,10 @@ export class AuthorController {
     if (request.author) {
       throw new Error("User already exists for firebase uid.");
     }
-    if (request.firebaseUid) {
-      createAuthorDto.firebaseUid = request.firebaseUid;
+    if (!request.firebaseUid) {
+      throw new Error("No Firebase Uid on request.");
     }
-    return this.authorService.create(createAuthorDto);
+    return this.authorService.create(createAuthorDto, request.firebaseUid);
   }
 
   @ApiOkResponse({
