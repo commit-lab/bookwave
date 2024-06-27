@@ -12,7 +12,7 @@ export class BookService {
     private readonly bookModel: Model<BookDocument>
   ) {}
 
-  // Find all Books by an Author.
+  // Find all books by author.
 
   async findAll(author: string): Promise<BookDocument[]> {
     const allBooks = await this.bookModel
@@ -22,7 +22,7 @@ export class BookService {
     return allBooks;
   }
 
-  // Find one Book by an Author.
+  // Find one book by an author.
 
   async findOne(bookHandle: string): Promise<BookDocument> {
     const book = await this.bookModel
@@ -37,28 +37,28 @@ export class BookService {
     return book;
   }
 
-  // Create a Book.
+  // Create a book.
 
   async create(
-    newBookInput: CreateBookDto,
+    newBookData: CreateBookDto,
     authorId: string
   ): Promise<BookDocument> {
     const book = await this.bookModel.create({
-      ...newBookInput,
+      ...newBookData,
       author: authorId,
     });
-    return book.save();
+    return book;
   }
 
-  // Update a Book.
+  // Update a book.
 
   async updateOne(
     bookId: string,
-    updateBookInput: UpdateBookDto
+    updateBookData: UpdateBookDto
   ): Promise<BookDocument> {
     const updatedBook = await this.bookModel.findByIdAndUpdate(
       bookId,
-      updateBookInput,
+      updateBookData,
       { new: true }
     );
 
@@ -68,11 +68,13 @@ export class BookService {
     return updatedBook;
   }
 
-  // Delete a Book.
-  // May decide to archive instead.
+  // Delete a book.
+  // May archive instead.
 
   async deleteOne(bookId: string): Promise<BookDocument> {
-    const deletedBook = await this.bookModel.findByIdAndDelete(bookId);
+    const deletedBook = await this.bookModel.findByIdAndDelete(bookId, {
+      new: true,
+    });
     if (!deletedBook) {
       throw new NotFoundException(`Book with BookId: ${bookId} not found.`);
     }

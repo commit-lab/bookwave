@@ -16,8 +16,4 @@ export class UpdateBookDto {
   @IsString()
   @IsOptional()
   readonly state: string;
-
-  @ApiProperty({ type: Array })
-  @IsOptional()
-  readonly chapters: string[];
 }
