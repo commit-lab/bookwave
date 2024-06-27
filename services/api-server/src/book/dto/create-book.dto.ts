@@ -11,14 +11,4 @@ export class CreateBookDto {
   @IsString()
   @IsNotEmpty()
   readonly handle: string;
-
-  @ApiProperty({ type: String, example: "66747b39b0a717aad42268f1" })
-  @IsString()
-  @IsNotEmpty()
-  readonly authorId: string;
-
-  @ApiProperty({ type: String, example: "Draft|Published" })
-  @IsString()
-  @IsNotEmpty()
-  readonly state: string;
 }
