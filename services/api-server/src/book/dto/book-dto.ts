@@ -9,4 +9,8 @@ export class BookDto {
 
   @ApiProperty({ type: String })
   readonly state: string;
+
+  // need to update or delete this
+  @ApiProperty({ type: [String] })
+  readonly chapters: string[];
 }

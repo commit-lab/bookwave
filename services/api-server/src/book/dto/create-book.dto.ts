@@ -7,7 +7,7 @@ export class CreateBookDto {
   @IsNotEmpty()
   readonly title: string;
 
-  @ApiProperty({ type: String, example: "Chronicles_Narnia" })
+  @ApiProperty({ type: String, example: "chroniclesofnarnia" })
   @IsString()
   @IsNotEmpty()
   readonly handle: string;

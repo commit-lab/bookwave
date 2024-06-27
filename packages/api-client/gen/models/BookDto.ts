@@ -7,5 +7,6 @@ export type BookDto = {
     title: string;
     handle: string;
     state: string;
+    chapters: Array<string>;
 };
 
