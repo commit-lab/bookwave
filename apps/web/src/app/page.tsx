@@ -6,6 +6,8 @@ export default function Page() {
   return (
     <div>
       <Link href="/dummy">Dummy Route</Link>
+      <br />
+      <Link href="/author">Author Route</Link>
     </div>
   );
 }

@@ -3,9 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type CreateAuthorDto = {
-    firstName: string;
-    lastName: string;
-    handle: string;
+export type DeleteAuthorResponseDto = {
+    deletedCount: number;
 };
 
