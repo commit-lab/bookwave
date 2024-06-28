@@ -11,6 +11,10 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+#keys
+/bookwave.json
+/bookwave-api-key-sdk.json
+
 # OS
 .DS_Store
 
