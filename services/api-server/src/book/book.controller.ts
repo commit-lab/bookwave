@@ -30,7 +30,7 @@ export class BookController {
     type: [BookDto],
   })
   @Get()
-  async getAll(@Author("_id") authorId: string): Promise<BookDocument[]> {
+  async getAll(@Author("_id") authorId: string): Promise<BookDto[]> {
     try {
       this.logger.log(
         `Author with author id: ${authorId} retrieving all books.`
@@ -55,7 +55,7 @@ export class BookController {
   async getOne(
     @Author("_id") authorId: string,
     @Param("bookHandle") bookHandle: string
-  ): Promise<BookDocument> {
+  ): Promise<BookDto> {
     try {
       this.logger.log(
         `Author ${authorId} retrieving book with book handle: /${bookHandle}.`
@@ -77,17 +77,20 @@ export class BookController {
   @Post()
   async createOne(
     @Author("_id") authorId: string,
-    @Body() newBookData: CreateBookDto
-  ): Promise<BookDocument> {
+    @Body() createBookDto: CreateBookDto
+  ): Promise<BookDto> {
     try {
       this.logger.verbose(
-        `Author with author id: ${authorId} creating a new book. Data: ${JSON.stringify(newBookData)}.`
+        `Author with author id: ${authorId} creating a new book. Data: ${JSON.stringify(createBookDto)}.`
       );
-      const createdBook = await this.bookService.create(newBookData, authorId);
+      const createdBook = await this.bookService.create(
+        createBookDto,
+        authorId
+      );
       return createdBook;
     } catch {
       this.logger.error(
-        `Failed to create book for author with author id: ${authorId}. Data: ${JSON.stringify(newBookData)}. `
+        `Failed to create book for author with author id: ${authorId}. Data: ${JSON.stringify(createBookDto)}. `
       );
       throw new NotImplementedException("Failed to create book.");
     }
@@ -101,20 +104,20 @@ export class BookController {
   async updateOne(
     @Author("_id") authorId: string,
     @Param("bookId") bookId: string,
-    @Body() updateBookData: UpdateBookDto
-  ): Promise<BookDocument> {
+    @Body() updateBookDto: UpdateBookDto
+  ): Promise<BookDto> {
     try {
       this.logger.log(
         `Author with author id: ${authorId} updating book with book id: ${bookId}.`
       );
       const updatedBook = await this.bookService.updateOne(
         bookId,
-        updateBookData
+        updateBookDto
       );
       return updatedBook;
     } catch {
       this.logger.error(
-        `Failed to update book with book id: ${bookId}. Data: ${JSON.stringify(updateBookData)}. `
+        `Failed to update book with book id: ${bookId}. Data: ${JSON.stringify(updateBookDto)}. `
       );
       throw new NotFoundException(`Book with book id: ${bookId} not found.`);
     }

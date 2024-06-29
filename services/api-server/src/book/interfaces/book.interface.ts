@@ -1,13 +1,12 @@
-import { type Document } from "mongoose";
-import { type Author } from "@/author/interfaces/author.interface";
-import { type Chapter } from "@/chapter/interfaces/chapter.interface";
+import { type Types, type Document } from "mongoose";
 
 export interface BookDocument extends Document {
+  readonly _id: string;
   readonly title: string;
   readonly handle: string;
-  readonly author: Author["_id"];
+  readonly author: Types.ObjectId;
   readonly state: string;
-  readonly chapters: [Chapter["_id"]];
+  readonly chapters: [Types.ObjectId];
   readonly createdAt: Date;
   readonly updatedAt: Date;
 }

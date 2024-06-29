@@ -11,3 +11,7 @@ export const BookSchema = new Schema<BookDocument>(
   },
   { timestamps: true }
 );
+
+BookSchema.virtual("chapterCount").get(function chapterCount() {
+  return this.chapters.length;
+});
