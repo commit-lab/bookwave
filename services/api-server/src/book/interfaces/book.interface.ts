@@ -6,7 +6,7 @@ export interface BookDocument extends Document {
   readonly handle: string;
   readonly author: Types.ObjectId;
   readonly state: string;
-  readonly chapters: [Types.ObjectId];
+  readonly chapters: [string];
   readonly createdAt: Date;
   readonly updatedAt: Date;
 }

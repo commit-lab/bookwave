@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-export class BookDetailDto {
+export class BookWithChaptersDto {
   @ApiProperty({ type: String })
   title: string;
 
@@ -11,5 +11,5 @@ export class BookDetailDto {
   state: string;
 
   @ApiProperty({ type: Array })
-  chapters: [];
+  chapters: string[];
 }

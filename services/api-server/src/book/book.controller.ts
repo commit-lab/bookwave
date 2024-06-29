@@ -17,6 +17,7 @@ import { BookService } from "./book.service";
 import { type BookDocument } from "./interfaces/book.interface";
 import { Author } from "@/author/author.decorator";
 import { BookDto } from "@/book/dto/book-dto";
+import { type BookWithChaptersDto } from "@/book/dto/book-with-chapters.dto";
 
 @ApiBearerAuth()
 @ApiTags("books")
@@ -66,6 +67,31 @@ export class BookController {
       this.logger.error(`Failed to get book with book handle: /${bookHandle}.`);
       throw new NotFoundException(
         `Book with book handle: /${bookHandle} not found.`
+      );
+    }
+  }
+
+  @ApiOkResponse({
+    description: "Book and its chapters successfully found.",
+    type: BookDto,
+  })
+  @Get("/:bookId/chapters")
+  async getOneWithChapters(
+    @Author("_id") authorId: string,
+    @Param("bookId") bookId: string
+  ): Promise<BookWithChaptersDto> {
+    try {
+      this.logger.log(
+        `Author ${authorId} retrieving book and its chapters with book id: ${bookId}.`
+      );
+      const book = await this.bookService.findOneWithChapters(bookId);
+      return book;
+    } catch {
+      this.logger.error(
+        `Failed to get book and chapters for book with book id: ${bookId}.`
+      );
+      throw new NotFoundException(
+        `Book and chapters for book with book id: ${bookId} not found.`
       );
     }
   }
@@ -128,7 +154,9 @@ export class BookController {
     type: BookDto,
   })
   @Delete("/:bookId")
-  async deleteBook(@Param("bookId") bookId: string): Promise<BookDocument> {
+  async deleteBook(
+    @Param("bookId") bookId: string
+  ): Promise<BookDocument | null> {
     try {
       const deletedBook = await this.bookService.deleteOne(bookId);
       return deletedBook;

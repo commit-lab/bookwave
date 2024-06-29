@@ -9,11 +9,13 @@ import { BookService } from "./book.service";
 import { bookProviders } from "./book.provider";
 import { AuthMiddleware } from "@/middleware/auth.middleware";
 import { AuthorModule } from "@/author/author.module";
+import { ChapterModule } from "@/chapter/chapter.module";
+import { chapterProviders } from "@/chapter/chapter.provider";
 
 @Module({
-  imports: [DbModule, AuthorModule],
+  imports: [DbModule, AuthorModule, ChapterModule],
   controllers: [BookController],
-  providers: [BookService, ...bookProviders],
+  providers: [BookService, ...bookProviders, ...chapterProviders],
 })
 export class BookModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

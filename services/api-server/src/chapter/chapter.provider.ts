@@ -4,7 +4,7 @@ import { CHAPTER_MODEL } from "./chapter.constants";
 import { type ChapterDocument } from "./interfaces/chapter.interface";
 import { MONGO_CONNECTION } from "@/db/constants";
 
-export const bookProviders = [
+export const chapterProviders = [
   {
     provide: CHAPTER_MODEL,
     inject: [MONGO_CONNECTION],

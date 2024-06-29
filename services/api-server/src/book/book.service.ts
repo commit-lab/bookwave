@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model, type ObjectId } from "mongoose";
 import { Injectable, Inject, NotFoundException } from "@nestjs/common";
 import { isNullOrUndefined } from "@bookwave/utils";
 import { BOOK_MODEL } from "./book.constants";
@@ -6,12 +6,19 @@ import { type UpdateBookDto } from "./dto/update-book.dto";
 import { type BookDocument } from "@/book/interfaces/book.interface";
 import { type CreateBookDto } from "@/book/dto/create-book.dto";
 import { BookDto } from "@/book/dto/book-dto";
+import { type ChapterDocument } from "@/chapter/interfaces/chapter.interface";
+import { CHAPTER_MODEL } from "@/chapter/chapter.constants";
+import { BookDetailDto } from "@/book/dto/book-detail.dto";
+import { BookWithChaptersDto } from "@/book/dto/book-with-chapters.dto";
 
 @Injectable()
 export class BookService {
   constructor(
     @Inject(BOOK_MODEL)
-    private readonly bookModel: Model<BookDocument>
+    private readonly bookModel: Model<BookDocument>,
+
+    @Inject(CHAPTER_MODEL)
+    private readonly chapterModel: Model<ChapterDocument>
   ) {}
 
   // Find all books by author.
@@ -41,7 +48,7 @@ export class BookService {
   async findOne(bookHandle: string): Promise<BookDto> {
     const book = await this.bookModel
       .findOne({ handle: bookHandle })
-      // .populate({ path: "chapters", select: "title" })
+      // .populate({ path: "chapters", model: "Chapter" })
       .exec();
     if (isNullOrUndefined(book)) {
       throw new NotFoundException(
@@ -56,6 +63,27 @@ export class BookService {
     bookResponse.chapterCount = book.chapters.length;
     bookResponse.state = book.state;
     return bookResponse;
+  }
+
+  // Find one book by an author.
+  // Return populated chapters in response.
+
+  async findOneWithChapters(bookId: string): Promise<BookWithChaptersDto> {
+    const book = await this.bookModel
+      .findOne({ _id: bookId })
+      .populate({ path: "chapters", model: "Chapter" })
+      .exec();
+    if (isNullOrUndefined(book)) {
+      throw new NotFoundException(`Book with bookId: ${bookId} not found.`);
+    }
+
+    const bookWithChaptersResponse = new BookWithChaptersDto();
+    bookWithChaptersResponse.title = book.title;
+    bookWithChaptersResponse.handle = book.handle;
+    bookWithChaptersResponse.state = book.state;
+    bookWithChaptersResponse.chapters = book.chapters;
+
+    return bookWithChaptersResponse;
   }
 
   // Create a book.
@@ -104,7 +132,21 @@ export class BookService {
   // Delete a book.
   // May archive instead.
 
-  async deleteOne(bookId: string): Promise<BookDocument> {
+  async deleteOne(bookId: string): Promise<BookDocument | null> {
+    // const book = await this.bookModel.findOne({ _id: bookId });
+    // const chapters = book?.chapters;
+    // console.log(chapters);
+
+    // chapters?.forEach((chapter: string) => {
+    //   console.log(chapter);
+    //   chapter.toString();
+    //   console.log(chapter);
+    //   const deletedChapter = this.chapterModel.findById(chapter.toString());
+    //   console.log(deletedChapter);
+    //   return deletedChapter;
+    // });
+    // return book;
+
     const deletedBook = await this.bookModel.findByIdAndDelete(bookId, {
       new: true,
     });
