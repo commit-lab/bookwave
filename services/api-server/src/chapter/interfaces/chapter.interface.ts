@@ -1,6 +1,6 @@
 import { type Document } from "mongoose";
 
-export interface Chapter extends Document {
+export interface ChapterDocument extends Document {
   readonly title: string;
   readonly content: string;
 }
