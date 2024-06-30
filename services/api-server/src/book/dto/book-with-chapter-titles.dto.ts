@@ -1,6 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { type ChapterDocument } from "@/chapter/interfaces/chapter.interface";
 
-export class BookWithChaptersDto {
+export class BookWithChapterTitlesDto {
+  @ApiProperty({ type: String })
+  id: string;
+
   @ApiProperty({ type: String })
   title: string;
 
@@ -11,5 +15,5 @@ export class BookWithChaptersDto {
   state: string;
 
   @ApiProperty({ type: Array })
-  chapters: string[];
+  chapterTitles: ChapterDocument["title"][];
 }

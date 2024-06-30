@@ -14,10 +14,10 @@ import { ApiBearerAuth, ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { CreateBookDto } from "./dto/create-book.dto";
 import { UpdateBookDto } from "./dto/update-book.dto";
 import { BookService } from "./book.service";
-import { type BookDocument } from "./interfaces/book.interface";
 import { Author } from "@/author/author.decorator";
 import { BookDto } from "@/book/dto/book-dto";
-import { type BookWithChaptersDto } from "@/book/dto/book-with-chapters.dto";
+import { BookWithChapterTitlesDto } from "@/book/dto/book-with-chapter-titles.dto";
+import { DeletedBookResponseDto } from "@/book/dto/deleted-book-response.dto";
 
 @ApiBearerAuth()
 @ApiTags("books")
@@ -50,48 +50,23 @@ export class BookController {
 
   @ApiOkResponse({
     description: "Book successfully found.",
-    type: BookDto,
+    type: BookWithChapterTitlesDto,
   })
   @Get("/:bookHandle")
   async getOne(
     @Author("_id") authorId: string,
     @Param("bookHandle") bookHandle: string
-  ): Promise<BookDto> {
+  ): Promise<BookWithChapterTitlesDto> {
     try {
       this.logger.log(
         `Author ${authorId} retrieving book with book handle: /${bookHandle}.`
       );
-      const book = await this.bookService.findOne(bookHandle);
+      const book = await this.bookService.findOneWithChapterTitles(bookHandle);
       return book;
     } catch {
       this.logger.error(`Failed to get book with book handle: /${bookHandle}.`);
       throw new NotFoundException(
         `Book with book handle: /${bookHandle} not found.`
-      );
-    }
-  }
-
-  @ApiOkResponse({
-    description: "Book and its chapters successfully found.",
-    type: BookDto,
-  })
-  @Get("/:bookId/chapters")
-  async getOneWithChapters(
-    @Author("_id") authorId: string,
-    @Param("bookId") bookId: string
-  ): Promise<BookWithChaptersDto> {
-    try {
-      this.logger.log(
-        `Author ${authorId} retrieving book and its chapters with book id: ${bookId}.`
-      );
-      const book = await this.bookService.findOneWithChapters(bookId);
-      return book;
-    } catch {
-      this.logger.error(
-        `Failed to get book and chapters for book with book id: ${bookId}.`
-      );
-      throw new NotFoundException(
-        `Book and chapters for book with book id: ${bookId} not found.`
       );
     }
   }
@@ -151,15 +126,15 @@ export class BookController {
 
   @ApiOkResponse({
     description: "Book successfully deleted.",
-    type: BookDto,
+    type: DeletedBookResponseDto,
   })
   @Delete("/:bookId")
   async deleteBook(
     @Param("bookId") bookId: string
-  ): Promise<BookDocument | null> {
+  ): Promise<DeletedBookResponseDto> {
     try {
-      const deletedBook = await this.bookService.deleteOne(bookId);
-      return deletedBook;
+      const deletedBookCount = await this.bookService.deleteOne(bookId);
+      return deletedBookCount;
     } catch {
       this.logger.error(`Failed to delete book with book id: ${bookId}. `);
       throw new NotFoundException(`Book with book id: ${bookId} not found.`);

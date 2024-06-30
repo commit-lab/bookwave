@@ -8,7 +8,8 @@ import { type CreateBookDto } from "@/book/dto/create-book.dto";
 import { BookDto } from "@/book/dto/book-dto";
 import { type ChapterDocument } from "@/chapter/interfaces/chapter.interface";
 import { CHAPTER_MODEL } from "@/chapter/chapter.constants";
-import { BookWithChaptersDto } from "@/book/dto/book-with-chapters.dto";
+import { BookWithChapterTitlesDto } from "@/book/dto/book-with-chapter-titles.dto";
+import { DeletedBookResponseDto } from "@/book/dto/deleted-book-response.dto";
 
 @Injectable()
 export class BookService {
@@ -20,7 +21,8 @@ export class BookService {
     private readonly chapterModel: Model<ChapterDocument>
   ) {}
 
-  // Find all books by author.
+  // Find all books by author
+  // Required response for book_list view: title, state, numChapters
 
   async findAll(authorId: string): Promise<BookDto[]> {
     const allBooks = await this.bookModel
@@ -41,46 +43,35 @@ export class BookService {
     return booksResponse;
   }
 
-  // Find one book by an author.
+  //Find one book by {bookHandle}
+  // Required response for book_detail view: title, state, chapter titles, chapter numWords
 
-  async findOne(bookHandle: string): Promise<BookDto> {
-    const book = await this.bookModel.findOne({ handle: bookHandle }).exec();
+  async findOneWithChapterTitles(
+    bookHandle: string
+  ): Promise<BookWithChapterTitlesDto> {
+    const book = await this.bookModel
+      .findOne({ handle: bookHandle })
+      .populate("chapters", "title")
+      .exec();
     if (isNullOrUndefined(book)) {
       throw new NotFoundException(
         `Book with bookHandle: /${bookHandle} not found.`
       );
     }
-
-    const bookResponse = new BookDto();
+    const bookResponse = new BookWithChapterTitlesDto();
     bookResponse.id = book._id;
     bookResponse.title = book.title;
     bookResponse.handle = book.handle;
-    bookResponse.chapterCount = book.chapters.length;
     bookResponse.state = book.state;
+    const chapterTitles = book.chapters.map((chapter) => {
+      return chapter.title;
+    });
+    bookResponse.chapterTitles = chapterTitles;
     return bookResponse;
   }
 
-  // Find one book by an author (return populated chapters in response)
-
-  async findOneWithChapters(bookId: string): Promise<BookWithChaptersDto> {
-    const book = await this.bookModel
-      .findOne({ _id: bookId })
-      .populate({ path: "chapters", model: "Chapter" })
-      .exec();
-    if (isNullOrUndefined(book)) {
-      throw new NotFoundException(`Book with bookId: ${bookId} not found.`);
-    }
-
-    const bookWithChaptersResponse = new BookWithChaptersDto();
-    bookWithChaptersResponse.title = book.title;
-    bookWithChaptersResponse.handle = book.handle;
-    bookWithChaptersResponse.state = book.state;
-    bookWithChaptersResponse.chapters = book.chapters;
-
-    return bookWithChaptersResponse;
-  }
-
   // Create a book.
+  // Required fields: book title and book handle
 
   async create(
     createBookDto: CreateBookDto,
@@ -123,15 +114,29 @@ export class BookService {
     return updatedBookResponse;
   }
 
-  // Delete a book (need to delete associated chapters)
+  // Delete a book.
 
-  async deleteOne(bookId: string): Promise<BookDocument | null> {
-    const deletedBook = await this.bookModel.findByIdAndDelete(bookId, {
-      new: true,
-    });
-    if (isNullOrUndefined(deletedBook)) {
+  async deleteOne(bookId: string): Promise<DeletedBookResponseDto> {
+    const bookToDelete = await this.bookModel
+      .findOne({ _id: bookId })
+      .populate("chapters", "_id");
+
+    if (isNullOrUndefined(bookToDelete)) {
       throw new NotFoundException(`Book with BookId: ${bookId} not found.`);
     }
-    return deletedBook;
+
+    let chapterCount = 0;
+    bookToDelete.chapters.forEach(async (chapterId) => {
+      // first delete all chapters of book
+      await this.chapterModel.findByIdAndDelete(chapterId);
+      chapterCount++;
+    });
+
+    await this.bookModel.findOneAndDelete({ _id: bookId }, { new: true });
+
+    const deletedBookResponse = new DeletedBookResponseDto();
+    deletedBookResponse.deletedBookCount = 1;
+    deletedBookResponse.deletedChapterCount = chapterCount;
+    return deletedBookResponse;
   }
 }
