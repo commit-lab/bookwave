@@ -11,126 +11,113 @@ import {
   Logger,
 } from "@nestjs/common";
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from "@nestjs/swagger";
+import { ChapterService } from "@/chapter/chapter.service";
+import { ChapterDto } from "@/chapter/dto/chapter.dto";
+import { UpdateChapterDto } from "@/chapter/dto/update-chapter.dto";
+import { type ChapterDocument } from "@/chapter/interfaces/chapter.interface";
+import { CreateChapterDto } from "@/chapter/dto/create-chapter.dto";
 
 @ApiBearerAuth()
 @ApiTags("chapters")
-@Controller("/chapters")
+@Controller("books/:bookId/chapters")
 export class ChapterController {
   private logger = new Logger("ChapterController");
-  // constructor(private readonly chapterService: ChapterService) {}
+  constructor(private readonly chapterService: ChapterService) {}
 
-  // @ApiOkResponse({
-  //   description: "All books by author successfully found.",
-  //   // type: [BookDto],
-  // })
-  // @Get()
-  // async getAll(@Author("_id") authorId: string): Promise<BookDto[]> {
-  //   try {
-  //     this.logger.log(
-  //       `Author with author id: ${authorId} retrieving all books.`
-  //     );
-  //     const allBooks = await this.bookService.findAll(authorId);
-  //     return allBooks;
-  //   } catch {
-  //     this.logger.error(
-  //       `Failed to get books for author with author id: ${authorId}.`
-  //     );
-  //     throw new NotFoundException(
-  //       `No books found for author with author id: ${authorId}.`
-  //     );
-  //   }
-  // }
+  @ApiOkResponse({
+    description: "Chapter successfully found.",
+  })
+  @Get("/:chapterNumber")
+  async getOne(
+    @Param("bookId") bookId: string,
+    @Param("chapterNumber") chapterNumber: number
+  ) {
+    try {
+      this.logger.log(
+        `Retrieving chapter with chapter number: ${chapterNumber.toString()} for book with book id: ${bookId}.`
+      );
+      const chapter = await this.chapterService.findOne(bookId, chapterNumber);
+      return chapter;
+    } catch {
+      this.logger.error(
+        `Failed to get chapter with chapter number: ${chapterNumber.toString()} for book with book id: ${bookId}.`
+      );
+      throw new NotFoundException(
+        `Chapter with chapter number: ${chapterNumber.toString()} not found.`
+      );
+    }
+  }
 
-  // @ApiOkResponse({
-  //   description: "Book successfully found.",
-  //   type: BookDto,
-  // })
-  // @Get("/:bookHandle")
-  // async getOne(
-  //   @Author("_id") authorId: string,
-  //   @Param("bookHandle") bookHandle: string
-  // ): Promise<BookDto> {
-  //   try {
-  //     this.logger.log(
-  //       `Author ${authorId} retrieving book with book handle: /${bookHandle}.`
-  //     );
-  //     const book = await this.bookService.findOne(bookHandle);
-  //     return book;
-  //   } catch {
-  //     this.logger.error(`Failed to get book with book handle: /${bookHandle}.`);
-  //     throw new NotFoundException(
-  //       `Book with book handle: /${bookHandle} not found.`
-  //     );
-  //   }
-  // }
+  @ApiOkResponse({
+    description: "Chapter successfully created.",
+    type: ChapterDto,
+  })
+  @Post()
+  async createOne(
+    @Param("bookId") bookId: string,
+    @Body() createChapterDto: CreateChapterDto
+  ): Promise<ChapterDto> {
+    try {
+      this.logger.verbose(
+        `Creating a new chapter for book with book id: ${bookId}. Data: ${JSON.stringify(createChapterDto)}.`
+      );
+      const createdChapter = await this.chapterService.create(
+        createChapterDto,
+        bookId
+      );
+      return createdChapter;
+    } catch {
+      this.logger.error(
+        `Failed to create chapter for book with book id: ${bookId}. Data: ${JSON.stringify(createChapterDto)}. `
+      );
+      throw new NotImplementedException("Failed to create chapter.");
+    }
+  }
 
-  // @ApiOkResponse({
-  //   description: "Book successfully created.",
-  //   type: BookDto,
-  // })
-  // @Post()
-  // async createOne(
-  //   @Author("_id") authorId: string,
-  //   @Body() createBookDto: CreateBookDto
-  // ): Promise<BookDto> {
-  //   try {
-  //     this.logger.verbose(
-  //       `Author with author id: ${authorId} creating a new book. Data: ${JSON.stringify(createBookDto)}.`
-  //     );
-  //     const createdBook = await this.bookService.create(
-  //       createBookDto,
-  //       authorId
-  //     );
-  //     return createdBook;
-  //   } catch {
-  //     this.logger.error(
-  //       `Failed to create book for author with author id: ${authorId}. Data: ${JSON.stringify(createBookDto)}. `
-  //     );
-  //     throw new NotImplementedException("Failed to create book.");
-  //   }
-  // }
+  @ApiOkResponse({
+    description: "Chapter successfully updated.",
+    type: ChapterDto,
+  })
+  @Put("/:chapterId")
+  async updateOne(
+    @Param("chapterId") chapterId: string,
+    @Body() updateChapterDto: UpdateChapterDto
+  ): Promise<ChapterDto> {
+    try {
+      this.logger.log(`Updating chapter with chapter id: ${chapterId}.`);
+      const updatedBook = await this.chapterService.updateOne(
+        chapterId,
+        updateChapterDto
+      );
+      return updatedBook;
+    } catch {
+      this.logger.error(
+        `Failed to update chapter with chapter id: ${chapterId}. Data: ${JSON.stringify(updateChapterDto)}. `
+      );
+      throw new NotFoundException(
+        `Chapter with chapter id: ${chapterId} not found.`
+      );
+    }
+  }
 
-  // @ApiOkResponse({
-  //   description: "Book successfully updated.",
-  //   type: BookDto,
-  // })
-  // @Put("/:bookId")
-  // async updateOne(
-  //   @Author("_id") authorId: string,
-  //   @Param("bookId") bookId: string,
-  //   @Body() updateBookDto: UpdateBookDto
-  // ): Promise<BookDto> {
-  //   try {
-  //     this.logger.log(
-  //       `Author with author id: ${authorId} updating book with book id: ${bookId}.`
-  //     );
-  //     const updatedBook = await this.bookService.updateOne(
-  //       bookId,
-  //       updateBookDto
-  //     );
-  //     return updatedBook;
-  //   } catch {
-  //     this.logger.error(
-  //       `Failed to update book with book id: ${bookId}. Data: ${JSON.stringify(updateBookDto)}. `
-  //     );
-  //     throw new NotFoundException(`Book with book id: ${bookId} not found.`);
-  //   }
-  // }
-
-  // @ApiOkResponse({
-  //   description: "Book successfully deleted.",
-  //   type: BookDto,
-  // })
-  // @Delete("/:bookId")
-  // async deleteBook(
-  //   @Param("bookId") bookId: string
-  // ): Promise<BookDocument | null> {
-  //   try {
-  //     const deletedBook = await this.bookService.deleteOne(bookId);
-  //     return deletedBook;
-  //   } catch {
-  //     this.logger.error(`Failed to delete book with book id: ${bookId}. `);
-  //     throw new NotFoundException(`Book with book id: ${bookId} not found.`);
-  //   }
-  // }
+  @ApiOkResponse({
+    description: "Chapter successfully deleted.",
+    type: ChapterDto,
+  })
+  @Delete("/:chapterId")
+  async deleteChapter(
+    @Param("chapterId") chapterId: string
+  ): Promise<ChapterDocument | null> {
+    try {
+      const deletedChapter = await this.chapterService.deleteOne(chapterId);
+      return deletedChapter;
+    } catch {
+      this.logger.error(
+        `Failed to delete chapter with chapter id: ${chapterId}. `
+      );
+      throw new NotFoundException(
+        `Chapter with chapter id: ${chapterId} not found.`
+      );
+    }
+  }
 }

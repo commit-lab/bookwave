@@ -1,4 +1,4 @@
-import { Model, type ObjectId } from "mongoose";
+import { Model } from "mongoose";
 import { Injectable, Inject, NotFoundException } from "@nestjs/common";
 import { isNullOrUndefined } from "@bookwave/utils";
 import { BOOK_MODEL } from "./book.constants";
@@ -8,7 +8,6 @@ import { type CreateBookDto } from "@/book/dto/create-book.dto";
 import { BookDto } from "@/book/dto/book-dto";
 import { type ChapterDocument } from "@/chapter/interfaces/chapter.interface";
 import { CHAPTER_MODEL } from "@/chapter/chapter.constants";
-import { BookDetailDto } from "@/book/dto/book-detail.dto";
 import { BookWithChaptersDto } from "@/book/dto/book-with-chapters.dto";
 
 @Injectable()
@@ -43,13 +42,9 @@ export class BookService {
   }
 
   // Find one book by an author.
-  // Return chapter titles only in response.
 
   async findOne(bookHandle: string): Promise<BookDto> {
-    const book = await this.bookModel
-      .findOne({ handle: bookHandle })
-      // .populate({ path: "chapters", model: "Chapter" })
-      .exec();
+    const book = await this.bookModel.findOne({ handle: bookHandle }).exec();
     if (isNullOrUndefined(book)) {
       throw new NotFoundException(
         `Book with bookHandle: /${bookHandle} not found.`
@@ -65,8 +60,7 @@ export class BookService {
     return bookResponse;
   }
 
-  // Find one book by an author.
-  // Return populated chapters in response.
+  // Find one book by an author (return populated chapters in response)
 
   async findOneWithChapters(bookId: string): Promise<BookWithChaptersDto> {
     const book = await this.bookModel
@@ -129,24 +123,9 @@ export class BookService {
     return updatedBookResponse;
   }
 
-  // Delete a book.
-  // May archive instead.
+  // Delete a book (need to delete associated chapters)
 
   async deleteOne(bookId: string): Promise<BookDocument | null> {
-    // const book = await this.bookModel.findOne({ _id: bookId });
-    // const chapters = book?.chapters;
-    // console.log(chapters);
-
-    // chapters?.forEach((chapter: string) => {
-    //   console.log(chapter);
-    //   chapter.toString();
-    //   console.log(chapter);
-    //   const deletedChapter = this.chapterModel.findById(chapter.toString());
-    //   console.log(deletedChapter);
-    //   return deletedChapter;
-    // });
-    // return book;
-
     const deletedBook = await this.bookModel.findByIdAndDelete(bookId, {
       new: true,
     });
