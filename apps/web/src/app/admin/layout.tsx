@@ -1,5 +1,5 @@
 import { type Metadata } from "next";
-import TopBar from "@/features/dummy/components/topbar";
+import TopBar from "@/components/topbar";
 
 export const metadata: Metadata = {
   title: "Admin Panel",
@@ -7,14 +7,13 @@ export const metadata: Metadata = {
 };
 
 export default function AdminLayout({
-  children, // will be a page or nested layout
+  children,
 }: {
   children: React.ReactNode;
 }) {
   return (
     <section>
       <TopBar />
-
       {children}
     </section>
   );

@@ -18,7 +18,7 @@ export const data = [
   },
   {
     id: 2,
-    title: "The 30 min guide to no-bs personal finance",
+    title: "Learn React/Next.js for complete beginners",
     chapters: [
       {
         id: 1,

@@ -1,5 +1,5 @@
 import { Card, CircularProgress, Stack, Typography } from "@mui/joy";
-import { useAllDummies } from "@/features/dummy/queries";
+import { useAllDummies } from "@/features/queries";
 
 export const AllDummies = () => {
   const { data, isLoading } = useAllDummies();

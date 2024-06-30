@@ -1,20 +1,26 @@
+"use client";
+
 import { Box, Button, Typography } from "@mui/joy";
+import { useTheme } from "@mui/joy/styles";
 
 export default function SideBar() {
+  const theme = useTheme();
+
   return (
     <Box
       sx={{
-        backgroundColor: "#F4F4F4",
-        height: "100vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        p: 2,
         alignItems: "center",
+        width: "200px",
+        height: "100dvh",
+        backgroundColor: theme.palette.background.backdrop,
+        p: 2,
       }}
     >
       <Typography>Books</Typography>
-      <Button sx={{ width: "fixed" }}>Your account</Button>
+      <Button>Your account</Button>
     </Box>
   );
 }

@@ -1,12 +1,6 @@
 import { Sheet, Stack, Input, Button, FormControl } from "@mui/joy";
 
-interface CreateBookFormProps {
-  handleShowBookForm: () => void;
-}
-
-export default function CreateBookForm({
-  handleShowBookForm,
-}: CreateBookFormProps) {
+export default function CreateBookForm() {
   return (
     <Sheet sx={{ maxWidth: "30rem", p: 4 }}>
       <form>
