@@ -8,6 +8,7 @@ import { CHAPTER_MODEL } from "@/chapter/chapter.constants";
 import { ChapterDto } from "@/chapter/dto/chapter.dto";
 import { type UpdateChapterDto } from "@/chapter/dto/update-chapter.dto";
 import { type CreateChapterDto } from "@/chapter/dto/create-chapter.dto";
+import { DeletedChapterResponseDto } from "@/chapter/dto/deleted-chapter-response.dto";
 
 @Injectable()
 export class ChapterService {
@@ -19,9 +20,9 @@ export class ChapterService {
     private readonly chapterModel: Model<ChapterDocument>
   ) {}
 
-  // Find chapter by chapter number.
+  // Find chapter by {chapterNumber}.
 
-  async findOne(bookId: string, chapterNumber: number) {
+  async findOne(bookId: string, chapterNumber: number): Promise<ChapterDto> {
     const book = await this.bookModel
       .findOne({ _id: bookId })
       .populate({ path: "chapters", model: "Chapter" })
@@ -36,11 +37,14 @@ export class ChapterService {
         `Chapter with chapter number: ${chapterNumber.toString()} not found.`
       );
     }
-
-    return chapter;
+    const chapterResponse = new ChapterDto();
+    chapterResponse.id = chapter._id;
+    chapterResponse.title = chapter.title;
+    chapterResponse.content = chapter.content;
+    return chapterResponse;
   }
 
-  // Create a chapter (and push created chapter into chapter array in book document)
+  // Create a chapter.
 
   async create(
     createChapterDto: CreateChapterDto,
@@ -51,6 +55,7 @@ export class ChapterService {
     });
 
     await this.bookModel.updateOne(
+      // push created chapter into chapter array of book document
       { _id: bookId },
       { $push: { chapters: createdChapter } }
     );
@@ -78,14 +83,16 @@ export class ChapterService {
       );
     }
     const updatedChapterResponse = new ChapterDto();
+    updatedChapterResponse.id = updatedChapter._id;
     updatedChapterResponse.title = updatedChapter.title;
     updatedChapterResponse.content = updatedChapter.content;
     return updatedChapterResponse;
   }
 
-  //  Delete chapter by chapter id (no need to delete chapter from books array)
+  //  Delete chapter by chapter id.
 
-  async deleteOne(chapterId: string): Promise<ChapterDocument | null> {
+  async deleteOne(chapterId: string): Promise<DeletedChapterResponseDto> {
+    // No need to delete chapter from books array
     const deletedChapter = await this.chapterModel.findByIdAndDelete(
       chapterId,
       {
@@ -97,6 +104,9 @@ export class ChapterService {
         `Chapter with chapterId: ${chapterId} not found.`
       );
     }
-    return deletedChapter;
+
+    const deletedChapterResponse = new DeletedChapterResponseDto();
+    deletedChapterResponse.deletedChapterCount = 1;
+    return deletedChapterResponse;
   }
 }

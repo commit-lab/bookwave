@@ -14,8 +14,8 @@ import { ApiBearerAuth, ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { ChapterService } from "@/chapter/chapter.service";
 import { ChapterDto } from "@/chapter/dto/chapter.dto";
 import { UpdateChapterDto } from "@/chapter/dto/update-chapter.dto";
-import { type ChapterDocument } from "@/chapter/interfaces/chapter.interface";
 import { CreateChapterDto } from "@/chapter/dto/create-chapter.dto";
+import { DeletedChapterResponseDto } from "@/chapter/dto/deleted-chapter-response.dto";
 
 @ApiBearerAuth()
 @ApiTags("chapters")
@@ -26,6 +26,7 @@ export class ChapterController {
 
   @ApiOkResponse({
     description: "Chapter successfully found.",
+    type: ChapterDto,
   })
   @Get("/:chapterNumber")
   async getOne(
@@ -102,15 +103,16 @@ export class ChapterController {
 
   @ApiOkResponse({
     description: "Chapter successfully deleted.",
-    type: ChapterDto,
+    type: DeletedChapterResponseDto,
   })
   @Delete("/:chapterId")
   async deleteChapter(
     @Param("chapterId") chapterId: string
-  ): Promise<ChapterDocument | null> {
+  ): Promise<DeletedChapterResponseDto> {
     try {
-      const deletedChapter = await this.chapterService.deleteOne(chapterId);
-      return deletedChapter;
+      const deletedChapterCount =
+        await this.chapterService.deleteOne(chapterId);
+      return deletedChapterCount;
     } catch {
       this.logger.error(
         `Failed to delete chapter with chapter id: ${chapterId}. `
