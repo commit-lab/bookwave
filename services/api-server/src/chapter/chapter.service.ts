@@ -33,7 +33,7 @@ export class ChapterService {
     const chapter = book.chapters[chapterIndex];
     if (isNullOrUndefined(chapter)) {
       throw new NotFoundException(
-        `Chapter with chapter number: ${chapterNumber} not found.`
+        `Chapter with chapter number: ${chapterNumber.toString()} not found.`
       );
     }
 
