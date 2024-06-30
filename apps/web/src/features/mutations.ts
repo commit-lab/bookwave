@@ -1,6 +1,6 @@
 import { type CreateDummyDto } from "@bookwave/api-client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { DummyApiKeys } from "@/features/dummy/queries";
+import { DummyApiKeys } from "@/features/queries";
 import { apiClient } from "@/lib/api/api-client";
 import { captureAndRethrowException } from "@/lib/error/capture-and-rethrow-exception";
 

@@ -1,27 +1,27 @@
 "ues client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { Box, Card, CardActions, CardContent, Typography } from "@mui/joy";
 import { useTheme } from "@mui/joy/styles";
 import BookOptions from "@/components/book-options";
 
-interface ChapterInfo {
-  id: number;
-  title: string;
-  content: string;
-}
-
 interface ChapterCardProps {
   book: {
-    id: number;
+    id: string;
     title: string;
-    chapters: ChapterInfo[];
+    chapters: [];
     state: string;
   };
 }
 
 export default function ChapterCard({ book }: ChapterCardProps) {
+  const [toggleOptions, setToggleOptions] = useState(false);
   const theme = useTheme();
+
+  const handleToggleOptions = () => {
+    setToggleOptions((prev) => !prev);
+  };
 
   return (
     <Box key={book.id}>
@@ -47,15 +47,15 @@ export default function ChapterCard({ book }: ChapterCardProps) {
             }}
           >
             <Box sx={{ textAlign: "start" }}>
-              <Typography variant="plain">Title</Typography>
+              <Typography variant="caption">Title</Typography>
               <Typography level="h3">{book.title}</Typography>
             </Box>
             <Box>
-              <Typography variant="plain">Chapters</Typography>
+              <Typography variant="caption">Chapters</Typography>
               <Typography level="h4">{book.chapters.length}</Typography>
             </Box>
             <Box>
-              <Typography variant="plain">State</Typography>
+              <Typography variant="caption">State</Typography>
               <Typography level="h4">{book.state}</Typography>
             </Box>
           </CardContent>
