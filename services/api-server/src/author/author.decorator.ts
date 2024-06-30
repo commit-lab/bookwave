@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { createParamDecorator, type ExecutionContext } from "@nestjs/common";
 
 export const Author = createParamDecorator<string>(
