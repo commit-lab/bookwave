@@ -3,11 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type BookDto = {
-    id: string;
-    title: string;
-    handle: string;
-    chapterCount: number;
-    state: string;
+export type DeletedBookResponseDto = {
+    deletedBookCount: number;
+    deletedChapterCount: number;
 };
 

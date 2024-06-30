@@ -3,11 +3,11 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type BookDto = {
+export type BookWithChapterTitlesDto = {
     id: string;
     title: string;
     handle: string;
-    chapterCount: number;
     state: string;
+    chapterTitles: Array<string>;
 };
 

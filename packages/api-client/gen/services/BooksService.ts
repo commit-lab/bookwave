@@ -3,7 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { BookDto } from '../models/BookDto';
+import type { BookWithChapterTitlesDto } from '../models/BookWithChapterTitlesDto';
 import type { CreateBookDto } from '../models/CreateBookDto';
+import type { DeletedBookResponseDto } from '../models/DeletedBookResponseDto';
 import type { UpdateBookDto } from '../models/UpdateBookDto';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -42,12 +44,12 @@ export class BooksService {
 
     /**
      * @param bookHandle
-     * @returns BookDto Book successfully found.
+     * @returns BookWithChapterTitlesDto Book successfully found.
      * @throws ApiError
      */
     public getOne(
         bookHandle: string,
-    ): CancelablePromise<BookDto> {
+    ): CancelablePromise<BookWithChapterTitlesDto> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/books/{bookHandle}',
@@ -80,12 +82,12 @@ export class BooksService {
 
     /**
      * @param bookId
-     * @returns BookDto Book successfully deleted.
+     * @returns DeletedBookResponseDto Book successfully deleted.
      * @throws ApiError
      */
     public deleteBook(
         bookId: string,
-    ): CancelablePromise<BookDto> {
+    ): CancelablePromise<DeletedBookResponseDto> {
         return this.httpRequest.request({
             method: 'DELETE',
             url: '/books/{bookId}',

@@ -3,11 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type BookDto = {
-    id: string;
+export type CreateChapterDto = {
     title: string;
-    handle: string;
-    chapterCount: number;
-    state: string;
 };
 
