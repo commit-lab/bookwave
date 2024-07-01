@@ -5,11 +5,11 @@ import { BOOK_MODEL } from "./book.constants";
 import { type UpdateBookDto } from "./dto/update-book.dto";
 import { type BookDocument } from "@/book/interfaces/book.interface";
 import { type CreateBookDto } from "@/book/dto/create-book.dto";
-import { BookDto } from "@/book/dto/book-dto";
+import { type BookDto } from "@/book/dto/book-dto";
 import { type ChapterDocument } from "@/chapter/interfaces/chapter.interface";
 import { CHAPTER_MODEL } from "@/chapter/chapter.constants";
-import { BookWithChapterTitlesDto } from "@/book/dto/book-with-chapter-titles.dto";
-import { DeletedBookResponseDto } from "@/book/dto/deleted-book-response.dto";
+import { type BookWithChapterTitlesDto } from "@/book/dto/book-with-chapter-titles.dto";
+import { type DeletedBookResponseDto } from "@/book/dto/deleted-book-response.dto";
 
 @Injectable()
 export class BookService {
@@ -27,16 +27,17 @@ export class BookService {
   async findAll(authorId: string): Promise<BookDto[]> {
     const allBooks = await this.bookModel
       .find({ author: authorId })
-      .sort({ state: 1, updatedAt: -1 }) // Sort in order of most recently updated and "Draft" books before "Published"
+      .sort({ state: 1, updatedAt: -1 }) // First sort state alphabetically ("Draft" then "Published") and then by most recently updated
       .exec();
 
     const booksResponse = allBooks.map((book) => {
-      const bookDto = new BookDto();
-      bookDto.id = book._id;
-      bookDto.title = book.title;
-      bookDto.handle = book.handle;
-      bookDto.chapterCount = book.chapters.length;
-      bookDto.state = book.state;
+      const bookDto: BookDto = {
+        id: book._id,
+        title: book.title,
+        handle: book.handle,
+        chapterCount: book.chapters.length,
+        state: book.state,
+      };
       return bookDto;
     });
 
@@ -58,18 +59,18 @@ export class BookService {
         `Book with bookHandle: /${bookHandle} not found.`
       );
     }
-    const bookResponse = new BookWithChapterTitlesDto();
-    bookResponse.id = book._id;
-    bookResponse.title = book.title;
-    bookResponse.handle = book.handle;
-    bookResponse.state = book.state;
-    const chapterTitles = book.chapters.map((chapter) => {
-      return chapter.title;
-    });
-    bookResponse.chapterTitles = chapterTitles;
+    const bookResponse: BookWithChapterTitlesDto = {
+      id: book._id,
+      title: book.title,
+      handle: book.handle,
+      state: book.state,
+      chapterTitles: book.chapters.map((chapter) => {
+        return chapter.title;
+      }),
+    };
+
     return bookResponse;
   }
-
   // Create a book.
   // Required fields: book title and book handle
 
@@ -81,12 +82,13 @@ export class BookService {
       ...createBookDto,
       author: authorId,
     });
-    const createdBookResponse = new BookDto();
-
-    createdBookResponse.title = createdBook.title;
-    createdBookResponse.handle = createdBook.handle;
-    createdBookResponse.chapterCount = createdBook.chapters.length;
-    createdBookResponse.state = createdBook.state;
+    const createdBookResponse: BookDto = {
+      id: createdBook._id,
+      title: createdBook.title,
+      handle: createdBook.handle,
+      chapterCount: createdBook.chapters.length,
+      state: createdBook.state,
+    };
     return createdBookResponse;
   }
 
@@ -106,11 +108,13 @@ export class BookService {
       throw new NotFoundException(`Book with BookId: ${bookId} not found.`);
     }
 
-    const updatedBookResponse = new BookDto();
-    updatedBookResponse.title = updatedBook.title;
-    updatedBookResponse.handle = updatedBook.handle;
-    updatedBookResponse.chapterCount = updatedBook.chapters.length;
-    updatedBookResponse.state = updatedBook.state;
+    const updatedBookResponse: BookDto = {
+      id: updatedBook._id,
+      title: updatedBook.title,
+      handle: updatedBook.handle,
+      chapterCount: updatedBook.chapters.length,
+      state: updatedBook.state,
+    };
     return updatedBookResponse;
   }
 
@@ -134,9 +138,10 @@ export class BookService {
 
     await this.bookModel.findOneAndDelete({ _id: bookId }, { new: true });
 
-    const deletedBookResponse = new DeletedBookResponseDto();
-    deletedBookResponse.deletedBookCount = 1;
-    deletedBookResponse.deletedChapterCount = chapterCount;
+    const deletedBookResponse: DeletedBookResponseDto = {
+      deletedBookCount: 1,
+      deletedChapterCount: chapterCount,
+    };
     return deletedBookResponse;
   }
 }

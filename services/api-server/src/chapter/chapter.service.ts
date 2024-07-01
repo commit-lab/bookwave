@@ -5,10 +5,10 @@ import { BOOK_MODEL } from "../book/book.constants";
 import { type BookDocument } from "@/book/interfaces/book.interface";
 import { type ChapterDocument } from "@/chapter/interfaces/chapter.interface";
 import { CHAPTER_MODEL } from "@/chapter/chapter.constants";
-import { ChapterDto } from "@/chapter/dto/chapter.dto";
+import { type ChapterDto } from "@/chapter/dto/chapter.dto";
 import { type UpdateChapterDto } from "@/chapter/dto/update-chapter.dto";
 import { type CreateChapterDto } from "@/chapter/dto/create-chapter.dto";
-import { DeletedChapterResponseDto } from "@/chapter/dto/deleted-chapter-response.dto";
+import { type DeletedChapterResponseDto } from "@/chapter/dto/deleted-chapter-response.dto";
 
 @Injectable()
 export class ChapterService {
@@ -37,10 +37,11 @@ export class ChapterService {
         `Chapter with chapter number: ${chapterNumber.toString()} not found.`
       );
     }
-    const chapterResponse = new ChapterDto();
-    chapterResponse.id = chapter._id;
-    chapterResponse.title = chapter.title;
-    chapterResponse.content = chapter.content;
+    const chapterResponse: ChapterDto = {
+      id: chapter._id,
+      title: chapter.title,
+      content: chapter.content,
+    };
     return chapterResponse;
   }
 
@@ -60,9 +61,11 @@ export class ChapterService {
       { $push: { chapters: createdChapter } }
     );
 
-    const createdChapterResponse = new ChapterDto();
-
-    createdChapterResponse.title = createdChapter.title;
+    const createdChapterResponse: ChapterDto = {
+      id: createdChapter._id,
+      title: createdChapter.title,
+      content: createdChapter.content,
+    };
     return createdChapterResponse;
   }
 
@@ -82,10 +85,11 @@ export class ChapterService {
         `Chapter with chapter id: ${chapterId} not found.`
       );
     }
-    const updatedChapterResponse = new ChapterDto();
-    updatedChapterResponse.id = updatedChapter._id;
-    updatedChapterResponse.title = updatedChapter.title;
-    updatedChapterResponse.content = updatedChapter.content;
+    const updatedChapterResponse: ChapterDto = {
+      id: updatedChapter._id,
+      title: updatedChapter.title,
+      content: updatedChapter.content,
+    };
     return updatedChapterResponse;
   }
 
@@ -105,8 +109,9 @@ export class ChapterService {
       );
     }
 
-    const deletedChapterResponse = new DeletedChapterResponseDto();
-    deletedChapterResponse.deletedChapterCount = 1;
+    const deletedChapterResponse: DeletedChapterResponseDto = {
+      deletedChapterCount: 1,
+    };
     return deletedChapterResponse;
   }
 }
