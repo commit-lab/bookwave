@@ -3,9 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type CreateAuthorDto = {
-    firstName: string;
-    lastName: string;
-    handle: string;
+import type { AuthorDto } from './AuthorDto';
+
+export type FetchAuthorResponseDto = {
+    author: AuthorDto;
 };
 
