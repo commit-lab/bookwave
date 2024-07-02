@@ -8,7 +8,7 @@ import {
 } from "@mui/joy";
 import { useForm } from "react-hook-form";
 import { InfoOutlined } from "@mui/icons-material";
-import { useCreateDummyMutation } from "@/features/mutations";
+import { useCreateDummyMutation } from "@/features/dummy/mutations";
 import {
   ApiConflictError,
   ApiNotFoundError,
