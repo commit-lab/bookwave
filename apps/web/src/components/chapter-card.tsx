@@ -5,11 +5,17 @@ import { Box, Card, CardActions, CardContent, Typography } from "@mui/joy";
 import { useTheme } from "@mui/joy/styles";
 import BookOptions from "@/components/book-options";
 
+interface ChapterInfo {
+  id: number;
+  title: string;
+  content: string;
+}
+
 interface ChapterCardProps {
   book: {
-    id: string;
+    id: number;
     title: string;
-    chapters: [];
+    chapters: ChapterInfo[];
     state: string;
   };
 }
@@ -41,15 +47,15 @@ export default function ChapterCard({ book }: ChapterCardProps) {
             }}
           >
             <Box sx={{ textAlign: "start" }}>
-              <Typography variant="caption">Title</Typography>
+              <Typography variant="plain">Title</Typography>
               <Typography level="h3">{book.title}</Typography>
             </Box>
             <Box>
-              <Typography variant="caption">Chapters</Typography>
+              <Typography variant="plain">Chapters</Typography>
               <Typography level="h4">{book.chapters.length}</Typography>
             </Box>
             <Box>
-              <Typography variant="caption">State</Typography>
+              <Typography variant="plain">State</Typography>
               <Typography level="h4">{book.state}</Typography>
             </Box>
           </CardContent>
