@@ -9,7 +9,7 @@ interface ChapterCardProps {
   book: {
     id: string;
     title: string;
-    chapters: [];
+    chapters?: [];
     state: string;
   };
 }
@@ -45,7 +45,7 @@ export default function BookCard({ book }: ChapterCardProps) {
             </Box>
             <Box>
               <Typography>Chapters</Typography>
-              <Typography level="h4">{book.chapters.length}</Typography>
+              <Typography level="h4">{book.chapters?.length}</Typography>
             </Box>
             <Box>
               <Typography>State</Typography>
