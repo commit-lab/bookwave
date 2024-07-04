@@ -8,8 +8,6 @@ export default function Page() {
       <Link href="/dummy">Dummy Route</Link>
       <br />
       <Link href="/author">Author Route</Link>
-      <br />
-      <Link href="/home">Home</Link>
     </div>
   );
 }
