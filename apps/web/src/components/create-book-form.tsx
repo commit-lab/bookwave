@@ -9,6 +9,7 @@ import {
 import { Dialog } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useCreateBookMutation } from "@/features/books/mutations";
+import { ApiConflictError } from "@/lib/error/api-errors";
 
 interface CreateBookFormFields {
   title: string;
@@ -29,7 +30,11 @@ export default function CreateBookForm() {
         title: fields.title,
         handle: fields.handle,
       });
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof ApiConflictError) {
+        // Handle conflict error on the UI.
+      }
+    }
   });
 
   return (
