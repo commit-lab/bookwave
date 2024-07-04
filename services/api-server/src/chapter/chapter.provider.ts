@@ -1,8 +1,8 @@
 import { type Mongoose, type Model } from "mongoose";
+import { MONGO_CONNECTION } from "@/db/constants";
 import { ChapterSchema } from "./schema/chapter.schema";
 import { CHAPTER_MODEL } from "./chapter.constants";
 import { type ChapterDocument } from "./interfaces/chapter.interface";
-import { MONGO_CONNECTION } from "@/db/constants";
 
 export const chapterProviders = [
   {

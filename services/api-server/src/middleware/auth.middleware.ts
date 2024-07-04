@@ -1,8 +1,8 @@
 import { Injectable, type NestMiddleware } from "@nestjs/common";
 import { type Request, type Response, type NextFunction } from "express";
 import { getAuth } from "firebase-admin/auth";
-import { AuthorService } from "../author/author.service";
 import { logErrorAndMaybeThrowInternalServerError } from "@/common/exception";
+import { AuthorService } from "../author/author.service";
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
