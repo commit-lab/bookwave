@@ -2,12 +2,12 @@
 
 import { Box, Typography } from "@mui/joy";
 import { useTheme } from "@mui/joy/styles";
-import { data } from "@/constants/temp-data";
 import CreateBook from "@/components/create-book";
-import ChapterCard from "@/components/chapter-card";
+import { useAllBooks } from "@/features/books/queries";
 
 export default function BookContent() {
   const theme = useTheme();
+  const { data } = useAllBooks();
   return (
     <Box
       sx={{
@@ -20,7 +20,7 @@ export default function BookContent() {
         flex: 1,
       }}
     >
-      {data.length === 0 && (
+      {data?.length === 0 && (
         <Box
           sx={{
             display: "flex",
@@ -40,9 +40,6 @@ export default function BookContent() {
           <CreateBook />
         </Box>
       )}
-      {data.map((book) => (
-        <ChapterCard key={book.id} book={book} />
-      ))}
     </Box>
   );
 }
