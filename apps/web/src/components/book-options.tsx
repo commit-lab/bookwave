@@ -108,7 +108,7 @@ export default function BookOptions() {
           <DialogTitle>Are you sure you want to delete your book?</DialogTitle>
           <DialogActions sx={{ gap: 4 }}>
             <Button
-              color="transparent"
+              color="neutral"
               onClick={() => {
                 setOpenDeleteDialog(false);
               }}

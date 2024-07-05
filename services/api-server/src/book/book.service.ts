@@ -1,8 +1,6 @@
 import { Model } from "mongoose";
 import { Injectable, Inject, NotFoundException } from "@nestjs/common";
 import { isNullOrUndefined } from "@bookwave/utils";
-import { BOOK_MODEL } from "./book.constants";
-import { type UpdateBookDto } from "./dto/update-book.dto";
 import { type BookDocument } from "@/book/interfaces/book.interface";
 import { type CreateBookDto } from "@/book/dto/create-book.dto";
 import { type BookDto } from "@/book/dto/book-dto";
@@ -10,6 +8,8 @@ import { type ChapterDocument } from "@/chapter/interfaces/chapter.interface";
 import { CHAPTER_MODEL } from "@/chapter/chapter.constants";
 import { type BookWithChapterTitlesDto } from "@/book/dto/book-with-chapter-titles.dto";
 import { type DeletedBookResponseDto } from "@/book/dto/deleted-book-response.dto";
+import { type UpdateBookDto } from "./dto/update-book.dto";
+import { BOOK_MODEL } from "./book.constants";
 
 @Injectable()
 export class BookService {
