@@ -1,8 +1,8 @@
 import { Stack, Typography, Box, Button } from "@mui/joy";
 import { type FC } from "react";
-import { AllDummies } from "@/features/dummy/components/all-dummies";
-import { CreateDummy } from "@/features/dummy/components/create-dummy";
 import { useSignOut } from "@/features/auth/hooks/use-sign-out";
+import { CreateDummy } from "@/features/dummy/components/create-dummy";
+import { AllDummies } from "@/features/dummy/components/all-dummies";
 
 export const DummyPageContent: FC = () => {
   const signOut = useSignOut();

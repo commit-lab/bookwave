@@ -7,6 +7,8 @@ import type { OpenAPIConfig } from './core/OpenAPI';
 import { FetchHttpRequest } from './core/FetchHttpRequest';
 
 import { AuthorService } from './services/AuthorService';
+import { BooksService } from './services/BooksService';
+import { ChaptersService } from './services/ChaptersService';
 import { DummyService } from './services/DummyService';
 
 type HttpRequestConstructor = new (config: OpenAPIConfig) => BaseHttpRequest;
@@ -14,6 +16,8 @@ type HttpRequestConstructor = new (config: OpenAPIConfig) => BaseHttpRequest;
 export class ApiClient {
 
     public readonly author: AuthorService;
+    public readonly books: BooksService;
+    public readonly chapters: ChaptersService;
     public readonly dummy: DummyService;
 
     public readonly request: BaseHttpRequest;
@@ -32,6 +36,8 @@ export class ApiClient {
         });
 
         this.author = new AuthorService(this.request);
+        this.books = new BooksService(this.request);
+        this.chapters = new ChaptersService(this.request);
         this.dummy = new DummyService(this.request);
     }
 }
