@@ -1,4 +1,5 @@
 import { Box, Button, Sheet, Typography } from "@mui/joy";
+import Link from "next/link";
 
 export default function BooksPage() {
   return (
@@ -16,6 +17,11 @@ export default function BooksPage() {
         <Box sx={{ p: 2, borderBottom: "1px solid #e0e0e0" }}>
           <Typography level="h4" component="h1">
             Bookwave
+          </Typography>
+        </Box>
+        <Box sx={{ flexGrow: 1, p: 2 }}>
+          <Typography level="h6" component="h2">
+            <Link href="/books/toc">Table of Contents</Link>
           </Typography>
         </Box>
         <Box sx={{ flexGrow: 1, p: 2 }}>

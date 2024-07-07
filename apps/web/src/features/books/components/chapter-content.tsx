@@ -63,7 +63,7 @@ export default function ChapterContent({ id }: { id: string }) {
             </Typography>
           </Link>
         )}
-        <Link href="/books" passHref>
+        <Link href="/books/toc" passHref>
           <Typography
             sx={{ textDecoration: "none", cursor: "pointer", fontSize: 25 }}
           >

@@ -6,6 +6,7 @@ import {
   ListItemButton,
   ListItemContent,
   Sheet,
+  Box,
 } from "@mui/joy";
 import Link from "next/link";
 import { dummyData } from "../dummy-data";
@@ -61,6 +62,31 @@ export default function TableOfContents() {
           </ListItem>
         ))}
       </List>
+
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          backgroundColor: "white",
+          padding: "10px 20px",
+          borderTop: "1px solid #ddd",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          // maxWidth: "1000px",
+          margin: "0 auto",
+        }}
+      >
+        <Link href="/books" passHref>
+          <Typography
+            sx={{ textDecoration: "none", cursor: "pointer", fontSize: 25 }}
+          >
+            Home
+          </Typography>
+        </Link>
+      </Box>
     </Sheet>
   );
 }
