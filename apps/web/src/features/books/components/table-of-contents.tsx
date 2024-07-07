@@ -7,6 +7,7 @@ import {
   ListItemContent,
   Sheet,
 } from "@mui/joy";
+import Link from "next/link";
 import { dummyData } from "../dummy-data";
 
 export default function TableOfContents() {
@@ -50,15 +51,13 @@ export default function TableOfContents() {
           fontWeight: 500,
         }}
       >
-        {[
-          "Introduction",
-          ...book.chapters.map((chapter) => chapter.title),
-          "Conclusion",
-        ].map((title, index) => (
-          <ListItem key={index}>
-            <ListItemButton>
-              <ListItemContent>{title}</ListItemContent>
-            </ListItemButton>
+        {book.chapters.map((chapter) => (
+          <ListItem key={chapter.id}>
+            <Link href={`/books/${String(chapter.id)}`} passHref>
+              <ListItemButton>
+                <ListItemContent>{chapter.title}</ListItemContent>
+              </ListItemButton>
+            </Link>
           </ListItem>
         ))}
       </List>
