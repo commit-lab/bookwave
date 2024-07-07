@@ -3,26 +3,22 @@
 import Link from "next/link";
 import { Box, Card, CardActions, CardContent, Typography } from "@mui/joy";
 import { useTheme } from "@mui/joy/styles";
+import { type BookDto } from "@bookwave/api-client";
 import BookOptions from "@/components/book-options";
 
-interface ChapterCardProps {
-  book: {
-    id: string;
-    title: string;
-    chapters?: [];
-    state: string;
-  };
+interface BookCardProps {
+  book: BookDto;
 }
 
-export default function BookCard({ book }: ChapterCardProps) {
+export default function BookCard({ book }: BookCardProps) {
   const theme = useTheme();
   return (
     <Box key={book.id}>
       <Card
         sx={{
-          minWidth: 1000,
+          minWidth: { xs: "100%", sm: 600, md: 800, lg: 1000 },
           display: "flex",
-          flexDirection: "row",
+          flexDirection: { xs: "column", md: "row" },
           justifyContent: "space-between",
           alignItems: "center",
           ":hover": {
@@ -41,15 +37,15 @@ export default function BookCard({ book }: ChapterCardProps) {
           >
             <Box sx={{ textAlign: "start" }}>
               <Typography>Title</Typography>
-              <Typography level="h3">{book.title}</Typography>
+              <Typography>{book.title}</Typography>
             </Box>
             <Box>
               <Typography>Chapters</Typography>
-              <Typography level="h4">{book.chapters?.length}</Typography>
+              <Typography>{book.chapterCount}</Typography>
             </Box>
             <Box>
               <Typography>State</Typography>
-              <Typography level="h4">{book.state}</Typography>
+              <Typography>{book.state}</Typography>
             </Box>
           </CardContent>
         </Link>
