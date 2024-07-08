@@ -1,4 +1,4 @@
-"ues client";
+"use client";
 
 import Link from "next/link";
 import { Box, Card, CardActions, CardContent, Typography } from "@mui/joy";
