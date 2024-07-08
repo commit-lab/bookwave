@@ -1,7 +1,7 @@
 import { type Metadata } from "next";
 import { Box } from "@mui/joy";
-import TopBar from "@/components/topbar";
-import SideBar from "@/components/sidebar";
+import SideBar from "@/features/admin/components/sidebar";
+import TopBar from "@/features/admin/components/topbar";
 
 export const metadata: Metadata = {
   title: "Admin Panel",
