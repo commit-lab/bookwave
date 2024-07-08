@@ -1,6 +1,6 @@
 import { CircularProgress, Stack } from "@mui/joy";
 import { useAllBooks } from "@/features/books/queries";
-import BookCard from "@/components/book-card";
+import BookCard from "@/features/admin/components/book-card";
 
 export default function AllBooks() {
   const { data, isLoading } = useAllBooks();

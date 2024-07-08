@@ -2,9 +2,8 @@
 
 import { Box } from "@mui/joy";
 import { useRouter } from "next/navigation";
-import BookContent from "@/components/book-content";
-import Sidebar from "@/components/sidebar";
 import { useIsSignedIn } from "@/features/auth/hooks/use-is-signed-in";
+import BookContent from "@/features/admin/components/book-content";
 
 export default function Books() {
   const router = useRouter();

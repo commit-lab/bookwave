@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/joy";
 import React from "react";
-import StateSwitch from "@/components/state-switch";
+import StateSwitch from "@/features/admin/components/state-switch";
 
 export default function Chapters() {
   return (
