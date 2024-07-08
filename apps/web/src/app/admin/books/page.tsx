@@ -15,8 +15,7 @@ export default function Books() {
   }
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <Sidebar />
+    <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <BookContent />
     </Box>
   );
