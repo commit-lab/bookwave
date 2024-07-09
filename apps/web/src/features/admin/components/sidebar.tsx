@@ -5,7 +5,6 @@ import { useTheme } from "@mui/joy/styles";
 
 export default function SideBar() {
   const theme = useTheme();
-
   return (
     <Box
       sx={{
@@ -19,7 +18,17 @@ export default function SideBar() {
         p: 2,
       }}
     >
-      <Typography>Books</Typography>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+        }}
+      >
+        <Typography>Books</Typography>
+        <Typography>Book title</Typography>
+      </Box>
+
       <Button>Your account</Button>
     </Box>
   );

@@ -1,5 +1,7 @@
 import { type Metadata } from "next";
-import TopBar from "@/components/topbar";
+import { Box } from "@mui/joy";
+import SideBar from "@/features/admin/components/sidebar";
+import TopBar from "@/features/admin/components/topbar";
 
 export const metadata: Metadata = {
   title: "Admin Panel",
@@ -12,9 +14,12 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section>
+    <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       <TopBar />
-      {children}
-    </section>
+      <Box sx={{ display: "flex", flex: 1 }}>
+        <SideBar />
+        <Box sx={{ flex: 1, overflow: "auto" }}>{children}</Box>
+      </Box>
+    </Box>
   );
 }
