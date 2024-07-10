@@ -27,11 +27,11 @@ const Editor = (props: EditorProps) => {
         class: "tiptap",
       },
     },
-    onUpdate: ({ editor }) => {
+    onUpdate: ({ editor: richTextEditor }) => {
       if (!contentRecentlyChanged) {
         setContentRecentlyChanged(true);
       }
-      onChange(editor.getHTML());
+      onChange(richTextEditor.getHTML());
     },
   });
 
