@@ -1,28 +1,26 @@
 "use client";
 
-import { CircularProgress, Stack, Typography } from "@mui/joy";
-import { useRouter } from "next/navigation";
-import { useDummy } from "@/features/dummy/queries";
+import { Button } from "@mui/joy";
 import { useIsSignedIn } from "@/features/auth/hooks/use-is-signed-in";
+import UpdateDummyPageContent from "@/features/dummy/components/update-dummy-page-content";
+import { useSignIn } from "@/features/auth/hooks/use-sign-in";
 
-const DummyPage = ({ params: { id } }: { params: { id: string } }) => {
-  // const router = useRouter();
-  // const isSignedIn = useIsSignedIn();
+interface SingleDummyPageProps {
+  id: string;
+}
+export default function SingleDummyPage({
+  params: { id },
+}: {
+  params: SingleDummyPageProps;
+}) {
+  const signIn = useSignIn();
+  const isSignedIn = useIsSignedIn();
 
-  // if (!isSignedIn) {
-  //   router.push(`/dummy/${id}`);
-  // }
-
-  const { data, isLoading } = useDummy(id);
-  return (
-    <Stack spacing={2}>
-      {isLoading ? (
-        <CircularProgress />
-      ) : (
-        <Typography level="body-sm">{data?.foo}</Typography>
-      )}
-    </Stack>
+  return isSignedIn ? (
+    <UpdateDummyPageContent dummyId={id} />
+  ) : (
+    <Button onClick={signIn} type="button">
+      Sign In
+    </Button>
   );
-};
-
-export default DummyPage;
+}

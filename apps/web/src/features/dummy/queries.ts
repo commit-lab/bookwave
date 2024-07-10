@@ -10,7 +10,7 @@ enum DummyApiEndpoint {
 
 export const DummyApiKeys = {
   fetchAll: () => [DummyApiEndpoint.FetchAll] as const,
-  fetchOne: (id: string) => [DummyApiEndpoint.FetchOne, id] as const,
+  fetchOne: (id: string) => [DummyApiEndpoint.FetchOne, { id }] as const,
 } as const;
 
 export const useAllDummies = () => {

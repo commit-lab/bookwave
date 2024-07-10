@@ -10,7 +10,7 @@ export const AllDummies = () => {
       ) : (
         data?.map((dummy) => (
           <Card key={`${dummy.foo}-${dummy.bar}`}>
-            <Link href={`/dummy/${dummy.id}`}>{dummy.foo}</Link>
+            <Link href={`/dummy/${dummy.id}`}>{dummy.id}</Link>
             <Typography level="body-sm">Foo</Typography>
             <Typography level="title-md">{dummy.bar}</Typography>
             <Typography level="body-sm">Bar</Typography>
