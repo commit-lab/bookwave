@@ -10,6 +10,7 @@ import {
   Input,
 } from "@mui/joy";
 import { Popover, Dialog } from "@mui/material";
+import { MoreVert } from "@mui/icons-material";
 
 export default function BookOptions() {
   const [popOver, setPopOver] = useState<null | HTMLElement>(null);
@@ -36,9 +37,12 @@ export default function BookOptions() {
 
   return (
     <Box sx={{ padding: 2 }}>
-      <Button variant="solid" onClick={handleClick}>
-        :
-      </Button>
+      <MoreVert
+        onClick={handleClick}
+        sx={{
+          cursor: "pointer",
+        }}
+      />
       <Popover open={Boolean(popOver)} anchorEl={popOver} onClose={handleClose}>
         <Box
           sx={{ display: "flex", flexDirection: "column", p: 2, gap: "10px" }}
@@ -46,7 +50,7 @@ export default function BookOptions() {
           <Button color="neutral" onClick={handleRenameClick}>
             Rename
           </Button>
-          <Button color="neutral" onClick={handleDeleteClick}>
+          <Button color="danger" onClick={handleDeleteClick}>
             Delete
           </Button>
         </Box>
