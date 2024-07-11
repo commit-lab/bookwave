@@ -2,12 +2,14 @@ import {
   Sheet,
   Stack,
   Input,
-  Button,
   FormControl,
   DialogTitle,
+  Typography,
+  Button,
 } from "@mui/joy";
 import { Dialog } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { Close } from "@mui/icons-material";
 import { useCreateBookMutation } from "@/features/books/mutations";
 import { ApiConflictError } from "@/lib/error/api-errors";
 
@@ -16,7 +18,13 @@ interface CreateBookFormFields {
   handle: string;
 }
 
-export default function CreateBookForm() {
+interface CreateBookFormProps {
+  handleShowBookForm: () => void;
+}
+
+export default function CreateBookForm({
+  handleShowBookForm,
+}: CreateBookFormProps) {
   const {
     register,
     formState: { errors, isValid },
@@ -44,10 +52,19 @@ export default function CreateBookForm() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          p: 4,
+          p: 2,
         }}
       >
-        Create Book
+        <Typography level="h4">Create Book</Typography>
+        <Close
+          onClick={handleShowBookForm}
+          sx={{
+            position: "absolute",
+            right: 0,
+            top: 0,
+            cursor: "pointer",
+          }}
+        />
       </DialogTitle>
       <Sheet sx={{ maxWidth: "30rem", p: 8 }}>
         <form onSubmit={doSubmit}>
