@@ -38,7 +38,7 @@ export default function BookContent() {
           >
             You don&apos;t have any books!
           </Typography>
-          <CreateBook />
+          <CreateBook formName="CREATE ONE TO GET STARTED" />
         </Box>
       ) : (
         <AllBooks />
