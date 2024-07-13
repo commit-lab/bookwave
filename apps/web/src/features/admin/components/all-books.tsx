@@ -23,8 +23,8 @@ export default function AllBooks() {
 
   return (
     <Stack spacing={2}>
-      {data?.length ? (
-        data.map((book) => <BookCard book={book} key={book.id} />)
+      {data?.books.length ? (
+        data.books.map((book) => <BookCard book={book} key={book.id} />)
       ) : (
         <div>You don&apos;t have any books!</div>
       )}

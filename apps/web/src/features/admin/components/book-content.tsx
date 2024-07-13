@@ -21,7 +21,7 @@ export default function BookContent() {
         flex: 1,
       }}
     >
-      {data?.length === 0 ? (
+      {data?.books.length === 0 ? (
         <Box
           sx={{
             display: "flex",
