@@ -21,7 +21,7 @@ export default function BookContent() {
         flex: 1,
       }}
     >
-      {data?.length === 0 ? (
+      {data?.books.length === 0 ? (
         <Box
           sx={{
             display: "flex",
@@ -42,7 +42,7 @@ export default function BookContent() {
         </Box>
       ) : (
         <Stack spacing={2}>
-          {data?.map((book) => <BookCard book={book} key={book.id} />)}
+          {data?.books.map((book) => <BookCard book={book} key={book.id} />)}
         </Stack>
       )}
     </Box>

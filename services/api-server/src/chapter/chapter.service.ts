@@ -1,7 +1,6 @@
 import { Model } from "mongoose";
 import { Injectable, Inject, NotFoundException } from "@nestjs/common";
 import { isNullOrUndefined } from "@bookwave/utils";
-import { BOOK_MODEL } from "../book/book.constants";
 import { type BookDocument } from "@/book/interfaces/book.interface";
 import { type ChapterDocument } from "@/chapter/interfaces/chapter.interface";
 import { CHAPTER_MODEL } from "@/chapter/chapter.constants";
@@ -9,6 +8,7 @@ import { type ChapterDto } from "@/chapter/dto/chapter.dto";
 import { type UpdateChapterDto } from "@/chapter/dto/update-chapter.dto";
 import { type CreateChapterDto } from "@/chapter/dto/create-chapter.dto";
 import { type DeletedChapterResponseDto } from "@/chapter/dto/deleted-chapter-response.dto";
+import { BOOK_MODEL } from "../book/book.constants";
 
 @Injectable()
 export class ChapterService {

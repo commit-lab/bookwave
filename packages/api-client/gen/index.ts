@@ -23,6 +23,7 @@ export type { DeletedBookResponseDto } from './models/DeletedBookResponseDto';
 export type { DeletedChapterResponseDto } from './models/DeletedChapterResponseDto';
 export type { DummyDto } from './models/DummyDto';
 export type { FetchAuthorResponseDto } from './models/FetchAuthorResponseDto';
+export type { FetchBooksResponseDto } from './models/FetchBooksResponseDto';
 export type { UpdateBookDto } from './models/UpdateBookDto';
 export type { UpdateChapterDto } from './models/UpdateChapterDto';
 export type { UpdateDummyDto } from './models/UpdateDummyDto';
