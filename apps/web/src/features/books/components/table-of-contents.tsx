@@ -11,8 +11,20 @@ import {
 import Link from "next/link";
 import { dummyData } from "../dummy-data";
 
-export default function TableOfContents() {
-  const book = dummyData.books[0];
+interface TableOfContentsProps {
+  authorHandle: string;
+  bookHandle: string;
+}
+
+export default function TableOfContents({
+  authorHandle,
+  bookHandle,
+}: TableOfContentsProps) {
+  // Find the book based on authorHandle and bookHandle
+  const book = dummyData.books.find(
+    (b) => b.authorHandle === authorHandle && b.bookHandle === bookHandle
+  );
+
   if (!book) {
     return <Typography level="h3">Book not found</Typography>;
   }
@@ -54,7 +66,10 @@ export default function TableOfContents() {
       >
         {book.chapters.map((chapter) => (
           <ListItem key={chapter.id}>
-            <Link href={`/books/${String(chapter.id)}`} passHref>
+            <Link
+              href={`/books/${authorHandle}/${bookHandle}/${String(chapter.id)}`}
+              passHref
+            >
               <ListItemButton>
                 <ListItemContent>{chapter.title}</ListItemContent>
               </ListItemButton>
@@ -75,7 +90,6 @@ export default function TableOfContents() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          // maxWidth: "1000px",
           margin: "0 auto",
         }}
       >

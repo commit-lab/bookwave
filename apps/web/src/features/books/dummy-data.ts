@@ -2,6 +2,8 @@ export const dummyData = {
   books: [
     {
       id: 1,
+      authorHandle: "lazy-larry",
+      bookHandle: "ultimate-guide-to-procrastination",
       title: "The Ultimate Guide to Procrastination",
       author: "Lazy Larry",
       chapters: [
@@ -21,6 +23,8 @@ export const dummyData = {
     },
     {
       id: 2,
+      authorHandle: "whisker-williams",
+      bookHandle: "cooking-for-cats",
       title: "Cooking for Cats",
       author: "Whisker Williams",
       chapters: [
