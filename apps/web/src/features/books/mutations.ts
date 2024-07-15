@@ -27,3 +27,27 @@ async function createBook(book: CreateBookDto) {
     captureAndRethrowException(error);
   }
 }
+
+export const useDeleteBookMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteBook,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: BooksApiKeys.fetchAll(),
+      });
+    },
+  });
+};
+
+async function deleteBook(id: string) {
+  try {
+    await new Promise((resolve) => {
+      setTimeout(resolve, 2000);
+    });
+    const response = await apiClient.books.deleteBook(id);
+    return response;
+  } catch (error) {
+    captureAndRethrowException(error);
+  }
+}

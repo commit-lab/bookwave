@@ -9,12 +9,15 @@ import {
   DialogActions,
   Input,
 } from "@mui/joy";
-import { Popover, Dialog } from "@mui/material";
+import { Popover, Dialog, CircularProgress } from "@mui/material";
+import { MoreVert } from "@mui/icons-material";
+import { useDeleteBookMutation } from "@/features/books/mutations";
 
-export default function BookOptions() {
+export default function BookOptions({ bookId }: { bookId: string }) {
   const [popOver, setPopOver] = useState<null | HTMLElement>(null);
   const [openRenameDialog, setOpenRenameDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const deleteBookMutation = useDeleteBookMutation();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setPopOver(event.currentTarget);
@@ -29,16 +32,24 @@ export default function BookOptions() {
     handleClose();
   };
 
-  const handleDeleteClick = () => {
+  const openDeleteOption = () => {
     setOpenDeleteDialog(true);
+  };
+
+  const handleDeleteClick = async () => {
+    setOpenDeleteDialog(true);
+    await deleteBookMutation.mutateAsync(bookId);
     handleClose();
   };
 
   return (
     <Box sx={{ padding: 2 }}>
-      <Button variant="solid" onClick={handleClick}>
-        :
-      </Button>
+      <MoreVert
+        onClick={handleClick}
+        sx={{
+          cursor: "pointer",
+        }}
+      />
       <Popover open={Boolean(popOver)} anchorEl={popOver} onClose={handleClose}>
         <Box
           sx={{ display: "flex", flexDirection: "column", p: 2, gap: "10px" }}
@@ -46,7 +57,7 @@ export default function BookOptions() {
           <Button color="neutral" onClick={handleRenameClick}>
             Rename
           </Button>
-          <Button color="neutral" onClick={handleDeleteClick}>
+          <Button color="danger" onClick={openDeleteOption}>
             Delete
           </Button>
         </Box>
@@ -114,7 +125,17 @@ export default function BookOptions() {
             >
               Cancel
             </Button>
-            <Button color="danger">Delete</Button>
+            <Button
+              color="danger"
+              onClick={handleDeleteClick}
+              disabled={deleteBookMutation.isPending}
+            >
+              {deleteBookMutation.isPending ? (
+                <CircularProgress color="inherit" size="20px" />
+              ) : (
+                "Delete"
+              )}
+            </Button>
           </DialogActions>
         </Box>
       </Dialog>
