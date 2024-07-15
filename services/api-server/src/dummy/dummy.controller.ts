@@ -1,7 +1,11 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { DummyService } from "@/dummy/dummy.service";
-import { CreateDummyDto, DummyDto } from "@/dummy/dto/dummy.dto";
+import {
+  CreateDummyDto,
+  DummyDto,
+  UpdateDummyDto,
+} from "@/dummy/dto/dummy.dto";
 import { type Dummy } from "@/dummy/interfaces/dummy.interface";
 import { logErrorAndMaybeThrowInternalServerError } from "@/common/exception";
 
@@ -15,13 +19,28 @@ export class DummyController {
     type: [DummyDto],
   })
   @Get()
-  async fetchAllDumies(): Promise<Dummy[]> {
+  async fetchAllDumies(): Promise<DummyDto[]> {
     try {
       return this.dummyService.fetchDummies();
     } catch (err: unknown) {
       logErrorAndMaybeThrowInternalServerError(
         err,
-        "Unable to fetch all dummies",
+        "Unable to fetch all dummies"
+      );
+    }
+  }
+
+  @ApiOkResponse({
+    type: DummyDto,
+  })
+  @Get("/:dummyId")
+  async fetchOne(@Param("dummyId") dummyId: string): Promise<DummyDto> {
+    try {
+      return this.dummyService.fetchOneDummy(dummyId);
+    } catch (err: unknown) {
+      logErrorAndMaybeThrowInternalServerError(
+        err,
+        "Unable to fetch all dummies"
       );
     }
   }
@@ -35,6 +54,21 @@ export class DummyController {
       return this.dummyService.createDummy(body);
     } catch (err: unknown) {
       logErrorAndMaybeThrowInternalServerError(err, "Unable to create dummy");
+    }
+  }
+
+  @ApiOkResponse({
+    type: DummyDto,
+  })
+  @Put("/:dummyId")
+  async updateOne(
+    @Param("dummyId") dummyId: string,
+    @Body() UpdateDummyRequestBody: UpdateDummyDto
+  ): Promise<DummyDto | null> {
+    try {
+      return this.dummyService.updateDummy(dummyId, UpdateDummyRequestBody);
+    } catch (err: unknown) {
+      logErrorAndMaybeThrowInternalServerError(err, "Unable to update dummy");
     }
   }
 }

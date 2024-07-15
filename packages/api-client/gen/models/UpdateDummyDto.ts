@@ -3,8 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type DummyDto = {
-    id: string;
+export type UpdateDummyDto = {
     foo: string;
     bar: string;
     content: string;

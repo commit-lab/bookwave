@@ -25,6 +25,7 @@ export type { DummyDto } from './models/DummyDto';
 export type { FetchAuthorResponseDto } from './models/FetchAuthorResponseDto';
 export type { UpdateBookDto } from './models/UpdateBookDto';
 export type { UpdateChapterDto } from './models/UpdateChapterDto';
+export type { UpdateDummyDto } from './models/UpdateDummyDto';
 
 export { AuthorService } from './services/AuthorService';
 export { BooksService } from './services/BooksService';
