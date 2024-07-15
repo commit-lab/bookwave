@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { Box, Button } from "@mui/joy";
-import CreateBookForm from "@/components/create-book-form";
+import CreateBookForm from "@/features/admin/components/create-book-form";
 
-export default function CreateBook() {
+export default function CreateBook({ formName }: { formName: string }) {
   const [showBookForm, setShowBookForm] = useState(false);
   const handleShowBookForm = () => {
     setShowBookForm((prev) => !prev);
@@ -13,9 +13,9 @@ export default function CreateBook() {
   return (
     <Box>
       {!showBookForm ? (
-        <Button onClick={handleShowBookForm}>CREATE ONE TO GET STARTED</Button>
+        <Button onClick={handleShowBookForm}>{formName}</Button>
       ) : (
-        <CreateBookForm />
+        <CreateBookForm handleShowBookForm={handleShowBookForm} />
       )}
     </Box>
   );
