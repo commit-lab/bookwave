@@ -17,6 +17,8 @@ import {
 } from "@/lib/error/api-errors";
 import Editor from "@/features/editor/components/editor";
 
+const TWO_SECONDS_MS = 2000;
+
 interface UpdateDummyFormFields {
   foo: string;
   bar: string;
@@ -62,7 +64,6 @@ export const UpdateDummyForm = (props: UpdateDummyFormProps) => {
       await updateDummyMutation.mutateAsync({ dummyId, dummy });
       reset();
     } catch (err: unknown) {
-      // Here's how we handle different errors.
       if (err instanceof ApiConflictError) {
         // Handle a conflict error on the UI.
       }
@@ -76,15 +77,15 @@ export const UpdateDummyForm = (props: UpdateDummyFormProps) => {
   });
 
   useEffect(() => {
-    const saveInterval = setInterval(() => {
+    const intervalId = setInterval(() => {
       if (contentRecentlyChanged) {
         // auto-save the content while typing
         void doSubmit();
         setContentRecentlyChanged(false);
       }
-    }, 2000); // auto-save every 2 seconds
+    }, TWO_SECONDS_MS); // auto-save every 2 seconds
     return () => {
-      clearInterval(saveInterval);
+      clearInterval(intervalId);
     }; // Cleanup interval
   });
 

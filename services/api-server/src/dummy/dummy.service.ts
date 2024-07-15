@@ -17,18 +17,16 @@ export class DummyService {
   ) {}
 
   async fetchDummies(): Promise<DummyDto[]> {
-    // Should make a call to the database to fetch dummies
     const allDummies = await this.dummyModel.find().exec();
 
-    const dummiesResponse = allDummies.map((dummy) => {
-      const dummyDto: DummyDto = {
-        id: dummy._id,
-        foo: dummy.foo,
-        bar: dummy.bar,
-        content: dummy.content,
-      };
-      return dummyDto;
-    });
+    const dummiesResponse = allDummies.map(
+      ({ _id: id, foo, bar, content }) => ({
+        id,
+        foo,
+        bar,
+        content,
+      })
+    );
 
     return dummiesResponse;
   }
@@ -49,7 +47,6 @@ export class DummyService {
   }
 
   async createDummy(createDummyRequestBody: CreateDummyDto): Promise<Dummy> {
-    // Should write the dummy to the database.
     const createdDummy = await this.dummyModel.create({
       ...createDummyRequestBody,
     });
@@ -60,7 +57,6 @@ export class DummyService {
     dummyId: string,
     updateDummyRequestBody: UpdateDummyDto
   ): Promise<DummyDto> {
-    // Should write the dummy to the database.
     const updatedDummy = await this.dummyModel.findByIdAndUpdate(
       dummyId,
       updateDummyRequestBody,
