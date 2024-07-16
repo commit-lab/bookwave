@@ -34,7 +34,7 @@ export default function ChapterCard({ chapter }: ChapterCardProps) {
         }}
       >
         <Box sx={{ textAlign: "start" }}>
-          <Link href={`/admin/book/learntocode/${chapter.id}`}>
+          <Link href={`/admin/book/chapters/${chapter.id}`}>
             <Typography level="body-lg">Chapter 1</Typography>
             <Typography level="h3">{chapter.title}</Typography>
           </Link>

@@ -4,26 +4,25 @@ import { apiClient } from "@/lib/api/api-client";
 import { captureAndRethrowException } from "@/lib/error/capture-and-rethrow-exception";
 
 enum ChaptersApiEndpoint {
-  FetchAllByBook = "ChaptersApiEndpointFetchAll",
+  FetchAll = "ChaptersApiEndpointFetchAll",
 }
 
 export const ChaptersApiKeys = {
-  fetchAllByBook: (bookHandle: string) =>
-    [ChaptersApiEndpoint.FetchAllByBook, bookHandle] as const,
-};
+  fetchAll: () => [ChaptersApiEndpoint.FetchAll] as const,
+} as const;
 
-export const useAllChaptersByBook = (bookHandle: string) => {
+export const useAllChapters = (bookId: string) => {
   return useQuery({
-    queryKey: ChaptersApiKeys.fetchAllByBook(bookHandle),
-    queryFn: () => fetchChaptersByBook(bookHandle),
+    queryKey: ChaptersApiKeys.fetchAll(),
+    queryFn: () => fetchChapters(bookId),
   });
 };
 
-async function fetchChaptersByBook(
-  bookHandle: string
+async function fetchChapters(
+  bookId: string
 ): Promise<BookWithChapterTitlesDto> {
   try {
-    const response = await apiClient.books.getOne(bookHandle);
+    const response = await apiClient.books.getOne(bookId);
     return response;
   } catch (error: unknown) {
     captureAndRethrowException(error);
