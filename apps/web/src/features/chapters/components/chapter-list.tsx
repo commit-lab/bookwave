@@ -1,13 +1,20 @@
 "use client";
 
-import { Box, Typography } from "@mui/joy";
+import { Box, Stack, Typography } from "@mui/joy";
 import { useTheme } from "@mui/joy/styles";
-import AllChapters from "@/features/chapters/components/all-chapters";
 import CreateChapter from "@/features/chapters/components/create-chapter";
-import { useAllChapters } from "@/features/chapters/queries";
+import ChapterCard from "@/features/chapters/components/chapter-card";
 
-export default function ChapterList({ bookId }: { bookId: string }) {
-  const { data } = useAllChapters(bookId);
+interface ChapterListProps {
+  bookHandle: string;
+  bookId: string | undefined;
+  chapterTitles: string[] | undefined;
+}
+export default function ChapterList({
+  bookHandle,
+  bookId,
+  chapterTitles,
+}: ChapterListProps) {
   const theme = useTheme();
   return (
     <Box
@@ -21,7 +28,7 @@ export default function ChapterList({ bookId }: { bookId: string }) {
         flex: 1,
       }}
     >
-      {data?.chapterTitles.length === 0 ? (
+      {chapterTitles?.length === 0 ? (
         <Box
           sx={{
             display: "flex",
@@ -41,7 +48,20 @@ export default function ChapterList({ bookId }: { bookId: string }) {
           <CreateChapter bookId={bookId} />
         </Box>
       ) : (
-        <AllChapters bookId={bookId} />
+        <Stack spacing={2}>
+          {chapterTitles?.length ? (
+            chapterTitles.map((chapter, index) => (
+              <ChapterCard
+                bookHandle={bookHandle}
+                chapterTitle={chapter}
+                chapterNumber={index + 1}
+                key={chapter}
+              />
+            ))
+          ) : (
+            <div>You don&apos;t have any chapters!</div>
+          )}
+        </Stack>
       )}
     </Box>
   );

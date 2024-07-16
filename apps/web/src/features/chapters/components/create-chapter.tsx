@@ -4,7 +4,11 @@ import { useState } from "react";
 import { Box, Button } from "@mui/joy";
 import CreateChapterForm from "@/features/chapters/components/create-chapter-form";
 
-export default function CreateChapter({ bookId }: { bookId: string }) {
+interface CreateChapterProps {
+  bookId: string | undefined;
+}
+
+export default function CreateChapter({ bookId }: CreateChapterProps) {
   const [showChapterForm, setShowChapterForm] = useState(false);
   const handleShowChapterForm = () => {
     setShowChapterForm((prev) => !prev);

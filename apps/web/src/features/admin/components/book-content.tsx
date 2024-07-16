@@ -1,10 +1,10 @@
 "use client";
 
-import { Box, Typography } from "@mui/joy";
+import { Box, Stack, Typography } from "@mui/joy";
 import { useTheme } from "@mui/joy/styles";
 import { useAllBooks } from "@/features/books/queries";
-import AllBooks from "@/features/admin/components/all-books";
 import CreateBook from "@/features/admin/components/create-book";
+import BookCard from "@/features/admin/components/book-card";
 
 export default function BookContent() {
   const { data } = useAllBooks();
@@ -41,7 +41,9 @@ export default function BookContent() {
           <CreateBook formName="CREATE ONE TO GET STARTED" />
         </Box>
       ) : (
-        <AllBooks />
+        <Stack spacing={2}>
+          {data?.map((book) => <BookCard book={book} key={book.id} />)}
+        </Stack>
       )}
     </Box>
   );

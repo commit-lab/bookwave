@@ -35,7 +35,7 @@ export default function BookCard({ book }: BookCardProps) {
         }}
       >
         <Box sx={{ textAlign: "start" }}>
-          <Link href={`/admin/book/${book.title}?bookId=${book.id}`}>
+          <Link href={`/admin/book/${book.handle}`}>
             <Typography level="body-lg">Title</Typography>
             <Typography level="h3">{book.title}</Typography>
           </Link>

@@ -1,13 +1,21 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import { Box, Typography } from "@mui/joy";
 import StateSwitch from "@/features/admin/components/state-switch";
-import ChapterContent from "@/features/chapters/components/chapter-content";
+import ChapterList from "@/features/chapters/components/chapter-list";
+import { useAllChapters } from "@/features/chapters/queries";
 
-export default function Chapters() {
-  const searchParams = useSearchParams();
-  const bookId = searchParams.get("bookId");
+interface ChaptersPageProps {
+  bookHandle: string;
+}
+
+export default function ChaptersPage({
+  params: { bookHandle },
+}: {
+  params: ChaptersPageProps;
+}) {
+  const { data } = useAllChapters(bookHandle);
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <Box
@@ -24,7 +32,11 @@ export default function Chapters() {
         <StateSwitch />
       </Box>
 
-      <ChapterContent bookId={bookId ?? ""} />
+      <ChapterList
+        bookHandle={bookHandle}
+        bookId={data?.id}
+        chapterTitles={data?.chapterTitles}
+      />
     </Box>
   );
 }

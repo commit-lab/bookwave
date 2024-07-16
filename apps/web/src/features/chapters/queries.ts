@@ -11,18 +11,18 @@ export const ChaptersApiKeys = {
   fetchAll: () => [ChaptersApiEndpoint.FetchAll] as const,
 } as const;
 
-export const useAllChapters = (bookId: string) => {
+export const useAllChapters = (bookHandle: string) => {
   return useQuery({
     queryKey: ChaptersApiKeys.fetchAll(),
-    queryFn: () => fetchChapters(bookId),
+    queryFn: () => fetchChapters(bookHandle),
   });
 };
 
 async function fetchChapters(
-  bookId: string
+  bookHandle: string
 ): Promise<BookWithChapterTitlesDto> {
   try {
-    const response = await apiClient.books.getOne(bookId);
+    const response = await apiClient.books.getOne(bookHandle);
     return response;
   } catch (error: unknown) {
     captureAndRethrowException(error);

@@ -3,14 +3,18 @@
 import Link from "next/link";
 import { Box, Card, CardActions, CardContent, Typography } from "@mui/joy";
 import { useTheme } from "@mui/joy/styles";
-import { type ChapterDto } from "@bookwave/api-client";
 import ChapterOptions from "@/features/chapters/components/chapter-options";
 
 interface ChapterCardProps {
-  chapter: ChapterDto;
+  bookHandle: string;
+  chapterTitle: string;
+  chapterNumber: number;
 }
-
-export default function ChapterCard({ chapter }: ChapterCardProps) {
+export default function ChapterCard({
+  bookHandle,
+  chapterTitle,
+  chapterNumber,
+}: ChapterCardProps) {
   const theme = useTheme();
   return (
     <Card
@@ -34,9 +38,9 @@ export default function ChapterCard({ chapter }: ChapterCardProps) {
         }}
       >
         <Box sx={{ textAlign: "start" }}>
-          <Link href={`/admin/book/chapters/${chapter.id}`}>
-            <Typography level="body-lg">Chapter 1</Typography>
-            <Typography level="h3">{chapter.title}</Typography>
+          <Link href={`${bookHandle}/chapters/${chapterNumber.toString()}`}>
+            <Typography level="body-lg">Chapter {chapterNumber}</Typography>
+            <Typography level="h3">{chapterTitle}</Typography>
           </Link>
         </Box>
         <Box sx={{ textAlign: "center" }}>

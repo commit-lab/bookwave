@@ -19,7 +19,7 @@ interface CreateChapterFormFields {
 
 interface CreateChapterFormProps {
   handleShowChapterForm: () => void;
-  bookId: string;
+  bookId: string | undefined;
 }
 
 export default function CreateChapterForm({

@@ -4,11 +4,10 @@ import { ChaptersApiKeys } from "@/features/chapters/queries";
 import { apiClient } from "@/lib/api/api-client";
 import { captureAndRethrowException } from "@/lib/error/capture-and-rethrow-exception";
 
-export const useCreateChapterMutation = (bookHandle: string) => {
+export const useCreateChapterMutation = (bookId: string) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (chapter: CreateChapterDto) =>
-      createChapter(bookHandle, chapter),
+    mutationFn: (chapter: CreateChapterDto) => createChapter(bookId, chapter),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: ChaptersApiKeys.fetchAll(),
@@ -17,9 +16,9 @@ export const useCreateChapterMutation = (bookHandle: string) => {
   });
 };
 
-async function createChapter(bookHandle: string, chapter: CreateChapterDto) {
+async function createChapter(bookId: string, chapter: CreateChapterDto) {
   try {
-    const response = await apiClient.chapters.createOne(bookHandle, chapter);
+    const response = await apiClient.chapters.createOne(bookId, chapter);
     return response;
   } catch (error: unknown) {
     captureAndRethrowException(error);
