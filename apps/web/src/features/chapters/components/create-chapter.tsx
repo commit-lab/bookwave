@@ -5,7 +5,7 @@ import { Box, Button } from "@mui/joy";
 import CreateChapterForm from "@/features/chapters/components/create-chapter-form";
 
 interface CreateChapterProps {
-  bookId: string | undefined;
+  bookId: string;
 }
 
 export default function CreateChapter({ bookId }: CreateChapterProps) {

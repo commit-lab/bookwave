@@ -34,7 +34,7 @@ export default function ChaptersPage({
 
       <ChapterList
         bookHandle={bookHandle}
-        bookId={data?.id}
+        bookId={data ? data.id : ""}
         chapterTitles={data?.chapterTitles}
       />
     </Box>

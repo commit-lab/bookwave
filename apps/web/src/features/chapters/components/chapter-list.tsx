@@ -7,7 +7,7 @@ import ChapterCard from "@/features/chapters/components/chapter-card";
 
 interface ChapterListProps {
   bookHandle: string;
-  bookId: string | undefined;
+  bookId: string;
   chapterTitles: string[] | undefined;
 }
 export default function ChapterList({
