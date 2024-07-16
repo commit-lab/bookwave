@@ -1,13 +1,15 @@
 "use client";
-import { Box, Button } from "@mui/joy";
+
 import { useState } from "react";
+import { Box, Button } from "@mui/joy";
 import CreateChapterForm from "@/features/chapters/components/create-chapter-form";
 
-export default function CreateChapter({ bookHandle }: { bookHandle: string }) {
+export default function CreateChapter({ bookId }: { bookId: string }) {
   const [showChapterForm, setShowChapterForm] = useState(false);
   const handleShowChapterForm = () => {
     setShowChapterForm((prev) => !prev);
   };
+
   return (
     <Box>
       {!showChapterForm ? (
@@ -15,7 +17,7 @@ export default function CreateChapter({ bookHandle }: { bookHandle: string }) {
       ) : (
         <CreateChapterForm
           handleShowChapterForm={handleShowChapterForm}
-          bookHandle={bookHandle}
+          bookId={bookId}
         />
       )}
     </Box>

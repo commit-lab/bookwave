@@ -15,16 +15,15 @@ import { ApiConflictError } from "@/lib/error/api-errors";
 
 interface CreateChapterFormFields {
   title: string;
-  content: string;
 }
 
 interface CreateChapterFormProps {
   handleShowChapterForm: () => void;
-  bookHandle: string;
+  bookId: string;
 }
 
 export default function CreateChapterForm({
-  bookHandle,
+  bookId,
   handleShowChapterForm,
 }: CreateChapterFormProps) {
   const {
@@ -32,7 +31,7 @@ export default function CreateChapterForm({
     formState: { errors, isValid },
     handleSubmit,
   } = useForm<CreateChapterFormFields>();
-  const createChapterMutation = useCreateChapterMutation(bookHandle);
+  const createChapterMutation = useCreateChapterMutation(bookId);
   const doSubmit = handleSubmit(async (fields) => {
     try {
       await createChapterMutation.mutateAsync({

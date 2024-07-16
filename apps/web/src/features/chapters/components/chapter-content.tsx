@@ -1,18 +1,13 @@
 "use client";
 
-// import { usePathname } from "next/navigation";
 import { Box, Typography } from "@mui/joy";
 import { useTheme } from "@mui/joy/styles";
-import { useAllChaptersByBook } from "@/features/chapters/queries";
 import AllChapters from "@/features/chapters/components/all-chapters";
 import CreateChapter from "@/features/chapters/components/create-chapter";
+import { useAllChapters } from "@/features/chapters/queries";
 
-export default function ChapterList() {
-  // const pathname = usePathname();
-  // const bookHandle = pathname.split("/").slice(-1)[0];
-  const bookHandle = "book-handle";
-  const { data } = useAllChaptersByBook(bookHandle);
-  console.log("data", data);
+export default function ChapterList({ bookId }: { bookId: string }) {
+  const { data } = useAllChapters(bookId);
   const theme = useTheme();
   return (
     <Box
@@ -26,7 +21,7 @@ export default function ChapterList() {
         flex: 1,
       }}
     >
-      {data?.length === 0 ? (
+      {data?.chapterTitles.length === 0 ? (
         <Box
           sx={{
             display: "flex",
@@ -43,13 +38,10 @@ export default function ChapterList() {
           >
             You don&apos;t have any chapters!
           </Typography>
-          <CreateChapter bookHandle={bookHandle} />
+          <CreateChapter bookId={bookId} />
         </Box>
       ) : (
-        <>
-          <CreateChapter bookHandle={bookHandle} />
-          <AllChapters bookHandle={bookHandle} />
-        </>
+        <AllChapters bookId={bookId} />
       )}
     </Box>
   );

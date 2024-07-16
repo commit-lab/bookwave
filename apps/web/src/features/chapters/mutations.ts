@@ -11,7 +11,7 @@ export const useCreateChapterMutation = (bookHandle: string) => {
       createChapter(bookHandle, chapter),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ChaptersApiKeys.fetchAllByBook(bookHandle),
+        queryKey: ChaptersApiKeys.fetchAll(),
       });
     },
   });

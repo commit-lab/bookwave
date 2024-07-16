@@ -1,26 +1,30 @@
-import { CircularProgress, Stack, Typography } from "@mui/joy";
+import { CircularProgress, Stack } from "@mui/joy";
 import ChapterCard from "@/features/chapters/components/chapter-card";
-import { useAllChaptersByBook } from "@/features/chapters/queries";
+import { useAllChapters } from "@/features/chapters/queries";
 
 interface AllChaptersProps {
-  bookHandle: string;
+  bookId: string;
 }
 
-export default function AllChapters({ bookHandle }: AllChaptersProps) {
-  const { data, isLoading } = useAllChaptersByBook(bookHandle);
+export default function AllChapters({ bookId }: AllChaptersProps) {
+  const { data, isLoading, isError } = useAllChapters(bookId);
 
   if (isLoading) {
     return <CircularProgress />;
   }
 
+  if (isError) {
+    return <div>Error fetching chapters</div>;
+  }
+
   return (
     <Stack spacing={2}>
-      {data?.length ? (
-        data.map((chapter) => (
-          <ChapterCard chapter={chapter} key={chapter.id} />
+      {data?.chapterTitles.length ? (
+        data.chapterTitles.map((chapter) => (
+          <ChapterCard chapter={chapter} key={chapter} />
         ))
       ) : (
-        <Typography>You don&apos;t have any chapters!</Typography>
+        <div>You don&apos;t have any chapters!</div>
       )}
     </Stack>
   );
