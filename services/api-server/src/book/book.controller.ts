@@ -15,9 +15,10 @@ import { Author } from "@/author/author.decorator";
 import { BookDto } from "@/book/dto/book-dto";
 import { BookWithChapterTitlesDto } from "@/book/dto/book-with-chapter-titles.dto";
 import { DeletedBookResponseDto } from "@/book/dto/deleted-book-response.dto";
-import { BookService } from "./book.service";
-import { UpdateBookDto } from "./dto/update-book.dto";
+import { FetchBooksResponseDto } from "@/book/dto/fetch-books-response.dto";
 import { CreateBookDto } from "./dto/create-book.dto";
+import { UpdateBookDto } from "./dto/update-book.dto";
+import { BookService } from "./book.service";
 
 @ApiBearerAuth()
 @ApiTags("books")
@@ -28,16 +29,24 @@ export class BookController {
 
   @ApiOkResponse({
     description: "All books by author successfully found.",
-    type: [BookDto],
+    type: FetchBooksResponseDto,
   })
   @Get()
-  async getAll(@Author("_id") authorId: string): Promise<BookDto[]> {
+  async getAll(
+    @Author() author: Record<string, unknown> | undefined
+  ): Promise<FetchBooksResponseDto> {
+    const response = new FetchBooksResponseDto();
+    if (!author) {
+      response.isNewAccount = true;
+    }
+    const authorId = author?.id as string;
     try {
       this.logger.log(
         `Author with author id: ${authorId} retrieving all books.`
       );
       const allBooks = await this.bookService.findAll(authorId);
-      return allBooks;
+      response.books = allBooks;
+      return response;
     } catch {
       this.logger.error(
         `Failed to get books for author with author id: ${authorId}.`

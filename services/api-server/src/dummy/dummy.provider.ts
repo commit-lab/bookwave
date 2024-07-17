@@ -1,8 +1,8 @@
 import { type Mongoose, type Model } from "mongoose";
+import { MONGO_CONNECTION } from "@/db/constants";
 import { DummySchema } from "./schema/dummy.schema";
 import { DUMMY_MODEL } from "./dummy.constants";
 import { type Dummy } from "./interfaces/dummy.interface";
-import { MONGO_CONNECTION } from "@/db/constants";
 
 export const dummyProviders = [
   {

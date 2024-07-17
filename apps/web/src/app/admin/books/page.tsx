@@ -1,17 +1,28 @@
 "use client";
 
-import { Box, Typography } from "@mui/joy";
-import { useRouter } from "next/navigation";
-import { useIsSignedIn } from "@/features/auth/hooks/use-is-signed-in";
+import { Box, CircularProgress, Typography } from "@mui/joy";
+import { redirect } from "next/navigation";
 import BookContent from "@/features/admin/components/book-content";
+import { useIsSignedIn } from "@/features/auth/hooks/use-is-signed-in";
+import { useAuthorInfo } from "@/features/author/queries";
+import { CreateAuthorModal } from "@/features/author/components/create-author-modal";
 import CreateBook from "@/features/admin/components/create-book";
 
 export default function Books() {
-  const router = useRouter();
   const isSignedIn = useIsSignedIn();
-
+  const { data, isLoading } = useAuthorInfo();
   if (!isSignedIn) {
-    router.push("/home");
+    redirect("/home");
+  }
+
+  const authorExists = data?.author;
+
+  if (isLoading) {
+    return (
+      <Box sx={{ display: "flex" }}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
@@ -31,6 +42,7 @@ export default function Books() {
       </Box>
 
       <BookContent />
+      {!authorExists && <CreateAuthorModal />}
     </Box>
   );
 }
