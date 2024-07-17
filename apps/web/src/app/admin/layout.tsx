@@ -1,23 +1,22 @@
-import { type Metadata } from "next";
+"use client";
+
 import { Box } from "@mui/joy";
+import { useParams } from "next/navigation";
 import SideBar from "@/features/admin/components/sidebar";
 import TopBar from "@/features/admin/components/topbar";
-
-export const metadata: Metadata = {
-  title: "Admin Panel",
-  description: "Bookwave Admin Panel",
-};
 
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const params = useParams();
+  const isSpecificRoute = params.chapter_number;
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
-      <TopBar />
+      {!isSpecificRoute && <TopBar />}
       <Box sx={{ display: "flex", flex: 1 }}>
-        <SideBar />
+        {!isSpecificRoute && <SideBar />}
         <Box sx={{ flex: 1, overflow: "auto" }}>{children}</Box>
       </Box>
     </Box>
