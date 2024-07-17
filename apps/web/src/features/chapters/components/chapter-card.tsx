@@ -3,18 +3,21 @@
 import Link from "next/link";
 import { Box, Card, CardActions, CardContent, Typography } from "@mui/joy";
 import { useTheme } from "@mui/joy/styles";
-import { type BookDto } from "@bookwave/api-client";
-import BookOptions from "@/features/admin/components/book-options";
+import ChapterOptions from "@/features/chapters/components/chapter-options";
 
-interface BookCardProps {
-  book: BookDto;
+interface ChapterCardProps {
+  bookHandle: string;
+  chapterTitle: string;
+  chapterNumber: number;
 }
-
-export default function BookCard({ book }: BookCardProps) {
+export default function ChapterCard({
+  bookHandle,
+  chapterTitle,
+  chapterNumber,
+}: ChapterCardProps) {
   const theme = useTheme();
   return (
     <Card
-      key={book.id}
       sx={{
         minWidth: { xs: "100%", sm: 600, md: 800, lg: 1000 },
         display: "flex",
@@ -35,22 +38,18 @@ export default function BookCard({ book }: BookCardProps) {
         }}
       >
         <Box sx={{ textAlign: "start" }}>
-          <Link href={`/admin/book/${book.handle}`}>
-            <Typography level="body-lg">Title</Typography>
-            <Typography level="h3">{book.title}</Typography>
+          <Link href={`${bookHandle}/chapters/${chapterNumber.toString()}`}>
+            <Typography level="body-lg">Chapter {chapterNumber}</Typography>
+            <Typography level="h3">{chapterTitle}</Typography>
           </Link>
         </Box>
         <Box sx={{ textAlign: "center" }}>
-          <Typography level="body-lg">Chapters</Typography>
-          <Typography level="h3">{book.chapterCount}</Typography>
-        </Box>
-        <Box sx={{ textAlign: "end" }}>
-          <Typography level="body-lg">State</Typography>
-          <Typography level="h3">{book.state}</Typography>
+          <Typography level="body-lg">Words</Typography>
+          <Typography level="h3">1,222</Typography>
         </Box>
       </CardContent>
       <CardActions>
-        <BookOptions bookId={book.id} />
+        <ChapterOptions />
       </CardActions>
     </Card>
   );

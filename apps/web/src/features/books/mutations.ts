@@ -18,9 +18,6 @@ export const useCreateBookMutation = () => {
 
 async function createBook(book: CreateBookDto) {
   try {
-    await new Promise((resolve) => {
-      setTimeout(resolve, 2000);
-    });
     const response = await apiClient.books.createOne(book);
     return response;
   } catch (error: unknown) {
@@ -42,9 +39,6 @@ export const useDeleteBookMutation = () => {
 
 async function deleteBook(id: string) {
   try {
-    await new Promise((resolve) => {
-      setTimeout(resolve, 2000);
-    });
     const response = await apiClient.books.deleteBook(id);
     return response;
   } catch (error) {
