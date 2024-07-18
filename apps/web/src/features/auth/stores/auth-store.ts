@@ -8,6 +8,8 @@ export interface AuthStore {
   setSocialUserIdentity: (user: User | null) => void;
   authError: unknown;
   setAuthError: (error: unknown) => void;
+  _hasHydrated: boolean;
+  setHasHydrated: (state: boolean) => void;
   setAll: (params: Pick<AuthStore, "socialUserIdentity" | "authError">) => void;
 }
 
@@ -16,6 +18,7 @@ export const useAuthStore = create<AuthStore>()(
     (set) => ({
       socialUserIdentity: null,
       authError: null,
+      _hasHydrated: false,
       setSocialUserIdentity: (socialUserIdentity) => {
         set({ socialUserIdentity });
       },
@@ -25,10 +28,16 @@ export const useAuthStore = create<AuthStore>()(
       setAll: (params) => {
         set(params);
       },
+      setHasHydrated: (_hasHydrated) => {
+        set({ _hasHydrated });
+      },
     }),
     {
       enabled: shouldDebugLog(),
       name: "AuthStore",
-    },
-  ),
+      onRehydrateStorage: () => (state: AuthStore) => {
+        state.setHasHydrated(true);
+      },
+    }
+  )
 );

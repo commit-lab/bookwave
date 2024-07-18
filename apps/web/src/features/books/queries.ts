@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { type BookDto } from "@bookwave/api-client";
+import { type FetchBooksResponseDto } from "@bookwave/api-client";
 import { apiClient } from "@/lib/api/api-client";
 import { captureAndRethrowException } from "@/lib/error/capture-and-rethrow-exception";
 
@@ -18,7 +18,7 @@ export const useAllBooks = () => {
   });
 };
 
-async function fetchBooks(): Promise<BookDto[]> {
+async function fetchBooks(): Promise<FetchBooksResponseDto> {
   try {
     const response = await apiClient.books.getAll();
     return response;
