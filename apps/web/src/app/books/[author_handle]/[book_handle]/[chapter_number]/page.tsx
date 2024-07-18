@@ -1,19 +1,18 @@
-import { useRouter } from "next/router";
 import ChapterContent from "@/features/books/components/chapter-content";
 
-export default function BookChapter() {
-  const router = useRouter();
-  const { authorHandle, bookHandle, chapterNumber } = router.query;
+export default function BookChapter({
+  params,
+}: {
+  params: {
+    author_handle: string;
+    book_handle: string;
+    chapter_number: string;
+  };
+}) {
+  // eslint-disable-next-line no-console -- Debugging chapter params
+  console.log("BookChapter params:", params);
 
-  if (
-    typeof authorHandle !== "string" ||
-    typeof bookHandle !== "string" ||
-    typeof chapterNumber !== "string"
-  ) {
-    return <div>Invalid URL parameters</div>;
-  }
-
-  const id = `${authorHandle}/${bookHandle}/${chapterNumber}`;
+  const id = `${params.author_handle}/${params.book_handle}/${params.chapter_number}`;
 
   return <ChapterContent id={id} />;
 }

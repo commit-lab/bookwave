@@ -1,13 +1,17 @@
-import { useRouter } from "next/router";
 import BookOverview from "@/features/books/components/book-overview";
 
-export default function BookPage() {
-  const router = useRouter();
-  const { authorHandle, bookHandle } = router.query;
+export default function BookPage({
+  params,
+}: {
+  params: { author_handle: string; book_handle: string };
+}) {
+  // eslint-disable-next-line no-console -- Debugging page params
+  console.log("BookPage params:", params);
 
-  if (typeof authorHandle !== "string" || typeof bookHandle !== "string") {
-    return <div>Invalid URL parameters</div>;
-  }
-
-  return <BookOverview authorHandle={authorHandle} bookHandle={bookHandle} />;
+  return (
+    <BookOverview
+      authorHandle={params.author_handle}
+      bookHandle={params.book_handle}
+    />
+  );
 }

@@ -4,12 +4,24 @@ import { Box, Typography, Sheet } from "@mui/joy";
 import { dummyData } from "../dummy-data";
 
 export default function ChapterContent({ id }: { id: string }) {
-  const book = dummyData.books[0];
+  // Parse the id to get authorHandle, bookHandle, and chapterNumber
+  const [authorHandle, bookHandle, chapterNumber] = id.split("/");
+
+  if (!authorHandle || !bookHandle || !chapterNumber) {
+    return <Typography level="h3">Invalid URL</Typography>;
+  }
+
+  // Find the correct book
+  const book = dummyData.books.find(
+    (b) => b.authorHandle === authorHandle && b.bookHandle === bookHandle
+  );
+
   if (!book) {
     return <Typography level="h3">Book not found</Typography>;
   }
+
   const currentChapter = book.chapters.find(
-    (chapter) => chapter.id === parseInt(id)
+    (chapter) => chapter.id === parseInt(chapterNumber, 10)
   );
 
   if (!currentChapter)
@@ -55,7 +67,10 @@ export default function ChapterContent({ id }: { id: string }) {
         }}
       >
         {currentChapter.id > 1 && (
-          <Link href={`/books/${String(currentChapter.id - 1)}`} passHref>
+          <Link
+            href={`/books/${authorHandle}/${bookHandle}/${String(currentChapter.id - 1)}`}
+            passHref
+          >
             <Typography
               sx={{ textDecoration: "none", cursor: "pointer", fontSize: 25 }}
             >
@@ -63,7 +78,7 @@ export default function ChapterContent({ id }: { id: string }) {
             </Typography>
           </Link>
         )}
-        <Link href="/books/toc" passHref>
+        <Link href={`/books/${authorHandle}/${bookHandle}/toc`} passHref>
           <Typography
             sx={{ textDecoration: "none", cursor: "pointer", fontSize: 25 }}
           >
@@ -71,7 +86,10 @@ export default function ChapterContent({ id }: { id: string }) {
           </Typography>
         </Link>
         {currentChapter.id < book.chapters.length && (
-          <Link href={`/books/${String(currentChapter.id + 1)}`} passHref>
+          <Link
+            href={`/books/${authorHandle}/${bookHandle}/${String(currentChapter.id + 1)}`}
+            passHref
+          >
             <Typography
               sx={{ textDecoration: "none", cursor: "pointer", fontSize: 25 }}
             >

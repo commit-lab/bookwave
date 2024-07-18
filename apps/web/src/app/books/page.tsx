@@ -1,7 +1,19 @@
-import { Box, Button, Sheet, Typography } from "@mui/joy";
+import {
+  Box,
+  Button,
+  Sheet,
+  Typography,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemContent,
+} from "@mui/joy";
 import Link from "next/link";
+import { dummyData } from "@/features/books/dummy-data"; // Adjust this import path as needed
 
 export default function BooksPage() {
+  const books = dummyData.books;
+
   return (
     <Box sx={{ display: "flex", height: "100vh", bgcolor: "#f0f0f0" }}>
       {/* Navigation Sidebar */}
@@ -19,21 +31,6 @@ export default function BooksPage() {
             Bookwave
           </Typography>
         </Box>
-        <Box sx={{ flexGrow: 1, p: 2 }}>
-          <Typography level="h6" component="h2">
-            <Link href="/books/toc">Table of Contents</Link>
-          </Typography>
-        </Box>
-        <Box sx={{ flexGrow: 1, p: 2 }}>
-          <Typography level="h6" component="h2">
-            Books
-          </Typography>
-        </Box>
-        <Box sx={{ p: 2, borderTop: "1px solid #e0e0e0" }}>
-          <Typography level="body2" component="p">
-            Your Account
-          </Typography>
-        </Box>
       </Sheet>
 
       {/* Main Content */}
@@ -45,17 +42,40 @@ export default function BooksPage() {
             borderRadius: 2,
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
             height: "100%",
           }}
         >
-          <Typography level="h4" component="h2" sx={{ mb: 2 }}>
-            You don't have any books!
-          </Typography>
-          <Button variant="solid" color="primary">
-            CREATE ONE TO GET STARTED
-          </Button>
+          {books.length > 0 ? (
+            <>
+              <Typography level="h4" component="h2" sx={{ mb: 2 }}>
+                Your Books
+              </Typography>
+              <List>
+                {books.map((book) => (
+                  <ListItem key={book.id}>
+                    <ListItemButton
+                      component={Link}
+                      href={`/books/${book.authorHandle}/${book.bookHandle}`}
+                    >
+                      <ListItemContent>
+                        <Typography>{book.title}</Typography>
+                        <Typography>by {book.author}</Typography>
+                      </ListItemContent>
+                    </ListItemButton>
+                  </ListItem>
+                ))}
+              </List>
+            </>
+          ) : (
+            <Box sx={{ textAlign: "center" }}>
+              <Typography level="h4" component="h2" sx={{ mb: 2 }}>
+                You don't have any books!
+              </Typography>
+              <Button variant="solid" color="primary">
+                CREATE ONE TO GET STARTED
+              </Button>
+            </Box>
+          )}
         </Box>
       </Box>
     </Box>

@@ -12,9 +12,15 @@ export default function BookOverview({
   authorHandle,
   bookHandle,
 }: BookOverviewProps) {
+  // eslint-disable-next-line no-console -- Debugging book overview params
+  console.log("BookOverview params:", { authorHandle, bookHandle });
+
   const book = dummyData.books.find(
     (b) => b.authorHandle === authorHandle && b.bookHandle === bookHandle
   );
+
+  // eslint-disable-next-line no-console -- Debugging found book
+  console.log("Found book:", book);
 
   if (!book) {
     return <Typography level="h3">Book not found</Typography>;

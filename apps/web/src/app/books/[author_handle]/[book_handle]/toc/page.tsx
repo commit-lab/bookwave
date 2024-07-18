@@ -1,15 +1,17 @@
-import { useRouter } from "next/router";
 import TableOfContents from "@/features/books/components/table-of-contents";
 
-export default function BookTableOfContents() {
-  const router = useRouter();
-  const { authorHandle, bookHandle } = router.query;
-
-  if (typeof authorHandle !== "string" || typeof bookHandle !== "string") {
-    return <div>Invalid URL parameters</div>;
-  }
+export default function BookTableOfContents({
+  params,
+}: {
+  params: { author_handle: string; book_handle: string };
+}) {
+  // eslint-disable-next-line no-console -- Debugging TOC params
+  console.log("BookTableOfContents params:", params);
 
   return (
-    <TableOfContents authorHandle={authorHandle} bookHandle={bookHandle} />
+    <TableOfContents
+      authorHandle={params.author_handle}
+      bookHandle={params.book_handle}
+    />
   );
 }
