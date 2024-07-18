@@ -9,7 +9,7 @@ import {
   ListItemContent,
 } from "@mui/joy";
 import Link from "next/link";
-import { dummyData } from "@/features/books/dummy-data"; // Adjust this import path as needed
+import { dummyData } from "@/features/books/dummy-data";
 
 export default function BooksPage() {
   const books = dummyData.books;
