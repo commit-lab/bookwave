@@ -6,6 +6,7 @@ import type { BookDto } from '../models/BookDto';
 import type { BookWithChapterTitlesDto } from '../models/BookWithChapterTitlesDto';
 import type { CreateBookDto } from '../models/CreateBookDto';
 import type { DeletedBookResponseDto } from '../models/DeletedBookResponseDto';
+import type { FetchBooksResponseDto } from '../models/FetchBooksResponseDto';
 import type { UpdateBookDto } from '../models/UpdateBookDto';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -16,10 +17,10 @@ export class BooksService {
     constructor(public readonly httpRequest: BaseHttpRequest) {}
 
     /**
-     * @returns BookDto All books by author successfully found.
+     * @returns FetchBooksResponseDto All books by author successfully found.
      * @throws ApiError
      */
-    public getAll(): CancelablePromise<Array<BookDto>> {
+    public getAll(): CancelablePromise<FetchBooksResponseDto> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/books',

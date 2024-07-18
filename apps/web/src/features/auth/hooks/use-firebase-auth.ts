@@ -19,8 +19,14 @@ interface FirebaseAuth {
 }
 
 export const useFirebaseAuth = (): FirebaseAuth => {
-  const { setSocialUserIdentity, setAuthError, setAll, socialUserIdentity } =
-    useAuthStore();
+  const {
+    setSocialUserIdentity,
+    setAuthError,
+    setAll,
+    setHasHydrated,
+    socialUserIdentity,
+  } = useAuthStore();
+
   const { auth } = getFirebaseAuth();
 
   useEffect(() => {
@@ -31,6 +37,7 @@ export const useFirebaseAuth = (): FirebaseAuth => {
         } else {
           setSocialUserIdentity(null);
         }
+        setHasHydrated(true);
       });
       return () => {
         unsubscribeAuthState();
