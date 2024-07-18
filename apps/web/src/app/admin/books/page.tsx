@@ -4,20 +4,15 @@ import { Box, CircularProgress, Typography } from "@mui/joy";
 import { redirect } from "next/navigation";
 import BookContent from "@/features/admin/components/book-content";
 import { useIsSignedIn } from "@/features/auth/hooks/use-is-signed-in";
-import { useAuthorInfo } from "@/features/author/queries";
 import { CreateAuthorModal } from "@/features/author/components/create-author-modal";
 import CreateBook from "@/features/admin/components/create-book";
+import { useAuthStore } from "@/features/auth/stores/auth-store";
 
 export default function Books() {
+  const hasHydrated = useAuthStore((state) => state._hasHydrated);
   const isSignedIn = useIsSignedIn();
-  const { data, isLoading } = useAuthorInfo();
-  if (!isSignedIn) {
-    redirect("/home");
-  }
 
-  const authorExists = data?.author;
-
-  if (isLoading) {
+  if (!hasHydrated) {
     return (
       <Box sx={{ display: "flex" }}>
         <CircularProgress />
@@ -25,8 +20,13 @@ export default function Books() {
     );
   }
 
+  if (!isSignedIn) {
+    redirect("/home");
+  }
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
+      <CreateAuthorModal />
       <Box
         sx={{
           display: "flex",
@@ -42,7 +42,6 @@ export default function Books() {
       </Box>
 
       <BookContent />
-      {!authorExists && <CreateAuthorModal />}
     </Box>
   );
 }
