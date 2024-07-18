@@ -7,5 +7,16 @@
         "prebuild": "npm install @rollup/rollup-linux-x64-gnu"
       }
     }
-  ]
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
+  "env": {
+    "NEXT_PUBLIC_VERCEL_ENV": "production"
+  },
+  "buildCommand": "cd ../.. && turbo run build --filter={/apps/web}",
+  "outputDirectory": "apps/web/.next"
 }
