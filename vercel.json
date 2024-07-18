@@ -1,0 +1,11 @@
+{
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/node",
+      "config": {
+        "prebuild": "npm install @rollup/rollup-linux-x64-gnu"
+      }
+    }
+  ]
+}
