@@ -69,7 +69,7 @@ export default function BooksPage() {
           ) : (
             <Box sx={{ textAlign: "center" }}>
               <Typography level="h4" component="h2" sx={{ mb: 2 }}>
-                You don't have any books!
+                You dont have any books!
               </Typography>
               <Button variant="solid" color="primary">
                 CREATE ONE TO GET STARTED
