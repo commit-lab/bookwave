@@ -1,5 +1,7 @@
 import {
+  Box,
   Button,
+  CircularProgress,
   Modal,
   ModalDialog,
   Typography,
@@ -16,6 +18,7 @@ import {
   ApiNotFoundError,
   ApiUnauthorizedError,
 } from "@/lib/error/api-errors";
+import { useAuthorInfo } from "@/features/author/queries";
 
 interface CreateAuthorFormFields {
   firstName: string;
@@ -58,6 +61,21 @@ export const CreateAuthorModal = () => {
       }
     }
   });
+
+  const { data, isLoading } = useAuthorInfo();
+  const authorExists = data?.author;
+
+  if (isLoading) {
+    return (
+      <Box sx={{ display: "flex" }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (authorExists) {
+    return null;
+  }
 
   return (
     <Modal open>
