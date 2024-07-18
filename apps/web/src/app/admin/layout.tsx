@@ -11,7 +11,7 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const params = useParams();
-  const isSpecificRoute = params.chapter_number;
+  const isSpecificRoute = params.chapterNumber;
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       {!isSpecificRoute && <TopBar />}
