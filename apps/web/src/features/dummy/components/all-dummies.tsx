@@ -1,4 +1,4 @@
-import { Card, CircularProgress, Stack, Typography } from "@mui/joy";
+import { Link, Card, CircularProgress, Stack, Typography } from "@mui/joy";
 import { useAllDummies } from "@/features/dummy/queries";
 
 export const AllDummies = () => {
@@ -10,7 +10,7 @@ export const AllDummies = () => {
       ) : (
         data?.map((dummy) => (
           <Card key={`${dummy.foo}-${dummy.bar}`}>
-            <Typography level="title-md">{dummy.foo}</Typography>
+            <Link href={`/dummy/${dummy.id}`}>{dummy.id}</Link>
             <Typography level="body-sm">Foo</Typography>
             <Typography level="title-md">{dummy.bar}</Typography>
             <Typography level="body-sm">Bar</Typography>

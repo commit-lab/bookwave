@@ -44,12 +44,9 @@ export default function BookOptions({ bookId }: { bookId: string }) {
 
   return (
     <Box sx={{ padding: 2 }}>
-      <MoreVert
-        onClick={handleClick}
-        sx={{
-          cursor: "pointer",
-        }}
-      />
+      <Box onClick={handleClick}>
+        <MoreVert sx={{ cursor: "pointer" }} />
+      </Box>
       <Popover open={Boolean(popOver)} anchorEl={popOver} onClose={handleClose}>
         <Box
           sx={{ display: "flex", flexDirection: "column", p: 2, gap: "10px" }}

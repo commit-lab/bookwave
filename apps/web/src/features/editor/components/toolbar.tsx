@@ -13,7 +13,6 @@ import { type Editor } from "@tiptap/react";
 import React from "react";
 
 export interface ToolbarProps {
-  className?: string;
   editor?: Editor | null;
 }
 

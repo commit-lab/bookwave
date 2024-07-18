@@ -1,17 +1,16 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { Box, Button, Card, CardContent, Typography } from "@mui/joy";
 import { useIsSignedIn } from "@/features/auth/hooks/use-is-signed-in";
 import { useSignIn } from "@/features/auth/hooks/use-sign-in";
 
 export default function SignIn() {
-  const router = useRouter();
   const signIn = useSignIn();
   const isSignedIn = useIsSignedIn();
 
   if (isSignedIn) {
-    router.push("/admin/books");
+    redirect("/admin/books");
   }
 
   return (

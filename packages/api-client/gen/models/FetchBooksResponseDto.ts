@@ -3,10 +3,10 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type DummyDto = {
-    id: string;
-    foo: string;
-    bar: string;
-    content: string;
+import type { BookDto } from './BookDto';
+
+export type FetchBooksResponseDto = {
+    isNewAccount: boolean;
+    books: Array<BookDto>;
 };
 

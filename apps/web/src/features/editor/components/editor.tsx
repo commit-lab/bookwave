@@ -5,20 +5,39 @@ import { Underline } from "@tiptap/extension-underline";
 import { Sheet } from "@mui/joy";
 import Toolbar from "@/features/editor/components/toolbar";
 
-const Editor = () => {
+interface EditorProps {
+  content: string;
+  onChange: (value: string) => void;
+  contentRecentlyChanged: boolean;
+  setContentRecentlyChanged: React.Dispatch<React.SetStateAction<boolean>>;
+}
+const Editor = (props: EditorProps) => {
+  const {
+    content,
+    onChange,
+    contentRecentlyChanged,
+    setContentRecentlyChanged,
+  } = props;
+
   const editor = useEditor({
     extensions: [StarterKit, Underline],
-    content: testContent,
+    content,
     editorProps: {
       attributes: {
         class: "tiptap",
       },
     },
+    onUpdate: ({ editor: richTextEditor }) => {
+      if (!contentRecentlyChanged) {
+        setContentRecentlyChanged(true);
+      }
+      onChange(richTextEditor.getHTML());
+    },
   });
 
   return (
     <>
-      <Sheet sx={{ maxWidth: "40rem", p: 4 }}>
+      <Sheet sx={{ p: 4 }}>
         <EditorContent editor={editor} />
       </Sheet>
 
@@ -28,41 +47,3 @@ const Editor = () => {
 };
 
 export default Editor;
-
-const testContent = `
-<h1>
-  H1 Heading
-</h1>
-<h2>
-  H2 Heading
-</h2>
-<h3>
-  H3 Heading
-</h3>
-<br/>
-<p>
-  this is a <em>italic</em> and this is <strong>bold</strong>. 
-</p>
-
-<br/>
-<p>
- <u> This is underline</u>
-</p>
-
-<ul>
-  <li>Bullet list</li>
-</ul>
-
-<ol>
-  <li>list item 1</li>
-  <li>list item 2</li>
-  <li>list item 3</li>
-</ol>
-
-<pre><code> console.log("You make me smile")
-</code></pre>
-
-<blockquote>
-Here's a blockquote
-</blockquote>
-`;
