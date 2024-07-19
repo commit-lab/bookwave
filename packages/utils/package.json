@@ -10,7 +10,6 @@
     "dist/**"
   ],
   "scripts": {
-    "prebuild": "npm install @rollup/rollup-linux-x64-gnu",
     "build": "tsup src/index.ts --format esm,cjs --dts",
     "dev": "tsup src/index.ts --format esm,cjs --watch --dts",
     "lint": "eslint src/",
