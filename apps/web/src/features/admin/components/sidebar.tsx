@@ -3,7 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { Box, Button, Typography } from "@mui/joy";
 import { useTheme } from "@mui/joy/styles";
-import { ArrowBack } from "@mui/icons-material";
+import { ArrowBack, Square } from "@mui/icons-material";
 
 interface SideBarProps {
   bookTitle: string | undefined;
@@ -11,9 +11,11 @@ interface SideBarProps {
 
 export default function SideBar({ bookTitle }: SideBarProps) {
   const params = useParams();
-  const isSpecificRoute = params.bookHandle;
   const theme = useTheme();
   const router = useRouter();
+
+  const isSpecificRoute = params.bookHandle;
+
   const handleBackClick = () => {
     router.back();
   };
@@ -42,9 +44,18 @@ export default function SideBar({ bookTitle }: SideBarProps) {
             Back to Books
           </Button>
         ) : (
-          <Typography>Books</Typography>
+          <Box
+            sx={{
+              display: "flex",
+              gap: "10px",
+              alignItems: "center",
+            }}
+          >
+            <Square />
+            <Typography level="h4">Books</Typography>
+          </Box>
         )}
-        {isSpecificRoute ? <Typography>Book</Typography> : null}
+        {isSpecificRoute ? <Typography level="h4">Book</Typography> : null}
         <Typography level="h4">{bookTitle}</Typography>
       </Box>
 
