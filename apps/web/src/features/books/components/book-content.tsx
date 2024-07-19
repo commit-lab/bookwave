@@ -3,8 +3,8 @@
 import { Box, Stack, Typography } from "@mui/joy";
 import { useTheme } from "@mui/joy/styles";
 import { useAllBooks } from "@/features/books/queries";
-import CreateBook from "@/features/admin/components/create-book";
-import BookCard from "@/features/admin/components/book-card";
+import CreateBook from "@/features/books/components/create-book";
+import BookCard from "@/features/books/components/book-card";
 
 export default function BookContent() {
   const { data } = useAllBooks();

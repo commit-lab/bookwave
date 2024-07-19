@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Box, Button } from "@mui/joy";
-import CreateBookForm from "@/features/admin/components/create-book-form";
+import CreateBookForm from "@/features/books/components/create-book-form";
 
 export default function CreateBook({ formName }: { formName: string }) {
   const [showBookForm, setShowBookForm] = useState(false);

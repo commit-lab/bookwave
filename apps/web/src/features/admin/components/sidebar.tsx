@@ -56,7 +56,14 @@ export default function SideBar({ bookTitle }: SideBarProps) {
           </Box>
         )}
         {isSpecificRoute ? <Typography level="h4">Book</Typography> : null}
-        <Typography level="h4">{bookTitle}</Typography>
+        <Typography
+          sx={{
+            fontSize: "20px",
+            fontStyle: "light",
+          }}
+        >
+          {bookTitle}
+        </Typography>
       </Box>
 
       <Button>Your account</Button>

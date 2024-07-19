@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Box, Typography } from "@mui/joy";
 import { useTheme } from "@mui/joy/styles";
 import { AppBar } from "@mui/material";
-import { Circle, Pentagon, Square } from "@mui/icons-material";
+import { Circle } from "@mui/icons-material";
 
 export default function TopBar() {
   const theme = useTheme();
