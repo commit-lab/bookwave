@@ -16,7 +16,6 @@ export default function ChaptersPage({
   params: ChaptersPageProps;
 }) {
   const { data } = useAllChapters(bookHandle);
-
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <Box
@@ -47,7 +46,9 @@ export default function ChaptersPage({
           bookId={data ? data.id : ""}
           chapterTitles={data?.chapterTitles}
         />
-        <CreateChapter bookId={data ? data.id : ""} />
+        {data?.chapterTitles.length !== 0 && (
+          <CreateChapter bookId={data ? data.id : ""} />
+        )}
       </Box>
     </Box>
   );

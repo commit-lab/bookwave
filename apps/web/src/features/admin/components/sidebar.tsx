@@ -58,7 +58,7 @@ export default function SideBar({ bookTitle }: SideBarProps) {
         {isSpecificRoute ? <Typography level="h4">Book</Typography> : null}
         <Typography
           sx={{
-            fontSize: "20px",
+            fontSize: "17px",
             fontStyle: "light",
           }}
         >

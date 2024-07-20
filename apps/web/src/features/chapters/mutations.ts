@@ -24,3 +24,25 @@ async function createChapter(bookId: string, chapter: CreateChapterDto) {
     captureAndRethrowException(error);
   }
 }
+
+export const useDeleteChapterMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ chapterId }: { chapterId: string }) =>
+      deleteChapter(chapterId),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ChaptersApiKeys.fetchAll(),
+      });
+    },
+  });
+};
+
+async function deleteChapter(chapterId: string) {
+  try {
+    const response = await apiClient.chapters.deleteChapter(chapterId);
+    return response;
+  } catch (error: unknown) {
+    captureAndRethrowException(error);
+  }
+}
