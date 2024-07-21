@@ -49,7 +49,8 @@ export default function ChapterCard({
         </Box>
       </CardContent>
       <CardActions>
-        <ChapterOptions />
+        {/*Temp hardcoding chapterId*/}
+        <ChapterOptions chapterId="669afdcc533ca0656679658c" />
       </CardActions>
     </Card>
   );

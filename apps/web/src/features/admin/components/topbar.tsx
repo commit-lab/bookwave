@@ -1,13 +1,13 @@
 "use client";
 
-import { Typography } from "@mui/joy";
+import Link from "next/link";
+import { Box, Typography } from "@mui/joy";
 import { useTheme } from "@mui/joy/styles";
 import { AppBar } from "@mui/material";
-import Link from "next/link";
+import { Circle } from "@mui/icons-material";
 
 export default function TopBar() {
   const theme = useTheme();
-
   return (
     <AppBar
       position="static"
@@ -16,10 +16,23 @@ export default function TopBar() {
       <Typography
         level="h4"
         sx={{
-          cursor: "pointer",
+          color: theme.palette.primary[500],
         }}
       >
-        <Link href="/">Bookwave</Link>
+        <Box
+          sx={{
+            display: "flex",
+            gap: "10px",
+            alignItems: "center",
+          }}
+        >
+          <Circle
+            sx={{
+              color: theme.palette.primary[500],
+            }}
+          />
+          <Link href="/">Bookwave</Link>
+        </Box>
       </Typography>
     </AppBar>
   );

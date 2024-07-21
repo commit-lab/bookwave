@@ -1,9 +1,9 @@
 "use client";
 
 import { Box, Typography } from "@mui/joy";
-import BookContent from "@/features/admin/components/book-content";
+import BookContent from "@/features/books/components/book-content";
 import { CreateAuthorModal } from "@/features/author/components/create-author-modal";
-import CreateBook from "@/features/admin/components/create-book";
+import CreateBook from "@/features/books/components/create-book";
 
 export default function Books() {
   return (

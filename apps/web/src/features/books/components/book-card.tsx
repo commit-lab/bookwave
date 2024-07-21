@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Box, Card, CardActions, CardContent, Typography } from "@mui/joy";
 import { useTheme } from "@mui/joy/styles";
 import { type BookDto } from "@bookwave/api-client";
-import BookOptions from "@/features/admin/components/book-options";
+import BookOptions from "@/features/books/components/book-options";
 
 interface BookCardProps {
   book: BookDto;
