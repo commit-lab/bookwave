@@ -1,58 +1,31 @@
 "use client";
 
-import { ArrowBack } from "@mui/icons-material";
-import { Box, Button } from "@mui/joy";
-import { redirect, useRouter } from "next/navigation";
+import { CircularProgress } from "@mui/joy";
 import React from "react";
-import { useIsSignedIn } from "@/features/auth/hooks/use-is-signed-in";
+import { useChapter } from "@/features/chapters/queries";
+import { EditChapterForm } from "@/features/chapters/components/edit-chapter-form";
 
-interface EditChapterPageProps {
-  bookHandle: string;
-  chapterNumber: number;
-}
-
+//THE PAGE
 export default function EditChapterPage({
   params: { bookHandle, chapterNumber },
 }: {
-  params: EditChapterPageProps;
+  params: { bookHandle: string; chapterNumber: number };
 }) {
-  const router = useRouter();
-  const isSignedIn = useIsSignedIn();
-
-  if (!isSignedIn) {
-    redirect("/home");
-  }
-  const handleBackClick = () => {
-    router.back();
-  };
-
-  // const { data, isLoading, error } = useChapter(bookHandle, chapterNumber);
+  const { data, isLoading } = useChapter(bookHandle, chapterNumber);
 
   return (
     <>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          mx: "4rem",
-          my: "2rem",
-          flex: 1,
-        }}
-      >
-        <Button
-          variant="plain"
-          startDecorator={<ArrowBack />}
-          onClick={handleBackClick}
-        >
-          Back To Chapters
-        </Button>{" "}
-        <Button>Save</Button>
-      </Box>
+      {isLoading ? <CircularProgress /> : null}
 
-      <div>{bookHandle}</div>
-      <div>{chapterNumber}</div>
-      {/* <div>{data?.content}</div> */}
+      {data ? (
+        <EditChapterForm
+          chapterId={data.id}
+          previousChapterTitle={data.title}
+          previousChapterContent={data.content}
+        />
+      ) : (
+        <div>Display an error</div>
+      )}
     </>
   );
 }

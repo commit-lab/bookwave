@@ -19,7 +19,7 @@ import { DeletedChapterResponseDto } from "@/chapter/dto/deleted-chapter-respons
 
 @ApiBearerAuth()
 @ApiTags("chapters")
-@Controller("books/:bookId/chapters")
+@Controller(":bookHandle/chapters")
 export class ChapterController {
   private logger = new Logger("ChapterController");
   constructor(private readonly chapterService: ChapterService) {}
@@ -30,18 +30,21 @@ export class ChapterController {
   })
   @Get("/:chapterNumber")
   async getOne(
-    @Param("bookId") bookId: string,
+    @Param("bookHandle") bookHandle: string,
     @Param("chapterNumber") chapterNumber: number
   ) {
     try {
       this.logger.log(
-        `Retrieving chapter with chapter number: ${chapterNumber.toString()} for book with book id: ${bookId}.`
+        `Retrieving chapter with chapter number: ${chapterNumber.toString()} for book with book id: ${bookHandle}.`
       );
-      const chapter = await this.chapterService.findOne(bookId, chapterNumber);
+      const chapter = await this.chapterService.findOne(
+        bookHandle,
+        chapterNumber
+      );
       return chapter;
     } catch {
       this.logger.error(
-        `Failed to get chapter with chapter number: ${chapterNumber.toString()} for book with book id: ${bookId}.`
+        `Failed to get chapter with chapter number: ${chapterNumber.toString()} for book with book id: ${bookHandle}.`
       );
       throw new NotFoundException(
         `Chapter with chapter number: ${chapterNumber.toString()} not found.`
