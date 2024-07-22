@@ -10,17 +10,12 @@ import {
   FormHelperText,
   Snackbar,
 } from "@mui/joy";
-import { TextStyle } from "@tiptap/extension-text-style";
-import { Underline } from "@tiptap/extension-underline";
-import { useEditor, EditorContent } from "@tiptap/react";
-import { StarterKit } from "@tiptap/starter-kit";
 import DOMPurify from "dompurify";
 import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { FontFamily } from "@tiptap/extension-font-family";
-import Toolbar from "@/features/editor/components/toolbar";
+import { Controller, useForm } from "react-hook-form";
 import { useGoBack } from "@/shared/routing/hooks/use-go-back";
 import { useUpdateChapterMutation } from "@/features/chapters/mutations";
+import Editor from "@/features/editor/components/editor";
 
 const TWO_SECONDS_MS = 2000;
 
@@ -46,7 +41,7 @@ export const EditChapterForm = (props: EditChapterFormProps) => {
     register,
     formState: { errors, isValid },
     handleSubmit,
-    setValue,
+    control,
   } = useForm<EditChapterFormFields>({
     defaultValues: {
       title: previousChapterTitle,
@@ -65,22 +60,6 @@ export const EditChapterForm = (props: EditChapterFormProps) => {
     } catch (err: unknown) {
       setSnackbarIsOpen(true);
     }
-  });
-
-  const editor = useEditor({
-    extensions: [StarterKit, Underline, TextStyle, FontFamily],
-    content: previousChapterContent,
-    editorProps: {
-      attributes: {
-        class: "tiptap",
-      },
-    },
-    onUpdate: ({ editor: richTextEditor }) => {
-      if (!contentRecentlyChanged) {
-        setContentRecentlyChanged(true);
-      }
-      setValue("content", richTextEditor.getHTML());
-    },
   });
 
   const cleanData = (htmlContent: string) => {
@@ -172,12 +151,15 @@ export const EditChapterForm = (props: EditChapterFormProps) => {
                   }}
                   {...register("title", {
                     required: "Title can't be blank",
+                    minLength: 3,
+                    maxLength: 50,
                   })}
                   placeholder="Chapter Title"
                 />
                 {errors.title ? (
                   <FormHelperText>
-                    <InfoOutlined /> Title can&apos;t be blank
+                    <InfoOutlined /> Title can&apos;t be blank and must be
+                    between 3 and 50 characters.
                   </FormHelperText>
                 ) : null}
               </Typography>
@@ -188,14 +170,21 @@ export const EditChapterForm = (props: EditChapterFormProps) => {
             variant="plain"
             sx={{ minHeight: "30rem", width: { xs: "80%", sm: "50%" } }}
           >
-            <EditorContent
-              {...register("content", { required: "Content can't be blank" })}
-              editor={editor}
+            <Controller
+              name="content"
+              control={control}
+              render={({ field }) => (
+                <Editor
+                  content={field.value}
+                  onChange={field.onChange}
+                  contentRecentlyChanged={contentRecentlyChanged}
+                  setContentRecentlyChanged={setContentRecentlyChanged}
+                />
+              )}
             />
           </Sheet>
         </Stack>
       </form>
-      <Toolbar editor={editor} />
       <Snackbar
         open={snackbarIsOpen}
         onClose={() => {

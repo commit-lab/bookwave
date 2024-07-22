@@ -13,7 +13,7 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const params = useParams();
-  const isSpecificRoute = params.chapterNumber;
+  const isSpecificRoute = Boolean(params.chapterNumber);
   const isSignedIn = useIsSignedIn();
 
   if (!isSignedIn) {

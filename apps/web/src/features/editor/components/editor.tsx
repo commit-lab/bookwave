@@ -2,8 +2,9 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import { StarterKit } from "@tiptap/starter-kit";
 import { Underline } from "@tiptap/extension-underline";
-import { Sheet } from "@mui/joy";
-import Toolbar from "@/features/editor/components/toolbar";
+import { TextStyle } from "@tiptap/extension-text-style";
+import { FontFamily } from "@tiptap/extension-font-family";
+import Toolbar from "@/features/editor/components/toolbar/toolbar";
 
 interface EditorProps {
   content: string;
@@ -20,7 +21,7 @@ const Editor = (props: EditorProps) => {
   } = props;
 
   const editor = useEditor({
-    extensions: [StarterKit, Underline],
+    extensions: [StarterKit, Underline, TextStyle, FontFamily],
     content,
     editorProps: {
       attributes: {
@@ -36,13 +37,9 @@ const Editor = (props: EditorProps) => {
   });
 
   return (
-    <>
-      <Sheet sx={{ p: 4 }}>
-        <EditorContent editor={editor} />
-      </Sheet>
-
+    <EditorContent editor={editor}>
       <Toolbar editor={editor} />
-    </>
+    </EditorContent>
   );
 };
 
