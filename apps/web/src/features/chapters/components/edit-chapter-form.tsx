@@ -35,7 +35,9 @@ export const EditChapterForm = (props: EditChapterFormProps) => {
 
   const [contentRecentlyChanged, setContentRecentlyChanged] = useState(false);
 
-  const [snackbarIsOpen, setSnackbarIsOpen] = useState(false);
+  const [contentIsValid, setContentIsValid] = useState(true);
+
+  const [errorSnackbarIsOpen, setErrorSnackbarIsOpen] = useState(false);
 
   const {
     register,
@@ -55,10 +57,14 @@ export const EditChapterForm = (props: EditChapterFormProps) => {
       title: cleanData(fields.title),
       content: cleanData(fields.content),
     };
+    if (!contentIsValid) {
+      updatedChapter.content = "";
+    }
+
     try {
       await updateChapterMutation.mutateAsync({ chapterId, updatedChapter });
     } catch (err: unknown) {
-      setSnackbarIsOpen(true);
+      setErrorSnackbarIsOpen(true);
     }
   });
 
@@ -152,14 +158,14 @@ export const EditChapterForm = (props: EditChapterFormProps) => {
                   {...register("title", {
                     required: "Title can't be blank",
                     minLength: 3,
-                    maxLength: 50,
+                    maxLength: 100,
                   })}
                   placeholder="Chapter Title"
                 />
                 {errors.title ? (
                   <FormHelperText>
                     <InfoOutlined /> Title can&apos;t be blank and must be
-                    between 3 and 50 characters.
+                    between 3 and 100 characters.
                   </FormHelperText>
                 ) : null}
               </Typography>
@@ -179,6 +185,7 @@ export const EditChapterForm = (props: EditChapterFormProps) => {
                   onChange={field.onChange}
                   contentRecentlyChanged={contentRecentlyChanged}
                   setContentRecentlyChanged={setContentRecentlyChanged}
+                  setContentIsValid={setContentIsValid}
                 />
               )}
             />
@@ -186,9 +193,9 @@ export const EditChapterForm = (props: EditChapterFormProps) => {
         </Stack>
       </form>
       <Snackbar
-        open={snackbarIsOpen}
+        open={errorSnackbarIsOpen}
         onClose={() => {
-          setSnackbarIsOpen(false);
+          setErrorSnackbarIsOpen(false);
         }}
         autoHideDuration={TWO_SECONDS_MS}
         color="danger"

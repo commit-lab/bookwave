@@ -11,6 +11,7 @@ interface EditorProps {
   onChange: (value: string) => void;
   contentRecentlyChanged: boolean;
   setContentRecentlyChanged: React.Dispatch<React.SetStateAction<boolean>>;
+  setContentIsValid: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const Editor = (props: EditorProps) => {
   const {
@@ -18,6 +19,7 @@ const Editor = (props: EditorProps) => {
     onChange,
     contentRecentlyChanged,
     setContentRecentlyChanged,
+    setContentIsValid,
   } = props;
 
   const editor = useEditor({
@@ -32,6 +34,10 @@ const Editor = (props: EditorProps) => {
       if (!contentRecentlyChanged) {
         setContentRecentlyChanged(true);
       }
+      editor?.state.doc.textContent.length === 0
+        ? setContentIsValid(false)
+        : setContentIsValid(true);
+
       onChange(richTextEditor.getHTML());
     },
   });

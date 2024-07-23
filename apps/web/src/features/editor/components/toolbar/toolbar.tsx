@@ -1,5 +1,4 @@
 import {
-  Abc,
   Code,
   FormatBold,
   FormatItalic,
@@ -9,8 +8,8 @@ import {
   FormatUnderlined,
   TextRotationNone,
 } from "@mui/icons-material";
-import { Divider, Sheet, ToggleButtonGroup } from "@mui/joy";
-import { AppBar, ToggleButton } from "@mui/material";
+import { Sheet, ToggleButtonGroup } from "@mui/joy";
+import { Divider, AppBar, ToggleButton } from "@mui/material";
 import { type Editor } from "@tiptap/react";
 import React from "react";
 import H1HeadingIcon from "@/features/editor/components/toolbar/h1-heading-icon";
@@ -84,10 +83,7 @@ const Toolbar = (props: ToolbarProps) => {
           </ToggleButton>
         </ToggleButtonGroup>
 
-        <Divider
-          orientation="vertical"
-          sx={{ height: "60%", alignSelf: "center" }}
-        />
+        <Divider orientation="vertical" variant="middle" flexItem />
 
         <ToggleButtonGroup
           variant="plain"
@@ -125,10 +121,7 @@ const Toolbar = (props: ToolbarProps) => {
             <H3HeadingIcon />
           </ToggleButton>
         </ToggleButtonGroup>
-        <Divider
-          orientation="vertical"
-          sx={{ height: "60%", alignSelf: "center" }}
-        />
+        <Divider orientation="vertical" variant="middle" flexItem />
 
         <ToggleButtonGroup
           variant="plain"
@@ -153,10 +146,8 @@ const Toolbar = (props: ToolbarProps) => {
           </ToggleButton>
         </ToggleButtonGroup>
 
-        <Divider
-          orientation="vertical"
-          sx={{ height: "60%", alignSelf: "center" }}
-        />
+        <Divider orientation="vertical" variant="middle" flexItem />
+
         <ToggleButtonGroup
           variant="plain"
           spacing={1.5}
