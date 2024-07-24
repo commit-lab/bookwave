@@ -10,9 +10,9 @@ import {
   FormHelperText,
   Snackbar,
 } from "@mui/joy";
-import DOMPurify from "dompurify";
 import { useState, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { cleanData } from "@bookwave/utils";
 import { useGoBack } from "@/shared/routing/hooks/use-go-back";
 import { useUpdateChapterMutation } from "@/features/chapters/mutations";
 import Editor from "@/features/editor/components/editor";
@@ -65,10 +65,6 @@ export const EditChapterForm = (props: EditChapterFormProps) => {
       setErrorSnackbarIsOpen(true);
     }
   });
-
-  const cleanData = (htmlContent: string) => {
-    return DOMPurify.sanitize(htmlContent);
-  };
 
   useEffect(() => {
     const intervalId = setInterval(() => {

@@ -42,7 +42,6 @@ a {
   outline: none;
 
   p {
-    font-family: "Inter", sans-serif;
     font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
@@ -53,9 +52,15 @@ a {
   h3 {
     line-height: 1.1;
     text-wrap: pretty;
-    font-family: "Lato", sans-serif;
     font-weight: 900;
     font-style: normal;
+  }
+
+  h1,
+  h2,
+  h3,
+  p {
+    font-family: "Lato", sans-serif;
   }
 
   h1 {
