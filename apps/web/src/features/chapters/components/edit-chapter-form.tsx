@@ -32,11 +32,8 @@ interface EditChapterFormFields {
 
 export const EditChapterForm = (props: EditChapterFormProps) => {
   const { chapterId, previousChapterTitle, previousChapterContent } = props;
-
   const [contentRecentlyChanged, setContentRecentlyChanged] = useState(false);
-
   const [contentIsValid, setContentIsValid] = useState(true);
-
   const [errorSnackbarIsOpen, setErrorSnackbarIsOpen] = useState(false);
 
   const {
@@ -44,6 +41,7 @@ export const EditChapterForm = (props: EditChapterFormProps) => {
     formState: { errors, isValid },
     handleSubmit,
     control,
+    watch,
   } = useForm<EditChapterFormFields>({
     defaultValues: {
       title: previousChapterTitle,
@@ -85,6 +83,15 @@ export const EditChapterForm = (props: EditChapterFormProps) => {
     }; // Cleanup interval
   });
 
+  useEffect(() => {
+    const subscription = watch(() => {
+      setContentRecentlyChanged(true);
+    });
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [watch]);
+
   return (
     <>
       <form onSubmit={doSubmit}>
@@ -123,18 +130,24 @@ export const EditChapterForm = (props: EditChapterFormProps) => {
           sx={{ width: "100%" }}
         >
           <Sheet variant="plain" sx={{ width: { xs: "80%", sm: "50%" } }}>
-            <FormControl
-              disabled={updateChapterMutation.isPending}
-              error={Boolean(errors.title)}
-            >
+            <FormControl error={Boolean(errors.title)}>
               <Typography level="h1">
                 <Input
                   variant="plain"
                   size="lg"
-                  startDecorator={<Typography level="h1">Editing: </Typography>}
+                  startDecorator={
+                    <Typography
+                      level="h1"
+                      sx={{ fontFamily: "Gloria Hallelujah" }}
+                    >
+                      Editing:{" "}
+                    </Typography>
+                  }
                   sx={{
                     fontSize: "45px",
                     fontWeight: "700",
+                    fontFamily: "Gloria Hallelujah",
+
                     "--Input-radius": "0px",
                     borderBottom: "2px solid",
                     borderColor: "neutral.outlinedBorder",
@@ -174,7 +187,9 @@ export const EditChapterForm = (props: EditChapterFormProps) => {
 
           <Sheet
             variant="plain"
-            sx={{ minHeight: "30rem", width: { xs: "80%", sm: "50%" } }}
+            sx={{
+              width: { xs: "80%", sm: "50%" },
+            }}
           >
             <Controller
               name="content"
@@ -192,6 +207,7 @@ export const EditChapterForm = (props: EditChapterFormProps) => {
           </Sheet>
         </Stack>
       </form>
+
       <Snackbar
         open={errorSnackbarIsOpen}
         onClose={() => {

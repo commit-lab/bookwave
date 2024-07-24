@@ -4,6 +4,7 @@ import { StarterKit } from "@tiptap/starter-kit";
 import { Underline } from "@tiptap/extension-underline";
 import { TextStyle } from "@tiptap/extension-text-style";
 import { FontFamily } from "@tiptap/extension-font-family";
+import { Box } from "@mui/joy";
 import Toolbar from "@/features/editor/components/toolbar/toolbar";
 
 interface EditorProps {
@@ -14,13 +15,7 @@ interface EditorProps {
   setContentIsValid: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const Editor = (props: EditorProps) => {
-  const {
-    content,
-    onChange,
-    contentRecentlyChanged,
-    setContentRecentlyChanged,
-    setContentIsValid,
-  } = props;
+  const { content, onChange, setContentIsValid } = props;
 
   const editor = useEditor({
     extensions: [StarterKit, Underline, TextStyle, FontFamily],
@@ -31,9 +26,6 @@ const Editor = (props: EditorProps) => {
       },
     },
     onUpdate: ({ editor: richTextEditor }) => {
-      if (!contentRecentlyChanged) {
-        setContentRecentlyChanged(true);
-      }
       editor?.state.doc.textContent.length === 0
         ? setContentIsValid(false)
         : setContentIsValid(true);
@@ -43,9 +35,10 @@ const Editor = (props: EditorProps) => {
   });
 
   return (
-    <EditorContent editor={editor}>
+    <>
+      <EditorContent editor={editor} />
       <Toolbar editor={editor} />
-    </EditorContent>
+    </>
   );
 };
 

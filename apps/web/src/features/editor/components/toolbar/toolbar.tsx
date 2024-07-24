@@ -9,7 +9,7 @@ import {
   TextRotationNone,
 } from "@mui/icons-material";
 import { Sheet, ToggleButtonGroup } from "@mui/joy";
-import { Divider, AppBar, ToggleButton } from "@mui/material";
+import { Divider, ToggleButton, Paper } from "@mui/material";
 import { type Editor } from "@tiptap/react";
 import React from "react";
 import H1HeadingIcon from "@/features/editor/components/toolbar/h1-heading-icon";
@@ -27,16 +27,17 @@ const Toolbar = (props: ToolbarProps) => {
   }
 
   return (
-    <AppBar
-      position="fixed"
+    <Paper
       sx={{
-        top: "auto",
+        position: "fixed",
         bottom: 0,
-        backgroundColor: "white",
-        boxShadow: "0",
+        left: 0,
+        right: 0,
         display: "flex",
-        alignItems: "center",
+        justifyContent: "center",
+        boxShadow: "none",
       }}
+      elevation={3}
     >
       <Sheet
         variant="outlined"
@@ -185,7 +186,7 @@ const Toolbar = (props: ToolbarProps) => {
           </ToggleButton>
         </ToggleButtonGroup>
       </Sheet>
-    </AppBar>
+    </Paper>
   );
 };
 

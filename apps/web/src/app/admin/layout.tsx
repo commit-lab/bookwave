@@ -20,13 +20,15 @@ export default function AdminLayout({
     return <InitialLoading />;
   }
 
-  return (
+  return !isSpecificRoute ? (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
-      {!isSpecificRoute && <TopBar />}
+      <TopBar />
       <Box sx={{ display: "flex", flex: 1 }}>
-        {!isSpecificRoute && <SideBar />}
+        <SideBar />
         <Box sx={{ flex: 1, overflow: "auto" }}>{children}</Box>
       </Box>
     </Box>
+  ) : (
+    <Box>{children}</Box>
   );
 }
