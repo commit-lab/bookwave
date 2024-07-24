@@ -4,7 +4,6 @@ import { StarterKit } from "@tiptap/starter-kit";
 import { Underline } from "@tiptap/extension-underline";
 import { TextStyle } from "@tiptap/extension-text-style";
 import { FontFamily } from "@tiptap/extension-font-family";
-import { Box } from "@mui/joy";
 import Toolbar from "@/features/editor/components/toolbar/toolbar";
 
 interface EditorProps {

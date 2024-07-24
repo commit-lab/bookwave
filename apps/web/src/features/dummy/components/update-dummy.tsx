@@ -6,7 +6,7 @@ import {
   Sheet,
   Stack,
 } from "@mui/joy";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { InfoOutlined } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useUpdateDummyMutation } from "@/features/dummy/mutations";
@@ -15,7 +15,6 @@ import {
   ApiNotFoundError,
   ApiUnauthorizedError,
 } from "@/lib/error/api-errors";
-import Editor from "@/features/editor/components/editor";
 
 const TWO_SECONDS_MS = 2000;
 
@@ -40,7 +39,6 @@ export const UpdateDummyForm = (props: UpdateDummyFormProps) => {
     formState: { errors, isValid },
     handleSubmit,
     reset,
-    control,
   } = useForm<UpdateDummyFormFields>({
     defaultValues: {
       foo: previousFoo,
@@ -127,19 +125,6 @@ export const UpdateDummyForm = (props: UpdateDummyFormProps) => {
               </FormHelperText>
             ) : null}
           </FormControl>
-
-          <Controller
-            name="content"
-            control={control}
-            render={({ field }) => (
-              <Editor
-                content={field.value}
-                onChange={field.onChange}
-                contentRecentlyChanged={contentRecentlyChanged}
-                setContentRecentlyChanged={setContentRecentlyChanged}
-              />
-            )}
-          />
 
           <Button
             type="submit"
