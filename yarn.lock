@@ -2109,6 +2109,13 @@
   dependencies:
     tippy.js "^6.3.7"
 
+
+"@tiptap/extension-font-family@^2.5.4":
+  version "2.5.6"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-font-family/-/extension-font-family-2.5.6.tgz#a4cf35cf248fb1cddce867cecb06939681586cbc"
+  integrity sha512-8/ElBAyzijzj+f7vCQdkC3DlM+Sd1KBdCZEsrf0ovWs+7/E7mpxmoGS9k7CJYK0NMeOKpm8b7WrwJbDKJqtmMw==
+
+
 "@tiptap/extension-gapcursor@^2.5.4":
   version "2.5.4"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-gapcursor/-/extension-gapcursor-2.5.4.tgz#45f6ef87458e7261e51fbc7f3343278c3e8f4534"
@@ -2158,6 +2165,12 @@
   version "2.5.4"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-strike/-/extension-strike-2.5.4.tgz#756af9aaef76d0b061741020d766654ea5bf1b63"
   integrity sha512-OSN6ePbCwEhi3hYZZOPow/P9Ym2Kv3NhVbUvasjZCiqQuk8TGc33xirPWl9DTjb/BLfL66TtJ2tKUEVOKl5dKg==
+
+"@tiptap/extension-text-style@^2.5.4":
+  version "2.5.6"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-text-style/-/extension-text-style-2.5.6.tgz#474cebf36b074283c1ec4ea77734a7ec0030397a"
+  integrity sha512-rztXENp9Usyerl2qaknmbwNRqShAR+vm5syBTy6P+L7/u9j5TpZMYgLku7WGIf0gz6EhVhdc1Dnbfif3qi2l6g==
+
 
 "@tiptap/extension-text@^2.5.4":
   version "2.5.4"
@@ -2360,6 +2373,13 @@
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@types/cookiejar/-/cookiejar-2.1.5.tgz#14a3e83fa641beb169a2dd8422d91c3c345a9a78"
   integrity sha512-he+DHOWReW0nghN24E1WUqM0efK4kI9oTqDm6XmK8ZPe2djZ90BSNdGnIyCLzCPw7/pogPlGbzI2wHGGmi4O/Q==
+
+"@types/dompurify@^3.0.5":
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/@types/dompurify/-/dompurify-3.0.5.tgz#02069a2fcb89a163bacf1a788f73cb415dd75cb7"
+  integrity sha512-1Wg0g3BtQF7sSb27fJQAKck1HECM6zV1EB66j8JH9i3LCjYabJa0FSdiSgsD5K/RbrsR0SiraKacLB+T8ZVYAg==
+  dependencies:
+    "@types/trusted-types" "*"
 
 "@types/eslint-scope@^3.7.3":
   version "3.7.7"
@@ -2636,6 +2656,13 @@
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/@types/tough-cookie/-/tough-cookie-4.0.5.tgz#cb6e2a691b70cb177c6e3ae9c1d2e8b2ea8cd304"
   integrity sha512-/Ad8+nIOV7Rl++6f1BdKxFSMgmoqEoYbHRpPcx3JEfv8VRsQe9Z4mCXeJBzxs7mbHY/XOZZuXlRNfhpVPbs6ZA==
+
+
+"@types/trusted-types@*":
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/@types/trusted-types/-/trusted-types-2.0.7.tgz#baccb07a970b91707df3a3e8ba6896c57ead2d11"
+  integrity sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==
+
 
 "@types/use-sync-external-store@^0.0.6":
   version "0.0.6"
@@ -4425,6 +4452,11 @@ domexception@^4.0.0:
   integrity sha512-A2is4PLG+eeSfoTMA95/s4pvAoSo2mKtiM5jlHkAVewmiO8ISFTFKZjH7UAM1Atli/OT/7JHOrJRJiMKUZKYBw==
   dependencies:
     webidl-conversions "^7.0.0"
+
+dompurify@^3.1.6:
+  version "3.1.6"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.1.6.tgz#43c714a94c6a7b8801850f82e756685300a027e2"
+  integrity sha512-cTOAhc36AalkjtBpfG6O8JimdTMWNXjiePT2xQH/ppBGi/4uIpmj8eKyIkMJErXWARyINV/sB38yf8JCLF5pbQ==
 
 dot-case@^2.1.0:
   version "2.1.1"

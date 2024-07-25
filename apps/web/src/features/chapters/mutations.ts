@@ -1,4 +1,7 @@
-import { type CreateChapterDto } from "@bookwave/api-client";
+import {
+  type UpdateChapterDto,
+  type CreateChapterDto,
+} from "@bookwave/api-client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ChaptersApiKeys } from "@/features/chapters/queries";
 import { apiClient } from "@/lib/api/api-client";
@@ -22,6 +25,40 @@ async function createChapter(bookId: string, chapter: CreateChapterDto) {
     return response;
   } catch (error: unknown) {
     captureAndRethrowException(error);
+  }
+}
+
+export const useUpdateChapterMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      chapterId,
+      updatedChapter,
+    }: {
+      chapterId: string;
+      updatedChapter: UpdateChapterDto;
+    }) => updateChapter(chapterId, updatedChapter),
+
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ChaptersApiKeys.fetchOne(),
+      });
+    },
+  });
+};
+
+async function updateChapter(
+  chapterId: string,
+  updatedChapter: UpdateChapterDto
+) {
+  try {
+    const response = await apiClient.chapters.updateOne(
+      chapterId,
+      updatedChapter
+    );
+    return response;
+  } catch (err: unknown) {
+    captureAndRethrowException(err);
   }
 }
 

@@ -1,6 +1,7 @@
 import { Model } from "mongoose";
 import { Injectable, Inject, NotFoundException } from "@nestjs/common";
 import { isNullOrUndefined } from "@bookwave/utils";
+import { BOOK_MODEL } from "../book/book.constants";
 import { type BookDocument } from "@/book/interfaces/book.interface";
 import { type ChapterDocument } from "@/chapter/interfaces/chapter.interface";
 import { CHAPTER_MODEL } from "@/chapter/chapter.constants";
@@ -8,7 +9,6 @@ import { type ChapterDto } from "@/chapter/dto/chapter.dto";
 import { type UpdateChapterDto } from "@/chapter/dto/update-chapter.dto";
 import { type CreateChapterDto } from "@/chapter/dto/create-chapter.dto";
 import { type DeletedChapterResponseDto } from "@/chapter/dto/deleted-chapter-response.dto";
-import { BOOK_MODEL } from "../book/book.constants";
 
 @Injectable()
 export class ChapterService {
@@ -22,13 +22,16 @@ export class ChapterService {
 
   // Find chapter by {chapterNumber}.
 
-  async findOne(bookId: string, chapterNumber: number): Promise<ChapterDto> {
+  async findOne(
+    bookHandle: string,
+    chapterNumber: number
+  ): Promise<ChapterDto> {
     const book = await this.bookModel
-      .findOne({ _id: bookId })
+      .findOne({ handle: bookHandle })
       .populate({ path: "chapters", model: "Chapter" })
       .exec();
     if (isNullOrUndefined(book)) {
-      throw new NotFoundException(`Book with bookId: ${bookId} not found.`);
+      throw new NotFoundException(`Book with bookId: ${bookHandle} not found.`);
     }
     const chapterIndex = chapterNumber - 1;
     const chapter = book.chapters[chapterIndex];

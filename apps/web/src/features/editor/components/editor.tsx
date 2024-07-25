@@ -2,25 +2,22 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import { StarterKit } from "@tiptap/starter-kit";
 import { Underline } from "@tiptap/extension-underline";
-import { Sheet } from "@mui/joy";
-import Toolbar from "@/features/editor/components/toolbar";
+import { TextStyle } from "@tiptap/extension-text-style";
+import { FontFamily } from "@tiptap/extension-font-family";
+import Toolbar from "@/features/editor/components/toolbar/toolbar";
 
 interface EditorProps {
   content: string;
   onChange: (value: string) => void;
   contentRecentlyChanged: boolean;
   setContentRecentlyChanged: React.Dispatch<React.SetStateAction<boolean>>;
+  setContentIsValid: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const Editor = (props: EditorProps) => {
-  const {
-    content,
-    onChange,
-    contentRecentlyChanged,
-    setContentRecentlyChanged,
-  } = props;
+  const { content, onChange, setContentIsValid } = props;
 
   const editor = useEditor({
-    extensions: [StarterKit, Underline],
+    extensions: [StarterKit, Underline, TextStyle, FontFamily],
     content,
     editorProps: {
       attributes: {
@@ -28,19 +25,17 @@ const Editor = (props: EditorProps) => {
       },
     },
     onUpdate: ({ editor: richTextEditor }) => {
-      if (!contentRecentlyChanged) {
-        setContentRecentlyChanged(true);
-      }
+      editor?.state.doc.textContent.length === 0
+        ? setContentIsValid(false)
+        : setContentIsValid(true);
+
       onChange(richTextEditor.getHTML());
     },
   });
 
   return (
     <>
-      <Sheet sx={{ p: 4 }}>
-        <EditorContent editor={editor} />
-      </Sheet>
-
+      <EditorContent editor={editor} />
       <Toolbar editor={editor} />
     </>
   );

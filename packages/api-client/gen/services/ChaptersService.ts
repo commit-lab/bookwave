@@ -15,20 +15,20 @@ export class ChaptersService {
     constructor(public readonly httpRequest: BaseHttpRequest) {}
 
     /**
-     * @param bookId
+     * @param bookHandle
      * @param chapterNumber
      * @returns ChapterDto Chapter successfully found.
      * @throws ApiError
      */
     public getOne(
-        bookId: string,
+        bookHandle: string,
         chapterNumber: number,
     ): CancelablePromise<ChapterDto> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/books/{bookId}/chapters/{chapterNumber}',
+            url: '/{bookHandle}/chapters/{chapterNumber}',
             path: {
-                'bookId': bookId,
+                'bookHandle': bookHandle,
                 'chapterNumber': chapterNumber,
             },
         });
@@ -46,7 +46,7 @@ export class ChaptersService {
     ): CancelablePromise<ChapterDto> {
         return this.httpRequest.request({
             method: 'POST',
-            url: '/books/{bookId}/chapters',
+            url: '/{bookHandle}/chapters',
             path: {
                 'bookId': bookId,
             },
@@ -67,7 +67,7 @@ export class ChaptersService {
     ): CancelablePromise<ChapterDto> {
         return this.httpRequest.request({
             method: 'PUT',
-            url: '/books/{bookId}/chapters/{chapterId}',
+            url: '/{bookHandle}/chapters/{chapterId}',
             path: {
                 'chapterId': chapterId,
             },
@@ -86,7 +86,7 @@ export class ChaptersService {
     ): CancelablePromise<DeletedChapterResponseDto> {
         return this.httpRequest.request({
             method: 'DELETE',
-            url: '/books/{bookId}/chapters/{chapterId}',
+            url: '/{bookHandle}/chapters/{chapterId}',
             path: {
                 'chapterId': chapterId,
             },

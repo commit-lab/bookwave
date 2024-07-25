@@ -15,8 +15,9 @@ export default function AdminLayout({
 }) {
   const { data } = useAllBooks();
   const params = useParams();
+  const isSpecificRoute = Boolean(params.chapterNumber);
+
   const isSignedIn = useIsSignedIn();
-  const isSpecificRoute = params.chapter_number;
   const bookHandle = params.bookHandle;
   const books = data?.books.map((book) => book);
   const bookTitle = books?.find((book) => book.handle === bookHandle)?.title;
@@ -25,13 +26,15 @@ export default function AdminLayout({
     return <InitialLoading />;
   }
 
-  return (
+  return !isSpecificRoute ? (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
-      {!isSpecificRoute && <TopBar />}
+      <TopBar />
       <Box sx={{ display: "flex", flex: 1 }}>
-        {!isSpecificRoute && <SideBar bookTitle={bookTitle} />}
+        <SideBar bookTitle={bookTitle} />
         <Box sx={{ flex: 1, overflow: "auto" }}>{children}</Box>
       </Box>
     </Box>
+  ) : (
+    <Box>{children}</Box>
   );
 }
