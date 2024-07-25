@@ -28,7 +28,6 @@ async function createChapter(bookId: string, chapter: CreateChapterDto) {
   }
 }
 
-
 export const useUpdateChapterMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -60,6 +59,8 @@ async function updateChapter(
     return response;
   } catch (err: unknown) {
     captureAndRethrowException(err);
+  }
+}
 
 export const useDeleteChapterMutation = () => {
   const queryClient = useQueryClient();
@@ -80,6 +81,5 @@ async function deleteChapter(chapterId: string) {
     return response;
   } catch (error: unknown) {
     captureAndRethrowException(error);
-
   }
 }
