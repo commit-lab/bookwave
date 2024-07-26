@@ -2,9 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { Box, Button, Card, CardContent, Typography } from "@mui/joy";
+import Image from "next/image";
 import { useIsSignedIn } from "@/features/auth/hooks/use-is-signed-in";
 import { useSignIn } from "@/features/auth/hooks/use-sign-in";
-// import { DummyPageContent } from "@/features/dummy/components/dummy-page-content";
 
 export default function SignIn() {
   const router = useRouter();
@@ -18,27 +18,57 @@ export default function SignIn() {
   return (
     <Box
       sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        display: "grid",
+        placeItems: "center",
         height: "100vh",
-        background: "#f0f0f0",
+        background: "#f5faff",
       }}
     >
-      <Card variant="outlined" sx={{ maxWidth: 600 }}>
-        <CardContent>
-          <Box sx={{ textAlign: "center", marginBottom: 2 }}>
-            <Typography level="h1" component="h1">
+      <Card
+        variant="outlined"
+        sx={{
+          maxWidth: 600,
+          p: 6,
+          border: "2px solid black",
+          borderRadius: "5%",
+          mx: { xs: "1rem" },
+        }}
+      >
+        <CardContent sx={{ display: "flex", flexDirection: "column" }}>
+          <Box sx={{ textAlign: "center", mb: 5 }}>
+            <Typography
+              level="h1"
+              component="h1"
+              sx={{ fontFamily: "Gloria Hallelujah", mb: 3 }}
+            >
               Welcome to Bookwave!
             </Typography>
-            <Typography level="h2">Sign in to get started.</Typography>
+
+            <Typography
+              component="h2"
+              level="h3"
+              sx={{ fontFamily: "Gloria Hallelujah", mb: 5 }}
+            >
+              Sign in to get started.
+            </Typography>
+            <Image
+              src="/images/app-icon.png"
+              alt="app icon"
+              width={100}
+              height={100}
+            />
           </Box>
+
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Button
               onClick={signIn}
               variant="solid"
               color="primary"
-              sx={{ width: "50%" }}
+              sx={{
+                width: { xs: "100% ", sm: "50%", md: "50%", lg: "50%" },
+                fontFamily: "Gloria Hallelujah",
+                p: 3,
+              }}
             >
               Sign in with Google
             </Button>
