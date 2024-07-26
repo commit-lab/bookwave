@@ -1,58 +1,94 @@
 "use client";
 import * as React from "react";
-import Sheet from "@mui/joy/Sheet";
-import CssBaseline from "@mui/joy/CssBaseline";
-import Typography from "@mui/joy/Typography";
-import FormControl from "@mui/joy/FormControl";
-import FormLabel from "@mui/joy/FormLabel";
-import Input from "@mui/joy/Input";
-import Button from "@mui/joy/Button";
-import Link from "@mui/joy/Link";
+import {
+  FormLabel,
+  FormControl,
+  Box,
+  Input,
+  Link,
+  Typography,
+  CssBaseline,
+  Button,
+} from "@mui/joy";
 
 export default function LoginFinal() {
   return (
-    <main>
+    <>
       <CssBaseline />
-      <Sheet
+      <Box
         sx={{
-          width: 300,
-          mx: "auto",
-          my: 4,
-          py: 3,
-          px: 2,
           display: "flex",
           flexDirection: "column",
-          gap: 2,
-          borderRadius: "sm",
-          boxShadow: "md",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+          height: "100vh",
+          padding: "20px",
+          background: "#f5faff",
         }}
-        variant="outlined"
       >
-        <div>
-          <Typography level="h4" component="h1" sx={{ textAlign: "center" }}>
-            <b>Create Your Account</b>
-          </Typography>
-          <Typography level="body-sm" sx={{ textAlign: "center" }}>
-            Let us know some basic details to get started
-          </Typography>
-        </div>
-        <FormControl>
-          <FormLabel>First Name</FormLabel>
-          <Input name="text" type="text" placeholder="john" />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Password</FormLabel>
-          <Input name="text" type="text" placeholder="doe" />
-        </FormControl>
-        <Button sx={{ mt: 1 /* margin top */ }}>Create Account</Button>
-        <Typography
-          endDecorator={<Link href="/books">Dashboard</Link>}
-          fontSize="sm"
-          sx={{ alignSelf: "center" }}
+        <Box
+          sx={{
+            width: "100%",
+            maxWidth: "600px",
+            p: 6,
+            backgroundColor: "#ffffff",
+            border: "2px solid black",
+            borderRadius: "5%",
+          }}
         >
-          Already have an account?
-        </Typography>
-      </Sheet>
-    </main>
+          <Box sx={{ textAlign: "center", mb: 2 }}>
+            <Typography
+              level="h4"
+              component="h1"
+              sx={{ fontFamily: "Gloria Hallelujah", mb: 3 }}
+            >
+              Create your account
+            </Typography>
+
+            <Typography
+              component="h2"
+              sx={{ fontFamily: "Gloria Hallelujah" }}
+              level="body-md"
+            >
+              Let us know some details to get started
+            </Typography>
+          </Box>
+
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            <FormControl>
+              <FormLabel>First Name</FormLabel>
+              <Input placeholder="J.K." fullWidth />
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Password</FormLabel>
+              <Input placeholder="Rowling" fullWidth />
+            </FormControl>
+          </Box>
+
+          <Box sx={{ display: "grid", placeItems: "center", mt: 3 }}>
+            <Button
+              variant="solid"
+              color="primary"
+              sx={{
+                width: { xs: "100% ", sm: "50%", md: "50%", lg: "50%" },
+                fontFamily: "Gloria Hallelujah",
+                p: 3,
+              }}
+            >
+              Create Account
+            </Button>
+            <Typography
+              endDecorator={<Link href="/books">Dashboard</Link>}
+              fontSize="sm"
+              sx={{ alignSelf: "center", mt: 2 }}
+            >
+              Already have an account?
+            </Typography>
+          </Box>
+        </Box>
+      </Box>
+    </>
   );
 }
