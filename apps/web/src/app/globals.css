@@ -38,41 +38,21 @@ a {
 }
 
 .tiptap {
-  min-height: 65vh;
+  height: 100%;
+  overflow-y: auto;
   outline: none;
-
-  p {
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-  }
-
-  h1,
-  h2,
-  h3 {
-    line-height: 1.1;
-    text-wrap: pretty;
-    font-weight: 900;
-    font-style: normal;
-  }
 
   h1,
   h2,
   h3,
   p {
-    font-family: "Lato", sans-serif;
+    font-family: Inter, Roboto, Helvetica, Arial, sans-serif;
   }
 
-  h1 {
-    font-size: 2rem;
-  }
-
-  h2 {
-    font-size: 1.875rem;
-  }
-
+  h1,
+  h2,
   h3 {
-    font-size: 1.5rem;
+    margin-bottom: 1rem;
   }
 
   ul,
@@ -89,10 +69,10 @@ a {
   pre {
     background: black;
     border-radius: 0.5rem;
-    color: white;
+    color: #e3effb;
     margin: 1.5rem 0;
     padding: 0.75rem 1rem;
-    border: 3px solid rgb(var(--mui-joy-blue-rgb));
+    border: 5px solid #e3effb;
   }
 
   blockquote {
