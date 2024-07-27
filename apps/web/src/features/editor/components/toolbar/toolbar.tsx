@@ -8,13 +8,15 @@ import {
   FormatUnderlined,
   TextRotationNone,
 } from "@mui/icons-material";
-import { Sheet, ToggleButtonGroup } from "@mui/joy";
-import { Divider, ToggleButton, Paper } from "@mui/material";
+import { Sheet } from "@mui/joy";
+import { Divider, Paper } from "@mui/material";
 import { type Editor } from "@tiptap/react";
 import React from "react";
 import H1HeadingIcon from "@/features/editor/components/toolbar/h1-heading-icon";
 import H2HeadingIcon from "@/features/editor/components/toolbar/h2-heading-icon";
 import H3HeadingIcon from "@/features/editor/components/toolbar/h3-heading-icon";
+import MenuButton from "@/features/editor/components/toolbar/menu-button";
+import MenuButtonGroup from "@/features/editor/components/toolbar/menu-button-group";
 
 export interface ToolbarProps {
   editor?: Editor | null;
@@ -37,126 +39,120 @@ const Toolbar = (props: ToolbarProps) => {
         justifyContent: "center",
         boxShadow: "none",
       }}
-      elevation={3}
     >
       <Sheet
         variant="outlined"
         sx={{
-          borderRadius: "sm",
+          borderRadius: 0,
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "center",
-          gap: 1.5,
-          p: 0.5,
+          gap: 2,
+          p: 1,
           maxWidth: "40rem",
         }}
       >
-        <ToggleButtonGroup
-          variant="plain"
-          spacing={1.5}
-          aria-label="text formatting"
-        >
-          <ToggleButton
+        <MenuButtonGroup ariaLabel="text formatting">
+          <MenuButton
+            title="Bold"
             value="bold"
-            aria-label="bold"
             onClick={() => editor.chain().focus().toggleBold().run()}
             selected={editor.isActive("bold")}
           >
+            {" "}
             <FormatBold />
-          </ToggleButton>
+          </MenuButton>
 
-          <ToggleButton
-            value="italic"
-            aria-label="italic"
-            onClick={() => editor.chain().focus().toggleItalic().run()}
-            selected={editor.isActive("italic")}
-          >
-            <FormatItalic />
-          </ToggleButton>
-
-          <ToggleButton
-            value="underlined"
-            aria-label="underlined"
+          <MenuButton
+            title="Underline"
+            value="underline"
             onClick={() => editor.chain().focus().toggleUnderline().run()}
             selected={editor.isActive("underline")}
           >
+            {" "}
             <FormatUnderlined />
-          </ToggleButton>
-        </ToggleButtonGroup>
+          </MenuButton>
+
+          <MenuButton
+            title="Italic"
+            value="italic"
+            onClick={() => editor.chain().focus().toggleItalic().run()}
+            selected={editor.isActive("italic")}
+          >
+            {" "}
+            <FormatItalic />
+          </MenuButton>
+        </MenuButtonGroup>
 
         <Divider orientation="vertical" variant="middle" flexItem />
 
-        <ToggleButtonGroup
-          variant="plain"
-          spacing={1.5}
-          aria-label="heading styles"
-        >
-          <ToggleButton
+        <MenuButtonGroup ariaLabel="heading styles">
+          <MenuButton
+            title="Heading 1"
             value="h1"
-            aria-label="h1"
             onClick={() =>
               editor.chain().focus().toggleHeading({ level: 1 }).run()
             }
             selected={editor.isActive("heading", { level: 1 })}
           >
+            {" "}
             <H1HeadingIcon />
-          </ToggleButton>
-          <ToggleButton
+          </MenuButton>
+
+          <MenuButton
+            title="Heading 2"
             value="h2"
-            aria-label="h2"
             onClick={() =>
               editor.chain().focus().toggleHeading({ level: 2 }).run()
             }
             selected={editor.isActive("heading", { level: 2 })}
           >
+            {" "}
             <H2HeadingIcon />
-          </ToggleButton>
-          <ToggleButton
+          </MenuButton>
+
+          <MenuButton
+            title="Heading 3"
             value="h3"
-            aria-label="h3"
             onClick={() =>
               editor.chain().focus().toggleHeading({ level: 3 }).run()
             }
             selected={editor.isActive("heading", { level: 3 })}
           >
+            {" "}
             <H3HeadingIcon />
-          </ToggleButton>
-        </ToggleButtonGroup>
+          </MenuButton>
+        </MenuButtonGroup>
         <Divider orientation="vertical" variant="middle" flexItem />
 
-        <ToggleButtonGroup
-          variant="plain"
-          spacing={1.5}
-          aria-label="list formatting"
-        >
-          <ToggleButton
+        <MenuButtonGroup ariaLabel="list formatting">
+          <MenuButton
+            title="Bullet List"
             value="bulletList"
-            aria-label="bulletList"
             onClick={() => editor.chain().focus().toggleBulletList().run()}
             selected={editor.isActive("bulletList")}
           >
+            {" "}
             <FormatListBulleted />
-          </ToggleButton>
-          <ToggleButton
+          </MenuButton>
+
+          <MenuButton
+            title="Ordered List"
             value="orderedList"
-            aria-label="orderedList"
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
             selected={editor.isActive("orderedList")}
           >
+            {" "}
             <FormatListNumbered />
-          </ToggleButton>
-        </ToggleButtonGroup>
+          </MenuButton>
+        </MenuButtonGroup>
 
         <Divider orientation="vertical" variant="middle" flexItem />
 
-        <ToggleButtonGroup
-          variant="plain"
-          spacing={1.5}
-          aria-label="code and blockquote formatting"
-        >
-          <ToggleButton
+        <MenuButtonGroup ariaLabel="code and blockquote formatting">
+          <MenuButton
+            title="Monospace"
             value="monospace"
-            aria-label="monospace"
             onClick={() => {
               editor
                 .chain()
@@ -166,25 +162,30 @@ const Toolbar = (props: ToolbarProps) => {
             }}
             selected={editor.isActive("textStyle")}
           >
+            {" "}
             <TextRotationNone />
-          </ToggleButton>
-          <ToggleButton
+          </MenuButton>
+
+          <MenuButton
+            title="Blockquote"
             value="blockquote"
-            aria-label="blockquote"
             onClick={() => editor.chain().focus().toggleBlockquote().run()}
             selected={editor.isActive("blockquote")}
           >
+            {" "}
             <FormatQuote />
-          </ToggleButton>
-          <ToggleButton
-            value="codeBlock"
-            aria-label="codeBlock"
+          </MenuButton>
+
+          <MenuButton
+            title="Code"
+            value="code"
             onClick={() => editor.chain().focus().toggleCodeBlock().run()}
             selected={editor.isActive("codeBlock")}
           >
+            {" "}
             <Code />
-          </ToggleButton>
-        </ToggleButtonGroup>
+          </MenuButton>
+        </MenuButtonGroup>
       </Sheet>
     </Paper>
   );

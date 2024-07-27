@@ -58,12 +58,12 @@ export default function LoginFinal() {
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <FormControl>
               <FormLabel>First Name</FormLabel>
-              <Input placeholder="J.K." fullWidth />
+              <Input placeholder="J.K. (Rowling)" fullWidth />
             </FormControl>
 
             <FormControl>
               <FormLabel>Password</FormLabel>
-              <Input placeholder="Rowling" fullWidth />
+              <Input placeholder="Super secret password" fullWidth />
             </FormControl>
           </Box>
 
