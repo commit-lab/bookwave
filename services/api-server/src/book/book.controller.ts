@@ -11,14 +11,14 @@ import {
   Logger,
 } from "@nestjs/common";
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from "@nestjs/swagger";
+import { CreateBookDto } from "./dto/create-book.dto";
+import { UpdateBookDto } from "./dto/update-book.dto";
+import { BookService } from "./book.service";
 import { Author } from "@/author/author.decorator";
 import { BookDto } from "@/book/dto/book-dto";
 import { BookWithChapterTitlesDto } from "@/book/dto/book-with-chapter-titles.dto";
 import { DeletedBookResponseDto } from "@/book/dto/deleted-book-response.dto";
 import { FetchBooksResponseDto } from "@/book/dto/fetch-books-response.dto";
-import { CreateBookDto } from "./dto/create-book.dto";
-import { UpdateBookDto } from "./dto/update-book.dto";
-import { BookService } from "./book.service";
 
 @ApiBearerAuth()
 @ApiTags("books")
@@ -26,6 +26,22 @@ import { BookService } from "./book.service";
 export class BookController {
   private logger = new Logger("BookController");
   constructor(private readonly bookService: BookService) {}
+
+  @ApiOkResponse({
+    description: "Database successfully seeded with dummy books.",
+    type: String,
+  })
+  @Post("/seed")
+  async seed(@Author("_id") authorId: string): Promise<string> {
+    try {
+      await this.bookService.seedDatabase(authorId);
+      return "Database successfully seeded with dummy books. Happy reading!";
+    } catch {
+      throw new NotFoundException(
+        `Could not seed database for author with author id: ${authorId}.`
+      );
+    }
+  }
 
   @ApiOkResponse({
     description: "All books by author successfully found.",
