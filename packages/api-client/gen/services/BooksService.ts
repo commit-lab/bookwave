@@ -17,6 +17,17 @@ export class BooksService {
     constructor(public readonly httpRequest: BaseHttpRequest) {}
 
     /**
+     * @returns string Database successfully seeded with dummy books.
+     * @throws ApiError
+     */
+    public seed(): CancelablePromise<string> {
+        return this.httpRequest.request({
+            method: 'POST',
+            url: '/books/seed',
+        });
+    }
+
+    /**
      * @returns FetchBooksResponseDto All books by author successfully found.
      * @throws ApiError
      */

@@ -3,9 +3,6 @@ import { type BookWithChapterTitlesDto } from "@bookwave/api-client";
 import { apiClient } from "@/lib/api/api-client";
 import { captureAndRethrowException } from "@/lib/error/capture-and-rethrow-exception";
 
-// Consider moving everything relating to 'FetchAll' to the file containing the book queries instead and renaming.
-// The endpoint is actually a book with a chapter titles array, not the chapters themselves (returns BookWithChapterTitlesDTO) -Marisa
-
 enum ChaptersApiEndpoint {
   FetchAll = "ChaptersApiEndpointFetchAll",
   FetchOne = "ChaptersApiEndpointFetchOne",

@@ -1,6 +1,8 @@
 import { Model } from "mongoose";
 import { Injectable, Inject, NotFoundException } from "@nestjs/common";
 import { isNullOrUndefined } from "@bookwave/utils";
+import { type UpdateBookDto } from "./dto/update-book.dto";
+import { BOOK_MODEL } from "./book.constants";
 import { type BookDocument } from "@/book/interfaces/book.interface";
 import { type CreateBookDto } from "@/book/dto/create-book.dto";
 import { type BookDto } from "@/book/dto/book-dto";
@@ -8,8 +10,7 @@ import { type ChapterDocument } from "@/chapter/interfaces/chapter.interface";
 import { CHAPTER_MODEL } from "@/chapter/chapter.constants";
 import { type BookWithChapterTitlesDto } from "@/book/dto/book-with-chapter-titles.dto";
 import { type DeletedBookResponseDto } from "@/book/dto/deleted-book-response.dto";
-import { type UpdateBookDto } from "./dto/update-book.dto";
-import { BOOK_MODEL } from "./book.constants";
+import { seedData } from "@/db/seed-data";
 
 @Injectable()
 export class BookService {
@@ -143,5 +144,45 @@ export class BookService {
       deletedChapterCount: chapterCount,
     };
     return deletedBookResponse;
+  }
+
+  // Seed database.
+
+  async seedDatabase(authorId: string) {
+    const booksToDelete = await this.bookModel.find({ author: authorId });
+    for (const book of booksToDelete) {
+      for (const chapter of book.chapters) {
+        await this.chapterModel.findByIdAndDelete(chapter._id); // delete all existing books by author
+      }
+    }
+    await this.bookModel.deleteMany({ author: authorId }); // delete all existing books by author
+
+    const createdBooks: BookDocument[] = [];
+
+    for (const book of seedData) {
+      const newBook = await this.bookModel.create({
+        title: book.title,
+        handle: book.handle,
+        state: book.state,
+        author: authorId,
+      });
+
+      for (const chapter of book.chapters) {
+        const newChapter = await this.chapterModel.create({
+          title: chapter.title,
+          content: chapter.content,
+        });
+        newBook.chapters.push(newChapter);
+
+        await this.bookModel.updateOne(
+          { _id: newBook._id },
+          { $push: { chapters: newChapter } }
+        );
+      }
+
+      createdBooks.push(newBook);
+    }
+
+    return createdBooks;
   }
 }
