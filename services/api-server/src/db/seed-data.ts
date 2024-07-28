@@ -307,7 +307,7 @@ return (
       &lt;/div&gt;
       &lt;div&gt;
         &lt;label&gt;Email&lt;/label&gt;
-        &lt;input {...register('email', { required: true, pattern: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/ })} /&gt;
+        &lt;input {...register('email', { required: true, pattern: /^[^@ ]+@[^@ ]+.[^@ .]{2,}$/ })} /&gt;
         {errors.email &amp;&amp; &lt;span&gt;This field is required and should be a valid email&lt;/span&gt;}
       &lt;/div&gt;
       &lt;button type="submit"&gt;Submit&lt;/button&gt;
